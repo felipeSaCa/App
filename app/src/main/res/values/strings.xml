@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="btnRegister">Register</string>
+    <string name="btnLogin">Login</string>
+    <string name="btnSend">Send</string>
+    <string name="editPassword">Password</string>
+    <string name="editNickname">Nickname</string>
+    <string name="editEmailRegister">Email</string>
+    <string name="editPhoneRegister">Phone Number</string>
+    <string name="editTextOptional">Optional</string>
+    <string name="editEscribeUnMensaje">Write a message</string>
+</resources>

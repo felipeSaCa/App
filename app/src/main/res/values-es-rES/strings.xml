@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="btnRegister">Registro</string>
+    <string name="btnLogin">Entrar</string>
+    <string name="btnSend">Enviar</string>
+    <string name="editPassword">Contraseña</string>
+    <string name="editNickname">Usuario</string>
+    <string name="editEmailRegister">Correo</string>
+    <string name="editPhoneRegister">Teléfono</string>
+    <string name="editTextOptional">Opcional</string>
+    <string name="editEscribeUnMensaje">Escribe un mensaje</string>
+</resources>
