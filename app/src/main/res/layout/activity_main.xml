@@ -8,7 +8,7 @@
     android:background="#191919">
 
     <EditText
-        android:id="@+id/editNickname"
+        android:id="@+id/editUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
@@ -16,7 +16,7 @@
         android:layout_marginEnd="50dp"
         android:backgroundTint="@color/colorPrimary"
         android:ems="10"
-        android:hint="@string/editNickname"
+        android:hint="@string/editUsername"
         android:textColorHint="@color/white"
         android:inputType="textPersonName"
         android:textSize="20sp"
@@ -41,7 +41,7 @@
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editNickname" />
+        app:layout_constraintTop_toBottomOf="@+id/editUsername" />
 
     <Button
         android:id="@+id/btnLogin"
@@ -53,9 +53,11 @@
         android:background="@drawable/buttonround"
         android:text="@string/btnLogin"
         android:textSize="18sp"
+        android:onClick="openLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnRegister" />
+        app:layout_constraintTop_toBottomOf="@+id/btnRegister"
+        tools:text="@string/btnLogin" />/>
 
     <Button
         android:id="@+id/btnRegister"

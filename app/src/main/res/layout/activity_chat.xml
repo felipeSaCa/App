@@ -9,36 +9,60 @@
     tools:context=".ChatView">
 
     <EditText
-        android:id="@+id/editEscribeUnMensaje"
+        android:id="@+id/editWriteAMessage"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
         android:layout_weight="1"
         android:backgroundTint="@color/colorPrimary"
-        android:hint="@string/editEscribeUnMensaje"
+        android:hint="@string/editWriteAMessage"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnSend"
+        app:layout_constraintEnd_toStartOf="@+id/btnSendChat"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/btnSend"
+        android:id="@+id/btnSendChat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="@string/btnSend"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:background="@drawable/buttonround"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <ImageView
+        android:id="@+id/imageViewChat"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/textViewUserChat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="Usuario"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toEndOf="@+id/imageViewChat"
+        tools:layout_editor_absoluteY="37dp"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="409dp"
+        android:layout_height="597dp"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="77dp"
+        tools:ignore="MissingConstraints" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
-

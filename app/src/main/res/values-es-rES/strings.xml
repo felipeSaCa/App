@@ -5,9 +5,9 @@
     <string name="btnLogin">Entrar</string>
     <string name="btnSend">Enviar</string>
     <string name="editPassword">Contraseña</string>
-    <string name="editNickname">Usuario</string>
+    <string name="editUsername">Usuario</string>
     <string name="editEmailRegister">Correo</string>
-    <string name="editPhoneRegister">Teléfono</string>
+    <string name="editAgeRegister">Edad</string>
     <string name="editTextOptional">Opcional</string>
-    <string name="editEscribeUnMensaje">Escribe un mensaje</string>
+    <string name="editWriteAMessage">Escribe un mensaje</string>
 </resources>

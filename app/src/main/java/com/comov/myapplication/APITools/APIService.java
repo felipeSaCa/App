@@ -1,9 +1,12 @@
 package com.comov.myapplication.APITools;
 
+import com.comov.myapplication.datamodel.Login;
 import com.comov.myapplication.datamodel.Post;
+import com.comov.myapplication.datamodel.Users;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -27,14 +30,13 @@ public interface APIService {
     @POST("/posts")
     Call<Post> newPost(@Body Post myPost);
 
-    // @FormUrlEncoded
-    // @Headers("Content-Type: application/json")
-    // @POST("createUser")
-    // Call<Post> createUser(
-    // @Field("nickname") String nickname,
-    // @Field("password") String password,
-    // @Field("email") String email,
-    // @Field("phone") String phone
-    // );
+    @Headers("Content-Type: application/json")
+    @POST("/user")
+    Call<Post> postRegister (@Body Users myPost);
+
+    @Headers("Content-Type: application/json")
+    @POST("/login")
+    Call<ResponseBody> postLogin (@Body Login data);
+
 }
 

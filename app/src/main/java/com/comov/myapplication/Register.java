@@ -1,7 +1,6 @@
 package com.comov.myapplication;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.comov.myapplication.APITools.APIService;
 import com.comov.myapplication.APITools.APIUtils;
 import com.comov.myapplication.datamodel.Post;
+import com.comov.myapplication.datamodel.Users;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,10 +25,10 @@ public class Register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        final EditText nickname = (EditText)findViewById(R.id.editNickmaneRegister);
+        final EditText username = (EditText)findViewById(R.id.editNickmaneRegister);
         final EditText password = (EditText)findViewById(R.id.editPasswordRegister);
         final EditText email = (EditText)findViewById(R.id.editEmailRegister);
-        final EditText phone = (EditText)findViewById(R.id.editPhoneRegister);
+        final EditText age = (EditText)findViewById(R.id.editAgeRegister);
 
         Button btnRegisterRegister = (Button) findViewById(R.id.btnRegisterRegister);
         APIService = APIUtils.getAPIService();
@@ -37,9 +37,9 @@ public class Register extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Comprobar campos
-                if(nickname.getText().toString().matches("")) {
-                    nickname.setError("Nickname is required");
-                    nickname.requestFocus();
+                if(username.getText().toString().matches("")) {
+                    username.setError("Nickname is required");
+                    username.requestFocus();
                     return;
                 }
                 if(email.getText().toString().matches("")) {
@@ -63,21 +63,14 @@ public class Register extends AppCompatActivity {
                     return;
                 }
 
-
-                String title = "POST";
-                String body = nickname.getText().toString().trim() + " ";
-                body += password.getText().toString().trim() + " ";
-                body += email.getText().toString().trim() + " ";
-                body += phone.getText().toString().trim() + " ";
-                if(!TextUtils.isEmpty(title) && !TextUtils.isEmpty(body)) {
-                    sendPost(title, body);
-                }
+                // Hacer comprobación de si ha metido edad o no para usar un constructor u otro TODO
+                Users user = new Users(username.getText().toString(), password.getText().toString(), email.getText().toString(), age.getText().toString());
+                sendRegister(user);
             }
         });
     }
-    public void sendPost(String title, String body) {
-        Post post = new Post(title, body, 1);
-        APIService.newPost(post).enqueue(new Callback<Post>() {
+    public void sendRegister(Users user) {
+        APIService.postRegister(user).enqueue(new Callback<Post>() {
             @Override
             public void onResponse(Call<Post> call, Response<Post> response) {
                 Toast.makeText(getApplicationContext(), "Register OK", Toast.LENGTH_LONG).show();
@@ -87,8 +80,8 @@ public class Register extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Post> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Register NOT OK", Toast.LENGTH_LONG).show();
-                //Manejar error TODO
+                Toast.makeText(getApplicationContext(), "Register NOT OK "+t, Toast.LENGTH_LONG).show();
+                //Manejar error TODO if (response.code() == ??? )
             }
         });
     }

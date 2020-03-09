@@ -16,7 +16,7 @@
         android:layout_marginEnd="50dp"
         android:backgroundTint="@color/colorPrimary"
         android:ems="10"
-        android:hint="@string/editNickname"
+        android:hint="@string/editUsername"
         android:inputType="textPersonName"
         android:textColorHint="@color/white"
         android:textSize="20sp"
@@ -24,7 +24,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="@string/editNickname" />
+        tools:text="@string/editUsername" />
 
     <EditText
         android:id="@+id/editEmailRegister"
@@ -63,7 +63,7 @@
         app:layout_constraintTop_toBottomOf="@+id/editEmailRegister" />
 
     <EditText
-        android:id="@+id/editPhoneRegister"
+        android:id="@+id/editAgeRegister"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
@@ -71,7 +71,7 @@
         android:layout_marginEnd="50dp"
         android:backgroundTint="@color/colorPrimary"
         android:ems="10"
-        android:hint="@string/editPhoneRegister"
+        android:hint="@string/editAgeRegister"
         android:inputType="phone"
         android:textColorHint="@color/white"
         android:textSize="20sp"
@@ -92,7 +92,7 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editPhoneRegister"
+        app:layout_constraintTop_toBottomOf="@+id/editAgeRegister"
         tools:text="@string/btnRegister" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
