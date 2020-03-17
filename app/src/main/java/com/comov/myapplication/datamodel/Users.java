@@ -8,9 +8,9 @@ import java.io.Serializable;
 public class Users implements Serializable
 {
 
-    @SerializedName("username")
+    @SerializedName("name")
     @Expose
-    private String username;
+    private String name;
     @SerializedName("pHash")
     @Expose
     private String pHash;
@@ -22,25 +22,25 @@ public class Users implements Serializable
     private String age;
     private final static long serialVersionUID = 6480304755729039345L;
 
-    public Users(String username, String pHash,String email) {
-        this.username = username;
+    public Users(String name, String pHash,String email) {
+        this.name = name;
         this.pHash = pHash;
         this.email = email;
     }
 
-    public Users(String username, String pHash,String email, String age) {
-        this.username = username;
+    public Users(String name, String pHash,String email, String age) {
+        this.name = name;
         this.pHash = pHash;
         this.email = email;
         this.age = age;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {

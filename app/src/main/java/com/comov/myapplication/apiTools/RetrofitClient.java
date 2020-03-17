@@ -1,4 +1,4 @@
-package com.comov.myapplication.APITools;
+package com.comov.myapplication.apiTools;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

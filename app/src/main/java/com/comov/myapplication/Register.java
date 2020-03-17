@@ -9,8 +9,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.comov.myapplication.APITools.APIService;
-import com.comov.myapplication.APITools.APIUtils;
+import com.comov.myapplication.apiTools.APIService;
+import com.comov.myapplication.apiTools.APIUtils;
 import com.comov.myapplication.datamodel.Post;
 import com.comov.myapplication.datamodel.Users;
 
@@ -25,7 +25,7 @@ public class Register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        final EditText username = (EditText)findViewById(R.id.editNickmaneRegister);
+        final EditText name = (EditText)findViewById(R.id.editNickmaneRegister);
         final EditText password = (EditText)findViewById(R.id.editPasswordRegister);
         final EditText email = (EditText)findViewById(R.id.editEmailRegister);
         final EditText age = (EditText)findViewById(R.id.editAgeRegister);
@@ -37,9 +37,9 @@ public class Register extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Comprobar campos
-                if(username.getText().toString().matches("")) {
-                    username.setError("Nickname is required");
-                    username.requestFocus();
+                if(name.getText().toString().matches("")) {
+                    name.setError("User name is required");
+                    name.requestFocus();
                     return;
                 }
                 if(email.getText().toString().matches("")) {
@@ -64,7 +64,7 @@ public class Register extends AppCompatActivity {
                 }
 
                 // Hacer comprobación de si ha metido edad o no para usar un constructor u otro TODO
-                Users user = new Users(username.getText().toString(), password.getText().toString(), email.getText().toString(), age.getText().toString());
+                Users user = new Users(name.getText().toString(), password.getText().toString(), email.getText().toString(), age.getText().toString());
                 sendRegister(user);
             }
         });
@@ -73,7 +73,7 @@ public class Register extends AppCompatActivity {
         APIService.postRegister(user).enqueue(new Callback<Post>() {
             @Override
             public void onResponse(Call<Post> call, Response<Post> response) {
-                Toast.makeText(getApplicationContext(), "Register OK", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Register OK "+ response, Toast.LENGTH_LONG).show();
                 finish();
                 // Ver si el usuario esta registrado antes o no y ese percal TODO
             }

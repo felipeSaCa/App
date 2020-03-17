@@ -4,22 +4,26 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Login {
-    @SerializedName("username")
+    @SerializedName("name")
     @Expose
-    private String username;
+    private String name;
     @SerializedName("pHash")
     @Expose
     private String pHash;
 
-    public Login(String username, String pHash) {
-        this.username = username;
+    public Login(String name, String pHash) {
+        this.name = name;
         this.pHash = pHash;
     }
 
-    public String getUsername() { return username;  }
+    public String getUsername() { return name;  }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.name = username;
+    }
+
+    public String toString() {
+        return "Username: " + this.name + " pHash: " + this.pHash;
     }
 
 }

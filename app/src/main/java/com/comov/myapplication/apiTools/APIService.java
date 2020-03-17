@@ -1,4 +1,4 @@
-package com.comov.myapplication.APITools;
+package com.comov.myapplication.apiTools;
 
 import com.comov.myapplication.datamodel.Login;
 import com.comov.myapplication.datamodel.Post;
@@ -31,11 +31,11 @@ public interface APIService {
     Call<Post> newPost(@Body Post myPost);
 
     @Headers("Content-Type: application/json")
-    @POST("/user")
+    @POST("/api/user")
     Call<Post> postRegister (@Body Users myPost);
 
     @Headers("Content-Type: application/json")
-    @POST("/login")
+    @POST("/api/login")
     Call<ResponseBody> postLogin (@Body Login data);
 
 }
