@@ -22,13 +22,11 @@ public class Users implements Serializable
     private String age;
     private final static long serialVersionUID = 6480304755729039345L;
 
-    public Users(String name, String pHash,String email) {
         this.name = name;
         this.pHash = pHash;
         this.email = email;
     }
 
-    public Users(String name, String pHash,String email, String age) {
         this.name = name;
         this.pHash = pHash;
         this.email = email;
