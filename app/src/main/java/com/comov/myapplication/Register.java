@@ -62,6 +62,10 @@ public class Register extends AppCompatActivity {
                     password.requestFocus();
                     return;
                 }
+                Users user;
+                if(age.getText().toString().trim().length() > 0)
+                    user = new Users(name.getText().toString(), password.getText().toString(), email.getText().toString(), age.getText().toString());
+                user = new Users(name.getText().toString(), password.getText().toString(), email.getText().toString());
                 sendRegister(user);
             }
         });
@@ -70,6 +74,12 @@ public class Register extends AppCompatActivity {
         APIService.postRegister(user).enqueue(new Callback<Post>() {
             @Override
             public void onResponse(Call<Post> call, Response<Post> response) {
+                if(response.code() == 401)
+                    Toast.makeText(getApplicationContext(), "User already exists"+ response, Toast.LENGTH_LONG).show();
+                else if (response.code() == 201){
+                    Toast.makeText(getApplicationContext(), "Register OK ", Toast.LENGTH_LONG).show();
+                    finish();
+                }
             }
 
             @Override
