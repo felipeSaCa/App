@@ -59,28 +59,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void sendLogin(Login login) {
-        System.out.println("###### AQUI #######");
         APIService.postLogin(login).enqueue(new Callback<ResponseBody>() {
 
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.code() == 200) {
                     Toast.makeText(getApplicationContext(), "Login OK", Toast.LENGTH_LONG).show();
-                    System.out.println("###### TOKEN 200 #######" + response.toString());
                 }
                 if (response.code() == 404) {
                     Toast.makeText(getApplicationContext(), "User not found", Toast.LENGTH_LONG).show();
-                    System.out.println("###### 404 #######" + response.toString());
                 }
                 if (response.code() == 500) {
                     Toast.makeText(getApplicationContext(), "Server Error", Toast.LENGTH_LONG).show();
-                    System.out.println("###### 500 #######" + response.toString());
                 }
                 Log.e("TOKEN", response.toString());
-                System.out.println("###### OK? #######" + response.toString());
-                // if (response.code() == 201){ }
-                // Ver si el usuario esta registrado antes o no y ese percal TODO
-                // set boolean
+
             }
 
             @Override

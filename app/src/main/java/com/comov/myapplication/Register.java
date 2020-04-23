@@ -62,9 +62,13 @@ public class Register extends AppCompatActivity {
                     password.requestFocus();
                     return;
                 }
-
-                // Hacer comprobación de si ha metido edad o no para usar un constructor u otro TODO
-                Users user = new Users(name.getText().toString(), password.getText().toString(), email.getText().toString(), age.getText().toString());
+                // TODO Cifrar contraseña
+                Users user;
+                if(age.getText().toString().trim().length() > 0) {
+                    user = new Users(name.getText().toString(), password.getText().toString(), email.getText().toString(), age.getText().toString());
+                } else {
+                    user = new Users(name.getText().toString(), password.getText().toString(), email.getText().toString());
+                }
                 sendRegister(user);
             }
         });
@@ -73,9 +77,12 @@ public class Register extends AppCompatActivity {
         APIService.postRegister(user).enqueue(new Callback<Post>() {
             @Override
             public void onResponse(Call<Post> call, Response<Post> response) {
-                Toast.makeText(getApplicationContext(), "Register OK "+ response, Toast.LENGTH_LONG).show();
-                finish();
-                // Ver si el usuario esta registrado antes o no y ese percal TODO
+                if(response.code() == 401)
+                    Toast.makeText(getApplicationContext(), "User already exists", Toast.LENGTH_LONG).show();
+                else if (response.code() == 201){
+                    Toast.makeText(getApplicationContext(), "Register OK ", Toast.LENGTH_LONG).show();
+                    finish();
+                }
             }
 
             @Override
