@@ -14,6 +14,9 @@ import com.comov.myapplication.apiTools.APIUtils;
 import com.comov.myapplication.datamodel.Post;
 import com.comov.myapplication.datamodel.Users;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -62,10 +65,18 @@ public class Register extends AppCompatActivity {
                     password.requestFocus();
                     return;
                 }
-                // TODO Cifrar contraseña
+                MessageDigest auxCipherPassword = null;
+                try {
+                    auxCipherPassword = MessageDigest.getInstance("SHA-256");
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+                auxCipherPassword.update(password.getText().toString().getBytes());
+                String cipherPassword = auxCipherPassword.digest().toString();
+
                 Users user;
                 if(age.getText().toString().trim().length() > 0) {
-                    user = new Users(name.getText().toString(), password.getText().toString(), email.getText().toString(), age.getText().toString());
+                    user = new Users(name.getText().toString(), cipherPassword, email.getText().toString(), age.getText().toString());
                 } else {
                     user = new Users(name.getText().toString(), password.getText().toString(), email.getText().toString());
                 }
