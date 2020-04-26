@@ -12,6 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.comov.myapplication.apiTools.APIUtils;
 import com.comov.myapplication.datamodel.Login;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -52,7 +55,16 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        Login login = new Login(name.getText().toString(), password.getText().toString());
+        MessageDigest auxCipherPassword = null;
+        try {
+            auxCipherPassword = MessageDigest.getInstance("SHA-256");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        auxCipherPassword.update(password.getText().toString().getBytes());
+        String cipherPassword = auxCipherPassword.digest().toString();
+
+        Login login = new Login(name.getText().toString(), cipherPassword);
         sendLogin(login);
         Intent intent = new Intent(MainActivity.this, ChatView.class);
         startActivity(intent);
