@@ -13,13 +13,9 @@ import com.comov.myapplication.apiTools.APIUtils;
 import com.comov.myapplication.datamodel.Login;
 import com.comov.myapplication.datamodel.Token;
 
-<<<<<<< Updated upstream
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import okhttp3.ResponseBody;
-=======
->>>>>>> Stashed changes
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -80,8 +76,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Token> call, Response<Token> response) {
                 if (response.code() == 200) {
-                    Token token = response.body();
-                    Toast.makeText(getApplicationContext(), "Login OK " + response.body().getToken(), Toast.LENGTH_LONG).show();
+                    String token = response.body().getToken();
+                    Toast.makeText(getApplicationContext(), "Login OK " + token, Toast.LENGTH_LONG).show();
                 }
                 if (response.code() == 404) {
                     Toast.makeText(getApplicationContext(), "User not found", Toast.LENGTH_LONG).show();
