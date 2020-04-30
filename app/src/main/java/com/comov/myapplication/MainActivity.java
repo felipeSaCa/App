@@ -11,11 +11,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.comov.myapplication.apiTools.APIUtils;
 import com.comov.myapplication.datamodel.Login;
+import com.comov.myapplication.datamodel.Token;
 
+<<<<<<< Updated upstream
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import okhttp3.ResponseBody;
+=======
+>>>>>>> Stashed changes
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -71,12 +75,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void sendLogin(Login login) {
-        APIService.postLogin(login).enqueue(new Callback<ResponseBody>() {
+        APIService.postLogin(login).enqueue(new Callback<Token>() {
 
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<Token> call, Response<Token> response) {
                 if (response.code() == 200) {
-                    Toast.makeText(getApplicationContext(), "Login OK", Toast.LENGTH_LONG).show();
+                    Token token = response.body();
+                    Toast.makeText(getApplicationContext(), "Login OK " + response.body().getToken(), Toast.LENGTH_LONG).show();
                 }
                 if (response.code() == 404) {
                     Toast.makeText(getApplicationContext(), "User not found", Toast.LENGTH_LONG).show();
@@ -85,11 +90,10 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Server Error", Toast.LENGTH_LONG).show();
                 }
                 Log.e("TOKEN", response.toString());
-
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<Token> call, Throwable t) {
 
                 System.out.println("###### Fail ####### " + call + "  " + t);
                 call.cancel();

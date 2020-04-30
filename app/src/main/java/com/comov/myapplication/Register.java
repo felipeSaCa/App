@@ -98,7 +98,7 @@ public class Register extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Post> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Register NOT OK "+t, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Register NOT OK " + t, Toast.LENGTH_LONG).show();
                 //Manejar error TODO if (response.code() == ??? )
             }
         });

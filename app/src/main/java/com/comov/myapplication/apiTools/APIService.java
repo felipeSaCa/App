@@ -2,11 +2,11 @@ package com.comov.myapplication.apiTools;
 
 import com.comov.myapplication.datamodel.Login;
 import com.comov.myapplication.datamodel.Post;
+import com.comov.myapplication.datamodel.Token;
 import com.comov.myapplication.datamodel.Users;
 
 import java.util.List;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -36,7 +36,7 @@ public interface APIService {
 
     @Headers("Content-Type: application/json")
     @POST("/api/login")
-    Call<ResponseBody> postLogin (@Body Login data);
+    Call<Token> postLogin (@Body Login data);
 
 }
 
