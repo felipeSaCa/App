@@ -65,18 +65,18 @@ public class Register extends AppCompatActivity {
                     password.requestFocus();
                     return;
                 }
-                MessageDigest auxCipherPassword = null;
+                /*MessageDigest auxCipherPassword = null;
                 try {
                     auxCipherPassword = MessageDigest.getInstance("SHA-256");
                 } catch (NoSuchAlgorithmException e) {
                     e.printStackTrace();
                 }
-                auxCipherPassword.update(password.getText().toString().getBytes());
-                String cipherPassword = auxCipherPassword.digest().toString();
+                //auxCipherPassword.update(password.getText().toString().getBytes());
+                String cipherPassword = auxCipherPassword.digest(password.getText().toString().getBytes()).toString();*/
 
                 Users user;
                 if(age.getText().toString().trim().length() > 0) {
-                    user = new Users(name.getText().toString(), cipherPassword, email.getText().toString(), age.getText().toString());
+                    user = new Users(name.getText().toString(), password.getText().toString(), email.getText().toString(), age.getText().toString());
                 } else {
                     user = new Users(name.getText().toString(), password.getText().toString(), email.getText().toString());
                 }

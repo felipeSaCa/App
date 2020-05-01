@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="4dp"
+        android:id="@+id/sentTxt"
+        android:layout_marginBottom="4dp"
+        android:layout_marginStart="40dp"
+        android:padding="8dp"
+        android:textSize="16dp"
+        android:text="Sample of text"
+        android:background="#cccc"
+
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/sentTxt"
+        android:id="@+id/dateText"
+        android:text="18:43"
+        />
+
+</RelativeLayout>

@@ -55,16 +55,16 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        MessageDigest auxCipherPassword = null;
+        /*MessageDigest auxCipherPassword = null;
         try {
             auxCipherPassword = MessageDigest.getInstance("SHA-256");
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-        auxCipherPassword.update(password.getText().toString().getBytes());
-        String cipherPassword = auxCipherPassword.digest().toString();
+        //auxCipherPassword.update(password.getText().toString().getBytes());
+        String cipherPassword = auxCipherPassword.digest(password.getText().toString().getBytes()).toString();*/
 
-        Login login = new Login(name.getText().toString(), cipherPassword);
+        Login login = new Login(name.getText().toString(),password.getText().toString());
         sendLogin(login);
         Intent intent = new Intent(MainActivity.this, ChatView.class);
         startActivity(intent);
