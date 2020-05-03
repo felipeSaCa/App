@@ -9,6 +9,10 @@ public class Token implements Serializable {
     @SerializedName("token")
     @Expose
     private String token;
+    @SerializedName("name")
+    @Expose
+    private String name;
+
 
     public Token(String token) {
         this.token = token;
@@ -22,4 +26,11 @@ public class Token implements Serializable {
         this.token = token;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

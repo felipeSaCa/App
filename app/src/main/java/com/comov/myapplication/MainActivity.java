@@ -66,8 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
         Login login = new Login(name.getText().toString(),password.getText().toString());
         sendLogin(login);
-        Intent intent = new Intent(MainActivity.this, ChatView.class);
-        startActivity(intent);
+
     }
 
     public void sendLogin(Login login) {
@@ -77,7 +76,9 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<Token> call, Response<Token> response) {
                 if (response.code() == 200) {
                     String token = response.body().getToken();
-                    Toast.makeText(getApplicationContext(), "Login OK " + token, Toast.LENGTH_LONG).show();
+                    String named = response.body().getName();
+                    Toast.makeText(getApplicationContext(), "Login OK " + token + " " + named, Toast.LENGTH_LONG).show();
+                    openChatView(named);
                 }
                 if (response.code() == 404) {
                     Toast.makeText(getApplicationContext(), "User not found", Toast.LENGTH_LONG).show();
@@ -101,6 +102,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void openRegister(View v) {
         Intent intent = new Intent(MainActivity.this, Register.class);
+        startActivity(intent);
+    }
+
+    public void openChatView(String name){
+        Intent intent = new Intent(MainActivity.this, ChatView.class);
+        intent.putExtra("name", name);
         startActivity(intent);
     }
 }
