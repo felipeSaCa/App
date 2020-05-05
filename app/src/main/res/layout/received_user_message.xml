@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/receivedTxt"
         android:layout_alignBottom="@id/receivedTxt"
-        android:id="@+id/dateText"
+        android:id="@+id/dateReceivedTextPrivate"
         android:text="18:43"
 
         />
