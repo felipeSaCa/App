@@ -13,9 +13,6 @@ import com.comov.myapplication.apiTools.APIUtils;
 import com.comov.myapplication.datamodel.Login;
 import com.comov.myapplication.datamodel.Token;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -78,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                     String token = response.body().getToken();
                     String named = response.body().getName();
                     Toast.makeText(getApplicationContext(), "Login OK " + token + " " + named, Toast.LENGTH_LONG).show();
-                    openChatView(named);
+                    openMainView(named);
                 }
                 if (response.code() == 404) {
                     Toast.makeText(getApplicationContext(), "User not found", Toast.LENGTH_LONG).show();
@@ -105,8 +102,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void openChatView(String name){
-        Intent intent = new Intent(MainActivity.this, ChatView.class);
+    public void openMainView(String name){
+        Intent intent = new Intent(MainActivity.this, MainView.class);
         intent.putExtra("name", name);
         startActivity(intent);
     }

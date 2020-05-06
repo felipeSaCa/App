@@ -22,6 +22,8 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".Register" android:parentActivityName=".MainActivity" />
         <activity android:name=".ChatView" android:parentActivityName=".MainActivity" />
+        <activity android:name=".AddChatView" android:parentActivityName=".AddChatView" />
+        <activity android:name=".MainView" android:parentActivityName=".MainView" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

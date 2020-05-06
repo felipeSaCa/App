@@ -27,7 +27,9 @@
         android:layout_width="77dp"
         android:layout_height="72dp"
         android:layout_alignParentRight="true"
+        android:background="@drawable/buttonround"
         android:text="ADD CHAT"
+        android:onClick="openAddChat"
         tools:layout_editor_absoluteX="318dp"
         tools:layout_editor_absoluteY="84dp" />
 
