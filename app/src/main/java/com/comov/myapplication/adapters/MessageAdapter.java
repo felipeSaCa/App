@@ -48,10 +48,11 @@ public class MessageAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Message message = messages.get(position);
-        if(holder instanceof ViewHolderOwnMessage){
+        int type = getItemViewType(position);
+        if(type == MESSAGE_SENT){
             //TODO
         }
-        else if(holder instanceof  ViewHolderPrivateMessage){
+        else if(type == PRIVATE_MESSAGE_RECEIVED){
             //TODO
         }
         else{ //ViewHolderGroupMessage

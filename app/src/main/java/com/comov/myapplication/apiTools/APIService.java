@@ -1,6 +1,7 @@
 package com.comov.myapplication.apiTools;
 
 import com.comov.myapplication.datamodel.Login;
+import com.comov.myapplication.datamodel.Message;
 import com.comov.myapplication.datamodel.Post;
 import com.comov.myapplication.datamodel.Token;
 import com.comov.myapplication.datamodel.Users;
@@ -37,6 +38,14 @@ public interface APIService {
     @Headers("Content-Type: application/json")
     @POST("/api/login")
     Call<Token> postLogin (@Body Login data);
+
+    @Headers("Content-Type: application/json")
+    @POST("/api/message")
+    Call<Message> postMessage(@Body Message myMessage);
+
+    @Headers("Content-Type: application/json")
+    @GET("/api/message")
+    Call<Message> getMessage(@Body Message messages);
 
 }
 
