@@ -10,6 +10,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface APIService {
 
@@ -29,7 +30,7 @@ public interface APIService {
 
     @Headers("Content-Type: application/json")
     @POST("/api/user")
-    Call<Post> postRegister (@Body Users myPost);
+    Call<Post> postRegister (@Body Users myUsers);
 
     @Headers("Content-Type: application/json")
     @POST("/api/login")
@@ -47,9 +48,8 @@ public interface APIService {
     @POST("/api/channel")
     Call<Post> postChannel(@Body Channel myChannel);
 
-    @Headers("Content-Type: application/json")
     @GET("/api/channel")
-    Call<Channel> getChannel(@Body Channel channels);
+    Call<Channels> getChannel(@Query("username") String username);
 
 }
 

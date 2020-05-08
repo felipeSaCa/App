@@ -2,7 +2,6 @@ package com.comov.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -68,22 +67,20 @@ public class MainActivity extends AppCompatActivity {
 
     public void sendLogin(Login login) {
         APIService.postLogin(login).enqueue(new Callback<Token>() {
-
             @Override
             public void onResponse(Call<Token> call, Response<Token> response) {
                 if (response.code() == 200) {
                     String token = response.body().getToken();
                     String named = response.body().getName();
-                    Toast.makeText(getApplicationContext(), "Login OK " + token + " " + named, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Login OK HAY QUE PASAR EL TOKEN TAMBIEN A LA SIGUIENTE VIEW " + named, Toast.LENGTH_LONG).show();
                     openMainView(named);
                 }
-                if (response.code() == 404) {
+                else if (response.code() == 404 || response.code() == 403) {
                     Toast.makeText(getApplicationContext(), "User not found", Toast.LENGTH_LONG).show();
                 }
                 if (response.code() == 500) {
                     Toast.makeText(getApplicationContext(), "Server Error", Toast.LENGTH_LONG).show();
                 }
-                Log.e("TOKEN", response.toString());
             }
 
             @Override

@@ -43,7 +43,9 @@ public class AddChatView extends AppCompatActivity{
                     usuarios.requestFocus();
                     return;
                 }
-                Channel channel = new Channel(title.getText().toString(), usuarios.getText().toString(), title.getText().toString());
+                String[] users = usuarios.getText().toString().split(",");
+                System.out.println("################  "+users);
+                Channel channel = new Channel(title.getText().toString(), users, title.getText().toString());
                 addChannel(channel);
             }
         });

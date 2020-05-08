@@ -12,17 +12,17 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="240dp"
+        android:layout_marginTop="180dp"
         android:layout_marginEnd="50dp"
         android:backgroundTint="@color/colorPrimary"
         android:ems="10"
-        android:hint="Title"
+        android:hint="@string/editTitle"
         android:inputType="textPersonName"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,16 +34,17 @@
         android:layout_marginEnd="50dp"
         android:backgroundTint="@color/colorPrimary"
         android:ems="10"
-        android:hint="Users"
+        android:hint="@string/editUsuarios"
         android:inputType="textPersonName"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/btnAddChannel"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/editTitle"
+        app:layout_constraintVertical_bias="0.329" />
 
     <Button
         android:id="@+id/btnAddChannel"
@@ -54,12 +55,26 @@
         android:layout_marginBottom="176dp"
         android:background="@drawable/buttonround"
         android:onClick="addChannel"
-        android:text="AddChannel"
+        android:text="@string/btnAddChannel"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="Add Channel" />/>
+        tools:text="@string/btnAddChannel" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:text="Separa a los usuarios por , "
+        android:textSize="18sp"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintBottom_toTopOf="@+id/btnAddChannel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editUsuarios" />/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

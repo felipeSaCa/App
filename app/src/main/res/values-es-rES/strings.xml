@@ -10,4 +10,7 @@
     <string name="editAgeRegister">Edad</string>
     <string name="editTextOptional">Opcional</string>
     <string name="editWriteAMessage">Escribe un mensaje</string>
+    <string name="editTitle">Titulo</string>
+    <string name="editUsuarios">Usuarios</string>
+    <string name="btnAddChannel">Añadir canal</string>
 </resources>

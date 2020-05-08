@@ -4,10 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.comov.myapplication.apiTools.APIUtils;
+import com.comov.myapplication.datamodel.Channels;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainView extends AppCompatActivity {
     private com.comov.myapplication.apiTools.APIService APIService;
@@ -25,6 +31,29 @@ public class MainView extends AppCompatActivity {
         TextView nameTxt = findViewById(R.id.user_name);
         String finalTxt = "Hi "+username;
         nameTxt.setText(finalTxt);
+
+        //Get Channels
+        getChannelsFromUser(username);
+    }
+
+    public void getChannelsFromUser(String user){
+        APIService.getChannel(user).enqueue(new Callback<Channels>(){
+            @Override
+            public void onResponse(Call<Channels> call, Response<Channels> response) {
+                if (response.code() == 200) {
+                    Toast.makeText(getApplicationContext(), "Got chats", Toast.LENGTH_LONG).show();
+                    Channels channels = response.body();
+                    System.out.println(response.body() + " #############################" + channels.getChannels());
+                } else if (response.code() == 404 )
+                    Toast.makeText(getApplicationContext(), "Chats not found. Tu princesa esta en otro castillo." +
+                            "", Toast.LENGTH_LONG).show();
+            }
+            @Override
+            public void onFailure(Call<Channels> call, Throwable t){
+                Toast.makeText(getApplicationContext(), "Fail "+ t, Toast.LENGTH_LONG).show();
+                System.out.println(t + " #######################################################################");
+            }
+        });
     }
 
     public void openAddChat(View v) {
