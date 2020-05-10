@@ -20,12 +20,16 @@ public class Message implements Serializable {
     @SerializedName("uid")
     @Expose
     private String uid;
+    @SerializedName("channel")
+    @Expose
+    private String channel;
 
-    public Message(String title, Date date, String body, String uid) {
+    public Message(String title, Date date, String body, String uid, String channel) {
         this.title = title;
         this.date = date;
         this.body = body;
         this.uid = uid;
+        this.channel = channel;
     }
 
     public String getTitle() {
@@ -58,6 +62,12 @@ public class Message implements Serializable {
 
     public void setUid(String uid) {
         this.uid = uid;
+    }
+
+    public String getChannel() { return channel; }
+
+    public void setChannel(String channel) {
+        this.channel = channel;
     }
 
     public int getNumberListeners(){

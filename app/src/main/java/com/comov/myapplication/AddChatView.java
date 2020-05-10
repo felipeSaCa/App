@@ -12,6 +12,9 @@ import com.comov.myapplication.apiTools.APIUtils;
 import com.comov.myapplication.datamodel.Channel;
 import com.comov.myapplication.datamodel.Post;
 
+import java.util.Arrays;
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -43,7 +46,8 @@ public class AddChatView extends AppCompatActivity{
                     usuarios.requestFocus();
                     return;
                 }
-                String[] users = usuarios.getText().toString().split(",");
+
+                List<String> users = Arrays.asList(usuarios.getText().toString().split(","));
                 System.out.println("################  "+users);
                 Channel channel = new Channel(title.getText().toString(), users, title.getText().toString());
                 addChannel(channel);

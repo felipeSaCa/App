@@ -4,21 +4,20 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Channel implements Serializable {
     @SerializedName("title")
     @Expose
     private String title;
-
     @SerializedName("usuarios")
     @Expose
-    private String[] usuarios;
-
+    private List<String> usuarios;
     @SerializedName("uid")
     @Expose
     private String uid;
 
-    public Channel(String title, String[] usuarios, String uid) {
+    public Channel(String title, List<String> usuarios, String uid) {
         this.title = title;
         this.usuarios = usuarios;
         this.uid = uid;
@@ -32,11 +31,11 @@ public class Channel implements Serializable {
         this.title = title;
     }
 
-    public String[] getUsuarios() {
+    public List<String> getUsuarios() {
         return usuarios;
     }
 
-    public void setUsuarios(String[] usuarios) {
+    public void setUsuarios(List<String> usuarios) {
         this.usuarios = usuarios;
     }
 

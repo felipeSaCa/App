@@ -9,7 +9,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.comov.myapplication.apiTools.APIUtils;
-import com.comov.myapplication.datamodel.Channels;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,19 +38,22 @@ public class MainView extends AppCompatActivity {
     }
 
     public void getChannelsFromUser(String user){
-        APIService.getChannel(user).enqueue(new Callback<Channels>(){
+        APIService.getChannel(user).enqueue(new Callback<JsonObject>(){
             @Override
-            public void onResponse(Call<Channels> call, Response<Channels> response) {
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.code() == 200) {
                     Toast.makeText(getApplicationContext(), "Got chats", Toast.LENGTH_LONG).show();
-                    Channels channels = response.body();
-                    System.out.println(response.body() + " #############################" + channels.getChannels());
+                    System.out.println(response.body() + " \n#############################" );
+                    System.out.println(response.body().get("ChannelsObj"));
+                    JsonArray channels = (JsonArray) response.body().get("ChannelsObj");
+
+                    //System.out.println(channels[0]);
                 } else if (response.code() == 404 )
                     Toast.makeText(getApplicationContext(), "Chats not found. Tu princesa esta en otro castillo." +
                             "", Toast.LENGTH_LONG).show();
             }
             @Override
-            public void onFailure(Call<Channels> call, Throwable t){
+            public void onFailure(Call<JsonObject> call, Throwable t){
                 Toast.makeText(getApplicationContext(), "Fail "+ t, Toast.LENGTH_LONG).show();
                 System.out.println(t + " #######################################################################");
             }
