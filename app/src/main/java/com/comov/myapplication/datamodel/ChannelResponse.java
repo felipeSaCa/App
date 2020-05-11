@@ -6,8 +6,8 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.List;
 
-public class Channels implements Serializable {
-    @SerializedName("data")
+public class ChannelResponse implements Serializable {
+    @SerializedName("ChannelsObj")
     @Expose
     private List<Channel> channels;
 

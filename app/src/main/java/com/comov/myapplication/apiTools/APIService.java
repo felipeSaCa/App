@@ -1,12 +1,12 @@
 package com.comov.myapplication.apiTools;
 
 import com.comov.myapplication.datamodel.Channel;
+import com.comov.myapplication.datamodel.ChannelResponse;
 import com.comov.myapplication.datamodel.Login;
 import com.comov.myapplication.datamodel.Message;
 import com.comov.myapplication.datamodel.Post;
 import com.comov.myapplication.datamodel.Token;
 import com.comov.myapplication.datamodel.Users;
-import com.google.gson.JsonObject;
 
 import java.util.List;
 
@@ -54,7 +54,7 @@ public interface APIService {
     Call<Post> postChannel(@Body Channel myChannel);
 
     @GET("/api/channel")
-    Call<JsonObject> getChannel(@Query("username") String username);
+    Call<ChannelResponse> getChannel(@Query("username") String username);
 
 }
 

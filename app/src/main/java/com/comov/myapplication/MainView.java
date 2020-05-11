@@ -9,8 +9,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.comov.myapplication.apiTools.APIUtils;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+import com.comov.myapplication.datamodel.*;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,22 +39,29 @@ public class MainView extends AppCompatActivity {
     }
 
     public void getChannelsFromUser(String user){
-        APIService.getChannel(user).enqueue(new Callback<JsonObject>(){
+        APIService.getChannel(user).enqueue(new Callback<ChannelResponse>(){
             @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+            public void onResponse(Call<ChannelResponse> call, Response<ChannelResponse> response) {
                 if (response.code() == 200) {
                     Toast.makeText(getApplicationContext(), "Got chats", Toast.LENGTH_LONG).show();
-                    System.out.println(response.body() + " \n#############################" );
-                    System.out.println(response.body().get("ChannelsObj"));
-                    JsonArray channels = (JsonArray) response.body().get("ChannelsObj");
-
-                    //System.out.println(channels[0]);
+                    /*System.out.println(response.body() + " \n#############################" );
+                    JsonArray channels = (JsonArray) response.body().getAsJsonArray("ChannelsObj");
+                    System.out.println(channels.get(0)+ " \n" + channels.get(1)+ " \n" +channels.get(2)+ " \n#############################" );
+                    System.out.println(channels.size()+ "  SIZE  \n#############################" );
+                    //for ( int i < channels.size() )
+                    JsonObject aux = channels.get(0).getAsJsonObject();
+                    System.out.println(aux.get("uid") + " -> uid\n" + aux.get("title") + " -> title\n" + aux.get("usuarios") + " -> usuarios\n#############################");
+                    */
+                    List<Channel> channels = response.body().getChannels();
+                    channels.get(0);
+                    System.out.println(channels.get(0).getTitle() + " \n#############################");
+                    System.out.println(response.toString()+ " \n#############################");
                 } else if (response.code() == 404 )
                     Toast.makeText(getApplicationContext(), "Chats not found. Tu princesa esta en otro castillo." +
                             "", Toast.LENGTH_LONG).show();
             }
             @Override
-            public void onFailure(Call<JsonObject> call, Throwable t){
+            public void onFailure(Call<ChannelResponse> call, Throwable t){
                 Toast.makeText(getApplicationContext(), "Fail "+ t, Toast.LENGTH_LONG).show();
                 System.out.println(t + " #######################################################################");
             }
