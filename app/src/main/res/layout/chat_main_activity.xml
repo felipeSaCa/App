@@ -16,8 +16,10 @@
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/channelsList"
         android:layout_width="417dp"
         android:layout_height="660dp"
+        android:layout_below="@id/add_chat"
         android:layout_alignParentBottom="true"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="70dp" />
