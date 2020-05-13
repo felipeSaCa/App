@@ -17,21 +17,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ViewHolderChannel>{
-    ArrayList<Channel> channels;
+    private ArrayList<Channel> channels;
+    private ChannelListener listener;
 
-    public ChannelAdapter(List<Channel> channels){
+    public ChannelAdapter(List<Channel> channels, ChannelListener listener){
         this.channels = new ArrayList<Channel>();
         this.channels.addAll(channels);
+        this.listener = listener;
 
     }
 
-    public class ViewHolderChannel extends RecyclerView.ViewHolder{
+    public class ViewHolderChannel extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView title;
 
         public ViewHolderChannel(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.titleChannel);
+            itemView.setOnClickListener(this);
         }
 
         public TextView getTitle() {
@@ -40,6 +43,12 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ViewHold
 
         public void setTitle(String title) {
             this.title.setText(title);
+        }
+
+        @Override
+        public void onClick(View v) {
+            System.out.println("Pinchamos canal "+ getAdapterPosition());
+            listener.onClickChannel(channels.get(getAdapterPosition()));
         }
     }
 
@@ -64,8 +73,9 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ViewHold
     }
 
 
-
-
+    public interface ChannelListener{
+        void onClickChannel(Channel channel);
+    }
 
 
 }

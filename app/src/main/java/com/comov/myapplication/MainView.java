@@ -23,11 +23,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainView extends AppCompatActivity {
+public class MainView extends AppCompatActivity implements ChannelAdapter.ChannelListener {
     private com.comov.myapplication.apiTools.APIService APIService;
     List<Channel> channels;
     List<Channel> prueba;
     RecyclerView recyclerViewChannel;
+    String username;
+    MainView mainView;
     //private EditText message;
     //private Button btnSend;
 
@@ -37,13 +39,14 @@ public class MainView extends AppCompatActivity {
         setContentView(R.layout.chat_main_activity);
         APIService = APIUtils.getAPIService();
         //obtener con getIntent() los parametros de login obtenidos
-        String username = getIntent().getStringExtra("name");
+        username = getIntent().getStringExtra("name");
         TextView nameTxt = findViewById(R.id.user_name);
         String finalTxt = "Hi "+username;
         nameTxt.setText(finalTxt);
         channels = new ArrayList<Channel>();
         //Get Channels
         getChannelsFromUser(username);
+        mainView = this;
 
         //Init recycler
         prueba = new ArrayList<Channel>();
@@ -51,15 +54,7 @@ public class MainView extends AppCompatActivity {
             prueba.add( new Channel("Channel " +i,null,"wtf"));
         }
 
-        System.out.println("Peta 1");
-        recyclerViewChannel = findViewById(R.id.channelsList);
-        System.out.println("Peta 2");
-        ChannelAdapter channelAdapter = new ChannelAdapter(prueba);
-        System.out.println("Peta 3");
-        recyclerViewChannel.setAdapter(channelAdapter);
-        System.out.println("Peta 4");
-        recyclerViewChannel.setLayoutManager(new LinearLayoutManager(this));
-        System.out.println("Por que no pinta?");
+
 
     }
 
@@ -74,6 +69,15 @@ public class MainView extends AppCompatActivity {
                     channels.get(0);
                     System.out.println(channels.get(0).getTitle() + " \n#############################");
                     System.out.println(response.toString()+ " \n#############################");
+                    System.out.println("Peta 1");
+                    recyclerViewChannel = findViewById(R.id.channelsList);
+                    System.out.println("Peta 2");
+                    ChannelAdapter channelAdapter = new ChannelAdapter(channels,mainView);
+                    System.out.println("Peta 3");
+                    recyclerViewChannel.setAdapter(channelAdapter);
+                    System.out.println("Peta 4");
+                    recyclerViewChannel.setLayoutManager(new LinearLayoutManager(mainView));
+                    System.out.println("Por que no pinta?");
 
                 } else if (response.code() == 404 )
                     Toast.makeText(getApplicationContext(), "Chats not found. Tu princesa esta en otro castillo." +
@@ -94,10 +98,16 @@ public class MainView extends AppCompatActivity {
         startActivity(intent);
     }
 
-
-
-
-
-
-
+    /**
+     * Listener implementado para diferenciar canales
+     * @param channel
+     */
+    @Override
+    public void onClickChannel(Channel channel) {
+        Intent intent = new Intent(this, ChatView.class);
+        intent.putExtra("username", username);
+        intent.putExtra("channelID", channel.getUid());
+        intent.putExtra("title", channel.getTitle());
+        startActivity(intent);
+    }
 }
