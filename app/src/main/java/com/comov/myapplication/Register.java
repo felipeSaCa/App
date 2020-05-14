@@ -14,9 +14,6 @@ import com.comov.myapplication.apiTools.APIUtils;
 import com.comov.myapplication.datamodel.Post;
 import com.comov.myapplication.datamodel.Users;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -89,7 +86,7 @@ public class Register extends AppCompatActivity {
             @Override
             public void onResponse(Call<Post> call, Response<Post> response) {
                 if(response.code() == 401)
-                    Toast.makeText(getApplicationContext(), "User already exists", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "User already exists " + response.body().getId(), Toast.LENGTH_LONG).show();
                 else if (response.code() == 201){
                     Toast.makeText(getApplicationContext(), "Register OK ", Toast.LENGTH_LONG).show();
                     finish();

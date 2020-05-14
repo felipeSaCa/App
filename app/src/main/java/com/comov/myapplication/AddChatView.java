@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.comov.myapplication.apiTools.APIUtils;
 import com.comov.myapplication.datamodel.Channel;
-import com.comov.myapplication.datamodel.Post;
 
 import java.util.Arrays;
 import java.util.List;
@@ -49,28 +48,28 @@ public class AddChatView extends AppCompatActivity{
 
                 List<String> users = Arrays.asList(usuarios.getText().toString().split(","));
                 System.out.println("################  "+users);
-                Channel channel = new Channel(title.getText().toString(), users, title.getText().toString());
+                Channel channel = new Channel(title.getText().toString(), users, "");
                 addChannel(channel);
             }
         });
     }
 
     public void addChannel(Channel channel) {
-        APIService.postChannel(channel).enqueue(new Callback<Post>() {
+        APIService.postChannel(channel).enqueue(new Callback<Channel>() {
             @Override
-            public void onResponse(Call<Post> call, Response<Post> response) {
+            public void onResponse(Call<Channel> call, Response<Channel> response) {
                 System.out.println(response.code() + response.toString() );
                 if (response.code() == 201){
-                    Toast.makeText(getApplicationContext(), "Added Chat 201", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Added Chat 201: ", Toast.LENGTH_LONG).show();
+                    System.out.println("####################################### "+ response.body().toString());
                     finish();
                 }
                 else if (response.code() == 500){
                     Toast.makeText(getApplicationContext(), "500", Toast.LENGTH_LONG).show();
                 }
             }
-
             @Override
-            public void onFailure(Call<Post> call, Throwable t) {
+            public void onFailure(Call<Channel> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "Register NOT OK " + t, Toast.LENGTH_LONG).show();
                 //Manejar error TODO if (response.code() == ??? )
             }

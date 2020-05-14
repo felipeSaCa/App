@@ -49,20 +49,16 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
         mainView = this;
 
         //Init recycler
-        prueba = new ArrayList<Channel>();
+        prueba = new ArrayList<Channel>(); //TODO Eliminar
         for (int i=0;i<10;i++){
-            prueba.add( new Channel("Channel " +i,null,"wtf"));
+            prueba.add( new Channel("Channel " +i,null,""));
         }
-
-
-
     }
 
     public void getChannelsFromUser(String user){
-
         APIService.getChannel(user).enqueue(new Callback<ChannelResponse>(){
             @Override
-            public void onResponse(Call<ChannelResponse> call, Response<ChannelResponse> response) {
+            public void onResponse(Call<ChannelResponse> call, Response<ChannelResponse> response) { //TODO Quitar system.out
                 if (response.code() == 200) {
                     Toast.makeText(getApplicationContext(), "Got chats", Toast.LENGTH_LONG).show();
                     channels = response.body().getChannels();
@@ -106,7 +102,7 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
     public void onClickChannel(Channel channel) {
         Intent intent = new Intent(this, ChatView.class);
         intent.putExtra("username", username);
-        intent.putExtra("channelID", channel.getUid());
+        intent.putExtra("channelID", channel.getId());
         intent.putExtra("title", channel.getTitle());
         startActivity(intent);
     }

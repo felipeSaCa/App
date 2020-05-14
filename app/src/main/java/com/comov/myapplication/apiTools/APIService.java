@@ -51,7 +51,7 @@ public interface APIService {
 
     @Headers("Content-Type: application/json")
     @POST("/api/channel")
-    Call<Post> postChannel(@Body Channel myChannel);
+    Call<Channel> postChannel(@Body Channel myChannel);
 
     @GET("/api/channel")
     Call<ChannelResponse> getChannel(@Query("username") String username);

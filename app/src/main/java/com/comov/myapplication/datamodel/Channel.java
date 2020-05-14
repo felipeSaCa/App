@@ -39,11 +39,7 @@ public class Channel implements Serializable {
         this.usuarios = usuarios;
     }
 
-    public String getUid() {
+    public String getId() {
         return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
     }
 }
