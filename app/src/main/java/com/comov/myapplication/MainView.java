@@ -62,18 +62,11 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
                 if (response.code() == 200) {
                     Toast.makeText(getApplicationContext(), "Got chats", Toast.LENGTH_LONG).show();
                     channels = response.body().getChannels();
-                    channels.get(0);
-                    System.out.println(channels.get(0).getTitle() + " \n#############################");
-                    System.out.println(response.toString()+ " \n#############################");
-                    System.out.println("Peta 1");
+
                     recyclerViewChannel = findViewById(R.id.channelsList);
-                    System.out.println("Peta 2");
                     ChannelAdapter channelAdapter = new ChannelAdapter(channels,mainView);
-                    System.out.println("Peta 3");
                     recyclerViewChannel.setAdapter(channelAdapter);
-                    System.out.println("Peta 4");
                     recyclerViewChannel.setLayoutManager(new LinearLayoutManager(mainView));
-                    System.out.println("Por que no pinta?");
 
                 } else if (response.code() == 404 )
                     Toast.makeText(getApplicationContext(), "Chats not found. Tu princesa esta en otro castillo." +

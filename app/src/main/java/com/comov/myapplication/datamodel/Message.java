@@ -13,23 +13,19 @@ public class Message implements Serializable {
     @SerializedName("date")
     @Expose
     private Date date;
-    @SerializedName("body")
+    @SerializedName("username")
     @Expose
-    private String body;
+    private String username;
 
     @SerializedName("uid")
     @Expose
     private String uid;
-    @SerializedName("channel")
-    @Expose
-    private String channel;
 
-    public Message(String title, Date date, String body, String uid, String channel) {
+    public Message(String title, Date date, String username, String uidChannel) {
         this.title = title;
         this.date = date;
-        this.body = body;
-        this.uid = uid;
-        this.channel = channel;
+        this.username = username;
+        this.uid = uidChannel;
     }
 
     public String getTitle() {
@@ -48,12 +44,12 @@ public class Message implements Serializable {
         this.date = date;
     }
 
-    public String getBody() {
-        return body;
+    public String getUsername() {
+        return username;
     }
 
-    public void setBody(String body) {
-        this.body = body;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getUid() {
@@ -62,12 +58,6 @@ public class Message implements Serializable {
 
     public void setUid(String uid) {
         this.uid = uid;
-    }
-
-    public String getChannel() { return channel; }
-
-    public void setChannel(String channel) {
-        this.channel = channel;
     }
 
     public int getNumberListeners(){
