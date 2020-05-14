@@ -48,7 +48,7 @@ public class AddChatView extends AppCompatActivity{
 
                 List<String> users = Arrays.asList(usuarios.getText().toString().split(","));
                 System.out.println("################  "+users);
-                Channel channel = new Channel(title.getText().toString(), users, "");
+                Channel channel = new Channel(title.getText().toString(), users);
                 addChannel(channel);
             }
         });
@@ -61,7 +61,7 @@ public class AddChatView extends AppCompatActivity{
                 System.out.println(response.code() + response.toString() );
                 if (response.code() == 201){
                     Toast.makeText(getApplicationContext(), "Added Chat 201: ", Toast.LENGTH_LONG).show();
-                    System.out.println("####################################### "+ response.body().toString());
+                    System.out.println("####################################### "+ response.body().get_id());
                     finish();
                 }
                 else if (response.code() == 500){

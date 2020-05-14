@@ -51,7 +51,7 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
         //Init recycler
         prueba = new ArrayList<Channel>(); //TODO Eliminar
         for (int i=0;i<10;i++){
-            prueba.add( new Channel("Channel " +i,null,""));
+            prueba.add( new Channel("Channel " +i,null));
         }
     }
 
@@ -62,7 +62,8 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
                 if (response.code() == 200) {
                     Toast.makeText(getApplicationContext(), "Got chats", Toast.LENGTH_LONG).show();
                     channels = response.body().getChannels();
-
+                    System.out.println(response.body().getChannels().toString());
+                    System.out.println(channels.get(0).getTitle() + "##############################\n" + channels.get(0).get_id().toString() + "##############################\n");
                     recyclerViewChannel = findViewById(R.id.channelsList);
                     ChannelAdapter channelAdapter = new ChannelAdapter(channels,mainView);
                     recyclerViewChannel.setAdapter(channelAdapter);
@@ -95,7 +96,7 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
     public void onClickChannel(Channel channel) {
         Intent intent = new Intent(this, ChatView.class);
         intent.putExtra("username", username);
-        intent.putExtra("channelID", channel.getId());
+        intent.putExtra("channelID", channel.get_id());
         intent.putExtra("title", channel.getTitle());
         startActivity(intent);
     }

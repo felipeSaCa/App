@@ -3,8 +3,10 @@ package com.comov.myapplication.datamodel;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.bson.types.ObjectId;
 import java.io.Serializable;
 import java.util.List;
+
 
 public class Channel implements Serializable {
     @SerializedName("title")
@@ -13,14 +15,13 @@ public class Channel implements Serializable {
     @SerializedName("usuarios")
     @Expose
     private List<String> usuarios;
-    @SerializedName("uid")
+    @SerializedName("_id")
     @Expose
-    private String uid;
+    private String _id;
 
-    public Channel(String title, List<String> usuarios, String uid) {
+    public Channel(String title, List<String> usuarios) {
         this.title = title;
         this.usuarios = usuarios;
-        this.uid = uid;
     }
 
     public String getTitle() {
@@ -39,7 +40,7 @@ public class Channel implements Serializable {
         this.usuarios = usuarios;
     }
 
-    public String getId() {
-        return uid;
+    public String get_id() {
+        return _id;
     }
 }
