@@ -19,14 +19,17 @@ public class ChatView extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_chat);
         APIservice = APIUtils.getAPIService();
         username = getIntent().getStringExtra("username");
         channelID = getIntent().getStringExtra("channelID");
         title = getIntent().getStringExtra("title");
+
+        String titleToText = title;
         TextView titleText = findViewById(R.id.titleChannel);
-        titleText.setText(title);
+        titleText.setText(titleToText);
         //TODO habria que recibir la lista de mensajes(tanto interno como externo), asi como los que componen el chat
-        setContentView(R.layout.activity_chat);
+
 
     }
 }
