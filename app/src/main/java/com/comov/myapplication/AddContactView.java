@@ -9,7 +9,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.comov.myapplication.apiTools.APIUtils;
-import com.comov.myapplication.datamodel.Channel;
 import com.comov.myapplication.datamodel.Login;
 import com.comov.myapplication.datamodel.Post;
 
@@ -26,18 +25,18 @@ public class AddContactView extends AppCompatActivity {
         setContentView(R.layout.activity_add_channel);
         APIService = APIUtils.getAPIService();
 
-        final EditText contact = (EditText) findViewById(R.id.editAddContact);
+        final EditText textcontact = (EditText) findViewById(R.id.editAddContact);
         Button btnAddContact = (Button) findViewById(R.id.btnAddContact);
         btnAddContact.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 //Comprobar campos
-                if (contact.getText().toString().matches("")) {
-                    contact.setError("Title is required");
-                    contact.requestFocus();
+                if (textcontact.getText().toString().matches("")) {
+                    textcontact.setError("Title is required");
+                    textcontact.requestFocus();
                     return;
                 }
-                Login contact = new Channel(contact.getText().toString(), //TODO);
+                Login contact = new Login("USER QUE SE PASA POR EXTRA", textcontact.getText().toString());//TODO
                 addContact(contact);
             }
         });
