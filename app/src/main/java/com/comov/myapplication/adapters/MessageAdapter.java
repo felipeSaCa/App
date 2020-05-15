@@ -69,7 +69,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
 
     public int getItemViewType(int position){
         Message message = messages.get(position);
-        if(message.getUid().equals(current_user.getName())){
+        if(message.getChannelID().equals(current_user.getName())){
             return MESSAGE_SENT;
         }
         else if(message.getNumberListeners()>1){
