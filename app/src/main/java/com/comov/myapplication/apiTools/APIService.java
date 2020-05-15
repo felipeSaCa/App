@@ -56,5 +56,9 @@ public interface APIService {
     @GET("/api/channel")
     Call<ChannelResponse> getChannel(@Query("username") String username);
 
+    @Headers("Content-Type: application/json")
+    @POST("/api/contact")
+    Call<Post> postContact(@Body Login contact);
+
 }
 

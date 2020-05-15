@@ -11,5 +11,7 @@
     <string name="editWriteAMessage">Write a message</string>
     <string name="editTitle">Title</string>
     <string name="editUsuarios">Users</string>
-    <string name="btnAddChannel">Add channel</string>
+    <string name="btnAddChannel">Add Channel</string>
+    <string name="editAddContact">Add Contact</string>
+    <string name="btnAddContact">Add Contact</string>
 </resources>

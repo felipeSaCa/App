@@ -88,6 +88,11 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
         startActivity(intent);
     }
 
+    public void openAddContact(View v) {
+        Intent intent = new Intent(MainView.this, AddChatView.class);
+        startActivity(intent);
+    }
+
     /**
      * Listener implementado para diferenciar canales
      * @param channel
