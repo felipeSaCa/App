@@ -19,13 +19,13 @@ public class Message implements Serializable {
 
     @SerializedName("uid")
     @Expose
-    private String uid;
+    private String channelID;
 
     public Message(String title, Date date, String username, String uidChannel) {
         this.title = title;
         this.date = date;
         this.username = username;
-        this.uid = uidChannel;
+        this.channelID = uidChannel;
     }
 
     public String getTitle() {
@@ -52,12 +52,12 @@ public class Message implements Serializable {
         this.username = username;
     }
 
-    public String getUid() {
-        return uid;
+    public String getChannelID() {
+        return channelID;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    public void setChannelID(String uid) {
+        this.channelID = uid;
     }
 
     public int getNumberListeners(){

@@ -25,10 +25,10 @@ public class ChatView extends AppCompatActivity {
         channelID = getIntent().getStringExtra("channelID");
         title = getIntent().getStringExtra("title");
 
-        String titleToText = title;
-        TextView titleText = findViewById(R.id.titleChannel);
+        String titleToText = "Channel "+title;
+        TextView titleText = findViewById(R.id.TitleChat);
         titleText.setText(titleToText);
-        //TODO habria que recibir la lista de mensajes(tanto interno como externo), asi como los que componen el chat
+
 
 
     }
