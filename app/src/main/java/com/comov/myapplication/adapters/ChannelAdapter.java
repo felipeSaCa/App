@@ -47,7 +47,6 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ViewHold
 
         @Override
         public void onClick(View v) {
-            System.out.println("Pinchamos canal "+ getAdapterPosition());
             listener.onClickChannel(channels.get(getAdapterPosition()));
         }
     }
@@ -72,6 +71,11 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ViewHold
         return channels.size();
     }
 
+
+    public void addItems (List<Channel> channel){
+        channels.addAll(channel);
+        notifyDataSetChanged();
+    }
 
     public interface ChannelListener{
         void onClickChannel(Channel channel);

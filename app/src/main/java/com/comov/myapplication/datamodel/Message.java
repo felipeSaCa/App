@@ -1,10 +1,13 @@
 package com.comov.myapplication.datamodel;
 
+import androidx.annotation.Nullable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 public class Message implements Serializable {
     @SerializedName("title")
@@ -58,6 +61,23 @@ public class Message implements Serializable {
 
     public void setChannelID(String uid) {
         this.channelID = uid;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Message)) return false;
+        Message message = (Message) o;
+        return Objects.equals(title, message.title) &&
+                Objects.equals(date, message.date) &&
+                Objects.equals(username, message.username) &&
+                Objects.equals(channelID, message.channelID);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, date, username, channelID);
     }
 
     public int getNumberListeners(){

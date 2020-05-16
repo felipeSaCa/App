@@ -21,15 +21,15 @@
         android:layout_marginEnd="64dp"
         android:layout_marginBottom="4dp"
         android:textSize="16dp"
-        android:id="@+id/receivedTxtGroup"
+        android:id="@+id/receivedTxt"
         android:text="sample of text"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/receivedTxtGroup"
-        android:layout_alignBottom="@id/receivedTxtGroup"
-        android:id="@+id/dateReceivedTextGroup"
+        android:layout_toEndOf="@id/receivedTxt"
+        android:layout_alignBottom="@id/receivedTxt"
+        android:id="@+id/dateReceivedText"
         android:text="18:43"
 
         />

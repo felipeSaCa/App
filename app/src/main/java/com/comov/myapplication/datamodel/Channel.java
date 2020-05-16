@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName;
 //import org.bson.types.ObjectId;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 
 public class Channel implements Serializable {
@@ -42,5 +43,18 @@ public class Channel implements Serializable {
 
     public String get_id() {
         return _id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Channel)) return false;
+        Channel channel = (Channel) o;
+        return Objects.equals(_id, channel._id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, usuarios, _id);
     }
 }
