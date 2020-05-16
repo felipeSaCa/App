@@ -4,6 +4,8 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Users implements Serializable
 {
@@ -20,12 +22,16 @@ public class Users implements Serializable
     @SerializedName("age")
     @Expose
     private String age;
+    @SerializedName("contacts")
+    @Expose
+    private List<String> contacts;
     private final static long serialVersionUID = 6480304755729039345L;
 
     public Users(String name, String pHash, String email) {
         this.name = name;
         this.pHash = pHash;
         this.email = email;
+        this.contacts = new ArrayList<>();
     }
 
     public Users(String name, String pHash, String email, String age) {
@@ -33,6 +39,7 @@ public class Users implements Serializable
         this.pHash = pHash;
         this.email = email;
         this.age = age;
+        this.contacts = new ArrayList<>();
     }
 
     public String getName() {
@@ -58,5 +65,7 @@ public class Users implements Serializable
     public void setAge(String age) {
         this.age = age;
     }
+
+    public List<String> getContacts(){return contacts;}
 
 }

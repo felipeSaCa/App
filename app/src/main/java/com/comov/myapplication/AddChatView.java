@@ -25,7 +25,7 @@ public class AddChatView extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_chat);
+        setContentView(R.layout.activity_add_channel);
         APIService = APIUtils.getAPIService();
 
         final EditText title = (EditText)findViewById(R.id.editTitle);
@@ -75,7 +75,5 @@ public class AddChatView extends AppCompatActivity{
             }
         });
     }
-
-
 
 }
