@@ -4,6 +4,7 @@ import com.comov.myapplication.datamodel.Channel;
 import com.comov.myapplication.datamodel.ChannelResponse;
 import com.comov.myapplication.datamodel.Login;
 import com.comov.myapplication.datamodel.Message;
+import com.comov.myapplication.datamodel.MessageResponse;
 import com.comov.myapplication.datamodel.Post;
 import com.comov.myapplication.datamodel.Token;
 import com.comov.myapplication.datamodel.Users;
@@ -44,10 +45,10 @@ public interface APIService {
 
     @Headers("Content-Type: application/json")
     @POST("/api/message")
-    Call<Post> postMessage(@Body Message myMessage);
+    Call<Message> postMessage(@Body Message myMessage);
 
     @GET("/api/message")
-    Call<Message> getMessage(@Query("channel") String channel);
+    Call<MessageResponse> getMessage(@Query("channel") String channel);
 
     @Headers("Content-Type: application/json")
     @POST("/api/channel")

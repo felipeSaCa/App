@@ -1,17 +1,20 @@
 package com.comov.myapplication.adapters;
 
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.comov.myapplication.R;
 import com.comov.myapplication.datamodel.Message;
 import com.comov.myapplication.datamodel.Users;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,13 +24,11 @@ public class MessageAdapter extends RecyclerView.Adapter {
     private static final int GROUP_MESSAGE_RECEIVED =1;
 
 
-    ArrayList<Message> messages;
-    private LayoutInflater inflater;
-    Users current_user;
+    private List<Message> messages;
+    private String current_user;
 
-    public MessageAdapter(ArrayList<Message> listMessage, LayoutInflater inflater, Users user){
+    public MessageAdapter(List<Message> listMessage, String user){
         messages = listMessage;
-        this.inflater = inflater;
         current_user = user;
     }
 
@@ -36,10 +37,11 @@ public class MessageAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         switch (viewType) {
             case MESSAGE_SENT:
-                return new ViewHolderOwnMessage(inflater.inflate(R.layout.message_sent, parent, false));
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.message_sent,parent,false);
+                return new ViewHolderOwnMessage(view);
             case GROUP_MESSAGE_RECEIVED:
-                return new ViewHolderGroupMessage(inflater.inflate(R.layout.received_groups_message, parent, false));
-        }
+                View view1 = LayoutInflater.from(parent.getContext()).inflate(R.layout.received_groups_message,parent,false);
+                return new ViewHolderGroupMessage(view1);        }
         return null;
     }
 
@@ -47,16 +49,18 @@ public class MessageAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Message message = messages.get(position);
         int type = getItemViewType(position);
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
+        String dateString = format.format(message.getDate());
         if(type == MESSAGE_SENT){
             ViewHolderOwnMessage ownHolder = (ViewHolderOwnMessage) holder;
             ownHolder.getText().setText(message.getTitle());
-            ownHolder.getDate().setText(message.getDate().toString());
+            ownHolder.getDate().setText(dateString);
         }
         else if (type == GROUP_MESSAGE_RECEIVED){
             ViewHolderGroupMessage holderGroupMessage = (ViewHolderGroupMessage) holder;
             holderGroupMessage.getText().setText(message.getTitle());
             holderGroupMessage.getUser().setText(message.getUsername());
-            holderGroupMessage.getDate().setText(message.getDate().toString());
+            holderGroupMessage.getDate().setText(dateString);
         }
     }
 
@@ -68,7 +72,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemViewType(int position){
         Message message = messages.get(position);
-        if(message.getChannelID().equals(current_user.getName())){
+        if(message.getUsername().equals(current_user)){
             return MESSAGE_SENT;
         }
         else {
@@ -77,8 +81,20 @@ public class MessageAdapter extends RecyclerView.Adapter {
     }
 
 
-    public void addItems (List<Message> message){
-        messages.addAll(message);
+    public void addItems (List<Message> messageList){
+        boolean addItem;
+        for (Message message:
+             messageList) {
+            addItem = true;
+            for (Message message1:
+                 messages) {
+                if (message.equals(message1)){
+                    addItem = false; break;
+                }
+            }
+            if(addItem)
+                messages.add(message);
+        }
         notifyDataSetChanged();
     }
 

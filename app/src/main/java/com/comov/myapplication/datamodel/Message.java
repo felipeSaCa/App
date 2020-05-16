@@ -20,13 +20,19 @@ public class Message implements Serializable {
     @Expose
     private String username;
 
-    @SerializedName("uid")
+    @SerializedName("channelID")
     @Expose
     private String channelID;
 
     public Message(String title, Date date, String username, String uidChannel) {
         this.title = title;
         this.date = date;
+        this.username = username;
+        this.channelID = uidChannel;
+    }
+
+    public Message(String title, String username, String uidChannel) {
+        this.title = title;
         this.username = username;
         this.channelID = uidChannel;
     }

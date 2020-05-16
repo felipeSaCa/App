@@ -83,8 +83,8 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
             public void onResponse(Call<ChannelResponse> call, Response<ChannelResponse> response) {
                 if (response.code() == 200) {
                     //Toast.makeText(getApplicationContext(), "Got chats", Toast.LENGTH_LONG).show();
-                    channels = response.body().getChannels();
-                    channelAdapter.addItems(channels);
+                    List<Channel> channels1 = response.body().getChannels();
+                    channelAdapter.addItems(channels1);
                     channelAdapter.notifyDataSetChanged();
 
                 } else if (response.code() == 404 )
