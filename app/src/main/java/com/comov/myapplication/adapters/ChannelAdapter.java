@@ -72,8 +72,18 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ViewHold
     }
 
 
-    public void addItems (List<Channel> channel){
-        channels.addAll(channel);
+    public void addItems (List<Channel> channels){
+        boolean addItem;
+        for (Channel channel : channels) {
+            addItem = true;
+            for (Channel channel1 : this.channels){
+                if(channel1.equals(channel)){
+                    addItem = false;
+                }
+            }
+            if (addItem)
+                this.channels.add(channel);
+        }
         notifyDataSetChanged();
     }
 

@@ -2,6 +2,7 @@ package com.comov.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +31,8 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
     String username;
     MainView mainView;
     ChannelAdapter channelAdapter;
+    Handler handler;
+    Runnable runnable;
     //private EditText message;
     //private Button btnSend;
 
@@ -39,6 +42,11 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
         setContentView(R.layout.chat_main_activity);
         APIService = APIUtils.getAPIService();
         mainView = this;
+        handler = new Handler();
+        runnable = () -> {
+            getChannelsFromUser();
+            handler.postDelayed(runnable,5000);
+        };
         //obtener con getIntent() los parametros de login obtenidos
         username = getIntent().getStringExtra("name");
         TextView nameTxt = findViewById(R.id.user_name);
@@ -51,21 +59,30 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
         recyclerViewChannel.setLayoutManager(new LinearLayoutManager(mainView));
         //Get Channels
 
-        getChannelsFromUser(username);
+        getChannelsFromUser();
     }
+
 
     @Override
     protected void onStart() {
         super.onStart();
-        getChannelsFromUser(username);
+        runnable.run();
+
     }
 
-    public void getChannelsFromUser(String user){
-        APIService.getChannel(user).enqueue(new Callback<ChannelResponse>(){
+    @Override
+    protected void onStop() {
+        super.onStop();
+        handler.removeCallbacks(runnable);
+
+    }
+
+    public void getChannelsFromUser(){
+        APIService.getChannel(username).enqueue(new Callback<ChannelResponse>(){
             @Override
             public void onResponse(Call<ChannelResponse> call, Response<ChannelResponse> response) {
                 if (response.code() == 200) {
-                    Toast.makeText(getApplicationContext(), "Got chats", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), "Got chats", Toast.LENGTH_LONG).show();
                     channels = response.body().getChannels();
                     channelAdapter.addItems(channels);
                     channelAdapter.notifyDataSetChanged();
