@@ -26,10 +26,10 @@ import retrofit2.Response;
 public class MainView extends AppCompatActivity implements ChannelAdapter.ChannelListener {
     private com.comov.myapplication.apiTools.APIService APIService;
     List<Channel> channels;
-    List<Channel> prueba;
     RecyclerView recyclerViewChannel;
     String username;
     MainView mainView;
+    ChannelAdapter channelAdapter;
     //private EditText message;
     //private Button btnSend;
 
@@ -38,39 +38,42 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat_main_activity);
         APIService = APIUtils.getAPIService();
+        mainView = this;
         //obtener con getIntent() los parametros de login obtenidos
         username = getIntent().getStringExtra("name");
         TextView nameTxt = findViewById(R.id.user_name);
         String finalTxt = "Hi "+username;
         nameTxt.setText(finalTxt);
         channels = new ArrayList<Channel>();
+        recyclerViewChannel = findViewById(R.id.channelsList);
+        channelAdapter = new ChannelAdapter(channels,mainView);
+        recyclerViewChannel.setAdapter(channelAdapter);
+        recyclerViewChannel.setLayoutManager(new LinearLayoutManager(mainView));
         //Get Channels
-        getChannelsFromUser(username);
-        mainView = this;
 
-        //Init recycler
-        prueba = new ArrayList<Channel>(); //TODO Eliminar
-        for (int i=0;i<10;i++){
-            prueba.add( new Channel("Channel " +i,null));
-        }
+        getChannelsFromUser(username);
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getChannelsFromUser(username);
     }
 
     public void getChannelsFromUser(String user){
         APIService.getChannel(user).enqueue(new Callback<ChannelResponse>(){
             @Override
-            public void onResponse(Call<ChannelResponse> call, Response<ChannelResponse> response) { //TODO Quitar system.out
+            public void onResponse(Call<ChannelResponse> call, Response<ChannelResponse> response) {
                 if (response.code() == 200) {
                     Toast.makeText(getApplicationContext(), "Got chats", Toast.LENGTH_LONG).show();
                     channels = response.body().getChannels();
-                    System.out.println(response.body().getChannels().toString());
-                    System.out.println(channels.get(0).getTitle() + "##############################\n" + channels.get(0).get_id().toString() + "##############################\n");
-                    recyclerViewChannel = findViewById(R.id.channelsList);
-                    ChannelAdapter channelAdapter = new ChannelAdapter(channels,mainView);
-                    recyclerViewChannel.setAdapter(channelAdapter);
-                    recyclerViewChannel.setLayoutManager(new LinearLayoutManager(mainView));
+                    channelAdapter.addItems(channels);
+                    channelAdapter.notifyDataSetChanged();
+
 
                 } else if (response.code() == 404 )
-                    Toast.makeText(getApplicationContext(), "Chats not found. Tu princesa esta en otro castillo." +
+                    Toast.makeText(getApplicationContext(), "Chats not found." +
                             "", Toast.LENGTH_LONG).show();
             }
             @Override
@@ -78,19 +81,18 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
             public void onFailure(Call<ChannelResponse> call, Throwable t){
 
                 Toast.makeText(getApplicationContext(), "Fail "+ t, Toast.LENGTH_LONG).show();
-                System.out.println(t + " #######################################################################");
             }
         });
     }
 
     public void openAddChat(View v) {
         Intent intent = new Intent(MainView.this, AddChatView.class);
+        intent.putExtra("username", username);
         startActivity(intent);
     }
 
-    public void openAddContact(View v) {
-        Intent intent = new Intent(MainView.this, AddChatView.class);
-        startActivity(intent);
+    public void openAddContactView(){
+        //TODO
     }
 
     /**
