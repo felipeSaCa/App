@@ -52,7 +52,6 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
         //Get Channels
 
         getChannelsFromUser(username);
-
     }
 
     @Override
@@ -71,28 +70,27 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
                     channelAdapter.addItems(channels);
                     channelAdapter.notifyDataSetChanged();
 
-
                 } else if (response.code() == 404 )
                     Toast.makeText(getApplicationContext(), "Chats not found." +
                             "", Toast.LENGTH_LONG).show();
             }
             @Override
-
             public void onFailure(Call<ChannelResponse> call, Throwable t){
-
                 Toast.makeText(getApplicationContext(), "Fail "+ t, Toast.LENGTH_LONG).show();
             }
         });
     }
 
-    public void openAddChat(View v) {
+    public void openAddChannel(View v) {
         Intent intent = new Intent(MainView.this, AddChatView.class);
         intent.putExtra("username", username);
         startActivity(intent);
     }
 
-    public void openAddContactView(){
-        //TODO
+    public void openAddContact(View v){
+        Intent intent = new Intent(MainView.this, AddContactView.class);
+        intent.putExtra("username", username);
+        startActivity(intent);
     }
 
     /**

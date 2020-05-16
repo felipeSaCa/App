@@ -12,12 +12,12 @@ import com.comov.myapplication.apiTools.APIUtils;
 import com.comov.myapplication.datamodel.Channel;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
 
 public class AddChatView extends AppCompatActivity{
     private com.comov.myapplication.apiTools.APIService APIService;
@@ -48,8 +48,8 @@ public class AddChatView extends AppCompatActivity{
                     return;
                 }
 
-                List<String> users = Arrays.asList(usuarios.getText().toString().split(","));
-                users.add(username);
+                List<String> users = new LinkedList<>(Arrays.asList(usuarios.getText().toString().split(",")));
+                users.add(0, username);
                 Channel channel = new Channel(title.getText().toString(), users);
                 addChannel(channel);
             }
@@ -62,7 +62,7 @@ public class AddChatView extends AppCompatActivity{
             public void onResponse(Call<Channel> call, Response<Channel> response) {
                 System.out.println(response.code() + response.toString() );
                 if (response.code() == 201){
-                    Toast.makeText(getApplicationContext(), "Added Chat 201: ", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Added Chat: " + response.body().getTitle(), Toast.LENGTH_LONG).show();
                     System.out.println("####################################### "+ response.body().get_id());
                     finish();
                 }

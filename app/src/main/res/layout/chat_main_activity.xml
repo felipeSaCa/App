@@ -19,26 +19,40 @@
         android:id="@+id/channelsList"
         android:layout_width="417dp"
         android:layout_height="660dp"
-        android:layout_below="@id/add_chat"
+        android:layout_below="@id/addChannel"
         android:layout_alignParentBottom="true"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="70dp" />
 
     <Button
-        android:id="@+id/add_chat"
-        android:layout_width="77dp"
+        android:id="@+id/addChannel"
+        android:layout_width="100dp"
         android:layout_height="72dp"
         android:layout_alignParentRight="true"
         android:background="@drawable/buttonround"
-        android:text="ADD CHAT"
-        android:onClick="openAddChat"
+        android:onClick="openAddChannel"
+        android:text="@string/btnAddChannel"
+        tools:layout_editor_absoluteX="318dp"
+        tools:layout_editor_absoluteY="84dp" />
+
+    <Button
+        android:id="@+id/addContact"
+        android:layout_width="100dp"
+        android:layout_height="72dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="86dp"
+        android:layout_marginRight="300dp"
+        android:layout_toStartOf="@+id/addChannel"
+        android:background="@drawable/buttonround"
+        android:onClick="openAddContact"
+        android:text="@string/btnAddContact"
         tools:layout_editor_absoluteX="318dp"
         tools:layout_editor_absoluteY="84dp" />
 
     <TextView
         android:id="@+id/user_name"
         android:layout_width="105dp"
-        android:layout_height="18dp"
+        android:layout_height="26dp"
         android:layout_toRightOf="@id/logo"
         android:text="user_name"
         tools:layout_editor_absoluteX="153dp"

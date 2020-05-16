@@ -18,12 +18,14 @@ import retrofit2.Response;
 
 public class AddContactView extends AppCompatActivity {
     private com.comov.myapplication.apiTools.APIService APIService;
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_channel);
+        setContentView(R.layout.activity_add_contact);
         APIService = APIUtils.getAPIService();
+        username = getIntent().getStringExtra("username");
 
         final EditText textcontact = (EditText) findViewById(R.id.editAddContact);
         Button btnAddContact = (Button) findViewById(R.id.btnAddContact);
@@ -36,7 +38,7 @@ public class AddContactView extends AppCompatActivity {
                     textcontact.requestFocus();
                     return;
                 }
-                Login contact = new Login("USER QUE SE PASA POR EXTRA", textcontact.getText().toString());//TODO
+                Login contact = new Login(username, textcontact.getText().toString());
                 addContact(contact);
             }
         });
