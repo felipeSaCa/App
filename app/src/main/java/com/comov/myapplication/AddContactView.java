@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.comov.myapplication.apiTools.APIUtils;
 import com.comov.myapplication.datamodel.Login;
-import com.comov.myapplication.datamodel.Post;
+import com.comov.myapplication.datamodel.Users;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,9 +43,9 @@ public class AddContactView extends AppCompatActivity {
     }
 
     public void addContact(Login contact) {
-        APIService.postContact(contact).enqueue(new Callback<Post>() {
+        APIService.postContact(contact).enqueue(new Callback<Users>() {
             @Override
-            public void onResponse(Call<Post> call, Response<Post> response) {
+            public void onResponse(Call<Users> call, Response<Users> response) {
                 System.out.println(response.code() + response.toString() );
                 if (response.code() == 201){
                     Toast.makeText(getApplicationContext(), "Added Contact 201: ", Toast.LENGTH_LONG).show();
@@ -56,7 +56,7 @@ public class AddContactView extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFailure(Call<Post> call, Throwable t) {
+            public void onFailure(Call<Users> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "Server NOT OK " + t, Toast.LENGTH_LONG).show();
                 //Manejar error TODO if (response.code() == ??? )
             }

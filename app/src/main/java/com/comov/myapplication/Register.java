@@ -14,6 +14,8 @@ import com.comov.myapplication.apiTools.APIUtils;
 import com.comov.myapplication.datamodel.Post;
 import com.comov.myapplication.datamodel.Users;
 
+import java.util.ArrayList;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -73,9 +75,9 @@ public class Register extends AppCompatActivity {
 
                 Users user;
                 if(age.getText().toString().trim().length() > 0) {
-                    user = new Users(name.getText().toString(), password.getText().toString(), email.getText().toString(), age.getText().toString());
+                    user = new Users(name.getText().toString(), password.getText().toString(), email.getText().toString(), age.getText().toString(), new ArrayList<String>());
                 } else {
-                    user = new Users(name.getText().toString(), password.getText().toString(), email.getText().toString());
+                    user = new Users(name.getText().toString(), password.getText().toString(), email.getText().toString(), new ArrayList<String>());
                 }
                 sendRegister(user);
             }

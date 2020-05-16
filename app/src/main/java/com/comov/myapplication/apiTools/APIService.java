@@ -58,7 +58,7 @@ public interface APIService {
 
     @Headers("Content-Type: application/json")
     @POST("/api/contact")
-    Call<Post> postContact(@Body Login contact);
+    Call<Users> postContact(@Body Login contact);
 
 }
 
