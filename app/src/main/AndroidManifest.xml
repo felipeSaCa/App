@@ -21,7 +21,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".Register" android:parentActivityName=".MainActivity" />
-        <activity android:name=".ChatView" android:parentActivityName=".MainActivity" />
+        <activity android:name=".ChatView" android:parentActivityName=".MainView" />
         <activity android:name=".AddChatView" android:parentActivityName=".MainView" />
         <activity android:name=".MainView" android:parentActivityName=".MainView" />
         <activity android:name=".AddContactView" android:parentActivityName=".MainView" />

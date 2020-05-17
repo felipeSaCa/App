@@ -40,6 +40,8 @@ public class AddContactView extends AppCompatActivity {
                 }
                 Login contact = new Login(username, textcontact.getText().toString());
                 addContact(contact);
+                textcontact.setText("");
+                onBackPressed();
             }
         });
     }
@@ -50,16 +52,15 @@ public class AddContactView extends AppCompatActivity {
             public void onResponse(Call<Users> call, Response<Users> response) {
                 System.out.println(response.code() + response.toString() );
                 if (response.code() == 201){
-                    Toast.makeText(getApplicationContext(), "Added Contact 201: ", Toast.LENGTH_LONG).show();
-                    finish();
+                    Toast.makeText(getApplicationContext(), "Added Contact", Toast.LENGTH_LONG).show();
                 }
-                else if (response.code() == 500){
-                    Toast.makeText(getApplicationContext(), "500", Toast.LENGTH_LONG).show();
+                else if (response.code() == 400){
+                    Toast.makeText(getApplicationContext(), "400", Toast.LENGTH_LONG).show();
                 }
             }
             @Override
             public void onFailure(Call<Users> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Server NOT OK " + t, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Server NOT OK", Toast.LENGTH_LONG).show();
                 //Manejar error TODO if (response.code() == ??? )
             }
         });

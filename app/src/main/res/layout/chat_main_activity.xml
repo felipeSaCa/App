@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#009688">
+    android:background="#191919">
 
     <ImageView
         android:id="@+id/logo"
@@ -21,12 +21,13 @@
         android:layout_height="660dp"
         android:layout_below="@id/addChannel"
         android:layout_alignParentBottom="true"
+        android:background="#191919"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="70dp" />
 
     <Button
         android:id="@+id/addChannel"
-        android:layout_width="100dp"
+        android:layout_width="108dp"
         android:layout_height="72dp"
         android:layout_alignParentRight="true"
         android:background="@drawable/buttonround"
@@ -37,12 +38,11 @@
 
     <Button
         android:id="@+id/addContact"
-        android:layout_width="100dp"
+        android:layout_width="108dp"
         android:layout_height="72dp"
         android:layout_alignParentRight="true"
-        android:layout_marginEnd="86dp"
-        android:layout_marginRight="300dp"
-        android:layout_toStartOf="@+id/addChannel"
+        android:layout_marginEnd="112dp"
+        android:layout_marginRight="116dp"
         android:background="@drawable/buttonround"
         android:onClick="openAddContact"
         android:text="@string/btnAddContact"
@@ -55,6 +55,7 @@
         android:layout_height="26dp"
         android:layout_toRightOf="@id/logo"
         android:text="user_name"
+        android:textColor="@color/white"
         tools:layout_editor_absoluteX="153dp"
         tools:layout_editor_absoluteY="455dp" />
 

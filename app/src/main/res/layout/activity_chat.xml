@@ -67,11 +67,12 @@
         tools:layout_editor_absoluteY="37dp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
         android:id="@+id/recyclerChat"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/imageViewChat"
         android:layout_above="@+id/editWriteAMessage"
+        android:layout_below="@id/imageViewChat"
+        android:background="#6A6A6A"
         tools:layout_editor_absoluteX="-2dp"
         tools:layout_editor_absoluteY="77dp" />
 
