@@ -14,6 +14,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -45,21 +46,26 @@ public interface APIService {
 
     @Headers("Content-Type: application/json")
     @POST("/api/message")
-    Call<Message> postMessage(@Body Message myMessage);
+    Call<Message> postMessage(@Header("authorization") String auth,
+                              @Body Message myMessage);
 
     @GET("/api/message")
-    Call<MessageResponse> getMessage(@Query("channel") String channel);
+    Call<MessageResponse> getMessage(@Header("authorization") String auth,
+                                     @Query("channel") String channel);
 
     @Headers("Content-Type: application/json")
     @POST("/api/channel")
-    Call<Channel> postChannel(@Body Channel myChannel);
+    Call<Channel> postChannel(@Header("authorization") String auth,
+                              @Body Channel myChannel);
 
     @GET("/api/channel")
-    Call<ChannelResponse> getChannel(@Query("username") String username);
+    Call<ChannelResponse> getChannel(@Header("authorization") String auth,
+                                     @Query("username") String username);
 
     @Headers("Content-Type: application/json")
     @POST("/api/contact")
-    Call<Users> postContact(@Body Login contact);
+    Call<Users> postContact(@Header("authorization") String auth,
+                            @Body Login contact);
 
 }
 

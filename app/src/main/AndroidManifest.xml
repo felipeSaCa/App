@@ -22,9 +22,17 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".Register" android:parentActivityName=".MainActivity" />
         <activity android:name=".ChatView" android:parentActivityName=".MainView" />
-        <activity android:name=".AddChatView" android:parentActivityName=".MainView" />
-        <activity android:name=".MainView" android:parentActivityName=".MainView" />
-        <activity android:name=".AddContactView" android:parentActivityName=".MainView" />
+        <activity android:name=".AddChatView"
+            android:parentActivityName=".MainView"
+            android:launchMode="singleTask"
+            />
+        <activity android:name=".MainView"
+            android:parentActivityName=".MainView"
+            android:launchMode="singleTop"
+            />
+        <activity android:name=".AddContactView"
+            android:parentActivityName=".MainView"
+            android:launchMode="singleTask"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

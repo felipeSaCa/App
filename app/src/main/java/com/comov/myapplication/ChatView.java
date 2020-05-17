@@ -31,6 +31,7 @@ public class ChatView extends AppCompatActivity {
     private String username;
     private String channelID;
     private String title;
+    private String token;
     private List<Message> messages;
     private RecyclerView recyclerView;
     private Handler handler;
@@ -45,6 +46,7 @@ public class ChatView extends AppCompatActivity {
         username = getIntent().getStringExtra("username");
         channelID = getIntent().getStringExtra("channelID");
         title = getIntent().getStringExtra("title");
+        token = getIntent().getStringExtra("token");
 
         handler = new Handler();
         runnable = () -> {
@@ -83,7 +85,7 @@ public class ChatView extends AppCompatActivity {
     }
 
     public void getMessages(){
-        APIservice.getMessage(channelID).enqueue(new Callback<MessageResponse>() {
+        APIservice.getMessage(token,channelID).enqueue(new Callback<MessageResponse>() {
             @Override
             public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {
                 if(response.code() == 200){
@@ -115,7 +117,7 @@ public class ChatView extends AppCompatActivity {
         }
         Message mymessage = new Message(text.getText().toString(),username, channelID);
         text.getText().clear();
-        APIservice.postMessage(mymessage).enqueue(new Callback<Message>(){
+        APIservice.postMessage(token,mymessage).enqueue(new Callback<Message>(){
 
             @Override
             public void onResponse(Call<Message> call, Response<Message> response) {

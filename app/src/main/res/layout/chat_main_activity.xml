@@ -42,7 +42,7 @@
         android:layout_height="72dp"
         android:layout_alignParentRight="true"
         android:layout_marginEnd="112dp"
-        android:layout_marginRight="116dp"
+        android:layout_marginRight="103dp"
         android:background="@drawable/buttonround"
         android:onClick="openAddContact"
         android:text="@string/btnAddContact"

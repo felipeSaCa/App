@@ -26,13 +26,14 @@ import retrofit2.Response;
 
 public class MainView extends AppCompatActivity implements ChannelAdapter.ChannelListener {
     private com.comov.myapplication.apiTools.APIService APIService;
-    List<Channel> channels;
     RecyclerView recyclerViewChannel;
-    String username;
-    MainView mainView;
     ChannelAdapter channelAdapter;
-    Handler handler;
+    List<Channel> channels;
+    String username;
+    String token;
+    MainView mainView;
     Runnable runnable;
+    Handler handler;
     //private EditText message;
     //private Button btnSend;
 
@@ -49,8 +50,9 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
         };
         //obtener con getIntent() los parametros de login obtenidos
         username = getIntent().getStringExtra("name");
+        token = getIntent().getStringExtra("token");
         TextView nameTxt = findViewById(R.id.user_name);
-        String finalTxt = "Hi "+username;
+        String finalTxt = "Hi "+ username;
         nameTxt.setText(finalTxt);
         channels = new ArrayList<Channel>();
         recyclerViewChannel = findViewById(R.id.channelsList);
@@ -67,22 +69,19 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
     protected void onStart() {
         super.onStart();
         runnable.run();
-
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         handler.removeCallbacks(runnable);
-
     }
 
     public void getChannelsFromUser(){
-        APIService.getChannel(username).enqueue(new Callback<ChannelResponse>(){
+        APIService.getChannel(token,username).enqueue(new Callback<ChannelResponse>(){
             @Override
             public void onResponse(Call<ChannelResponse> call, Response<ChannelResponse> response) {
                 if (response.code() == 200) {
-                    //Toast.makeText(getApplicationContext(), "Got chats", Toast.LENGTH_LONG).show();
                     List<Channel> channels1 = response.body().getChannels();
                     channelAdapter.addItems(channels1);
                     channelAdapter.notifyDataSetChanged();
@@ -101,12 +100,14 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
     public void openAddChannel(View v) {
         Intent intent = new Intent(MainView.this, AddChatView.class);
         intent.putExtra("username", username);
+        intent.putExtra("token", token);
         startActivity(intent);
     }
 
     public void openAddContact(View v){
         Intent intent = new Intent(MainView.this, AddContactView.class);
         intent.putExtra("username", username);
+        intent.putExtra("token", token);
         startActivity(intent);
     }
 
@@ -120,6 +121,7 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
         intent.putExtra("username", username);
         intent.putExtra("channelID", channel.get_id());
         intent.putExtra("title", channel.getTitle());
+        intent.putExtra("token", token);
         startActivity(intent);
     }
 }

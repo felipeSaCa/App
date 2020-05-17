@@ -22,6 +22,7 @@ import retrofit2.Response;
 public class AddChatView extends AppCompatActivity{
     private com.comov.myapplication.apiTools.APIService APIService;
     private String username;
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +30,7 @@ public class AddChatView extends AppCompatActivity{
         setContentView(R.layout.activity_add_channel);
         APIService = APIUtils.getAPIService();
         username = getIntent().getStringExtra("username");
+        token = getIntent().getStringExtra("token");
 
         final EditText title = (EditText)findViewById(R.id.editTitle);
         final EditText usuarios = (EditText)findViewById(R.id.editUsuarios);
@@ -57,7 +59,7 @@ public class AddChatView extends AppCompatActivity{
     }
 
     public void addChannel(Channel channel) {
-        APIService.postChannel(channel).enqueue(new Callback<Channel>() {
+        APIService.postChannel(token,channel).enqueue(new Callback<Channel>() {
             @Override
             public void onResponse(Call<Channel> call, Response<Channel> response) {
                 System.out.println(response.code() + response.toString() );

@@ -72,8 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 if (response.code() == 200) {
                     String token = response.body().getToken();
                     String named = response.body().getName();
-                    Toast.makeText(getApplicationContext(), "Login OK HAY QUE PASAR EL TOKEN TAMBIEN A LA SIGUIENTE VIEW " + named, Toast.LENGTH_LONG).show();
-                    openMainView(named);
+                    openMainView(named,token);
                 }
                 else if (response.code() == 404 || response.code() == 403) {
                     Toast.makeText(getApplicationContext(), "User not found", Toast.LENGTH_LONG).show();
@@ -85,11 +84,9 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Token> call, Throwable t) {
-
                 System.out.println("###### Fail ####### " + call + "  " + t);
                 call.cancel();
                 Toast.makeText(getApplicationContext(), "Login NOT OK", Toast.LENGTH_LONG).show();
-                //Manejar error TODO
             }
         });
     }
@@ -99,9 +96,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void openMainView(String name){
+    public void openMainView(String name, String token){
         Intent intent = new Intent(MainActivity.this, MainView.class);
         intent.putExtra("name", name);
+        intent.putExtra("token", token);
         startActivity(intent);
     }
 }
