@@ -83,6 +83,10 @@ public class MessageAdapter extends RecyclerView.Adapter {
 
     public void addItems (List<Message> messageList){
         boolean addItem;
+        boolean firstTime =false;
+        if(getItemCount()<1){
+            firstTime = true;
+        }
         for (Message message:
              messageList) {
             addItem = true;
@@ -92,8 +96,16 @@ public class MessageAdapter extends RecyclerView.Adapter {
                     addItem = false; break;
                 }
             }
-            if(addItem)
-                messages.add(message);
+            if(addItem){
+                if (firstTime){
+                    messages.add(message);
+                }
+
+                else {
+                    messages.add(messageList.indexOf(message),message);
+                }
+            }
+
         }
         notifyDataSetChanged();
     }

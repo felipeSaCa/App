@@ -57,8 +57,8 @@ public class ChatView extends AppCompatActivity {
         messageAdapter = new MessageAdapter(messages, username);
         recyclerView.setAdapter(messageAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        //linearLayoutManager.setReverseLayout(true);
-        linearLayoutManager.setStackFromEnd(true);
+        linearLayoutManager.setReverseLayout(true);
+        //linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
 
         String titleToText = "Channel "+title;
