@@ -14,7 +14,7 @@
         android:background="@color/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:titleMarginStart="40dp"
-        app:title="Toolbarrr"
+        app:title="Toolbar"
         app:logo="@drawable/ic_logout"
         />
 

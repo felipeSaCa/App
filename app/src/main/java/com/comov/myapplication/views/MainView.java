@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
-import android.view.View;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -102,21 +102,21 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
         });
     }
 
-    public void openAddChannel(View v) {
+    public void openAddChannel() {
         Intent intent = new Intent(MainView.this, AddChatView.class);
         intent.putExtra("username", username);
         intent.putExtra("token", token);
         startActivity(intent);
     }
 
-    public void openAddContact(View v){
+    public void openAddContact(){
         Intent intent = new Intent(MainView.this, AddContactView.class);
         intent.putExtra("username", username);
         intent.putExtra("token", token);
         startActivity(intent);
     }
 
-    public void openContactList(View v){
+    public void openContactList(){
         Intent intent = new Intent(MainView.this, ContactList.class);
         intent.putExtra("username", username);
         intent.putExtra("token", token);
@@ -135,5 +135,20 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
         intent.putExtra("title", channel.getTitle());
         intent.putExtra("token", token);
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.logoutMenu)
+            // TODO
+            System.out.println("TODO");
+        else if (id == R.id.contactListMenu)
+            openContactList();
+        else if (id == R.id.addContactMenu)
+            openAddContact();
+        else if (id == R.id.addChannelMenu)
+            openAddChannel();
+        return true;
     }
 }
