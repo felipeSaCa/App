@@ -25,14 +25,14 @@ public class AddUserChannel extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_contact);
+        setContentView(R.layout.activity_add_user_channel);
         APIService = APIUtils.getAPIService();
         channelID = getIntent().getStringExtra("channelID");
         token = getIntent().getStringExtra("token");
 
         final EditText textuserchannel = (EditText) findViewById(R.id.editAddUserChannel);
-        Button btnAddContact = (Button) findViewById(R.id.btnAddContact);
-        btnAddContact.setOnClickListener(new View.OnClickListener(){
+        Button btnAddUserChannel = (Button) findViewById(R.id.btnAddUserChannel);
+        btnAddUserChannel.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 //Comprobar campos
@@ -55,7 +55,7 @@ public class AddUserChannel extends AppCompatActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 System.out.println(response.code() + response.toString() );
                 if (response.code() == 201){
-                    Toast.makeText(getApplicationContext(), "Added Contact", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Added user", Toast.LENGTH_LONG).show();
                 }
                 else if (response.code() == 400){
                     Toast.makeText(getApplicationContext(), "Not found", Toast.LENGTH_LONG).show();

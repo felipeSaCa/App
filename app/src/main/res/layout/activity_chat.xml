@@ -40,30 +40,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageViewChat"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
-
 
     <TextView
         android:id="@+id/TitleChat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_marginStart="50dp"
         android:layout_marginTop="25dp"
-        android:layout_marginEnd="60dp"
-        android:layout_toEndOf="@+id/imageViewChat"
+        android:layout_marginEnd="20dp"
         android:text="Channel"
         android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/imageViewChat"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteY="37dp" />
 
@@ -72,7 +61,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/editWriteAMessage"
-        android:layout_below="@id/imageViewChat"
+        android:layout_marginTop="65dp"
         android:background="#6A6A6A"
         tools:layout_editor_absoluteX="-2dp"
         tools:layout_editor_absoluteY="77dp" />
@@ -91,16 +80,14 @@
 
     <ImageButton
         android:id="@+id/addUserChannel"
-        android:layout_width="30dp"
+        android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="25dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginTop="10dp"
         android:layout_toStartOf="@+id/deleteChannel"
-        android:layout_toEndOf="@+id/TitleChat"
+        android:layout_marginTop="10dp"
+        app:srcCompat="@drawable/ic_add_contact"
         android:background="@drawable/buttonround"
         android:onClick="openAddUserChannel"
-        app:srcCompat="@drawable/ic_add_contact"
         android:scaleType="fitCenter"/>
 
 </RelativeLayout>

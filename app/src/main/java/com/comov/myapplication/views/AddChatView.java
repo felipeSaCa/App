@@ -65,7 +65,7 @@ public class AddChatView extends AppCompatActivity{
             public void onResponse(Call<Channel> call, Response<Channel> response) {
                 System.out.println(response.code() + response.toString() );
                 if (response.code() == 201){
-                    Toast.makeText(getApplicationContext(), "Added Chat" + response.body().getTitle(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Added Chat", Toast.LENGTH_LONG).show();
                     finish();
                 }
                 else if (response.code() == 500){
