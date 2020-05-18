@@ -1,6 +1,9 @@
 package com.comov.myapplication.views;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
@@ -17,6 +20,7 @@ import com.comov.myapplication.adapters.ChannelAdapter;
 import com.comov.myapplication.apiTools.APIUtils;
 import com.comov.myapplication.datamodel.Channel;
 import com.comov.myapplication.datamodel.ChannelResponse;
+import com.comov.myapplication.services.Background;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,20 +36,29 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
     List<Channel> channels;
     String username;
     String token;
-    MainView mainView;
+    private Intent notService;
+    private static MainView mainView;
     Runnable runnable;
     Handler handler;
+    private static String current_channel;
     //private EditText message;
     //private Button btnSend;
+
+    public static MainView getInstance(){
+        return mainView;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chats_view);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        notService = new Intent(this, Background.class);
         setSupportActionBar(toolbar);
         APIService = APIUtils.getAPIService();
         mainView = this;
+        createNotificationChannel();
+
         handler = new Handler();
         runnable = () -> {
             getChannelsFromUser();
@@ -64,6 +77,21 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
         getChannelsFromUser();
     }
 
+    public static String getCurrent_channel() {
+        return current_channel;
+    }
+
+    private void createNotificationChannel() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            CharSequence name = getString(R.string.app_name);
+            String description = getString(R.string.channel_description);
+            NotificationChannel channel = new NotificationChannel(getString(R.string.channelID),name, NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setDescription(description);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu,menu);
@@ -73,14 +101,18 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
     @Override
     protected void onStart() {
         super.onStart();
+        current_channel ="";
         runnable.run();
+        startNotification();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         handler.removeCallbacks(runnable);
+        stopNotification();
     }
+
 
     public void getChannelsFromUser(){
         APIService.getChannel(token,username).enqueue(new Callback<ChannelResponse>(){
@@ -100,6 +132,15 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
                 Toast.makeText(getApplicationContext(), "Fail "+ t, Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private void startNotification() {
+        startService(notService);
+
+    }
+
+    private void stopNotification() {
+        stopService(notService);
     }
 
     public void openAddChannel() {
@@ -134,6 +175,7 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
         intent.putExtra("channelID", channel.get_id());
         intent.putExtra("title", channel.getTitle());
         intent.putExtra("token", token);
+        current_channel = channel.get_id();
         startActivity(intent);
     }
 

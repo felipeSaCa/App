@@ -14,4 +14,6 @@
     <string name="btnAddChannel">Add Channel</string>
     <string name="editAddContact">Add Contact</string>
     <string name="btnAddContact">Add Contact</string>
+    <string name="channel_description">New Messages</string>
+    <string name="channelID">App Notifications</string>
 </resources>

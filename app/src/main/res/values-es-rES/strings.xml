@@ -15,4 +15,6 @@
     <string name="btnAddChannel">Añadir Canal</string>
     <string name="editAddContact">Añadir Contacto</string>
     <string name="btnAddContact">Añadir Contacto</string>
+    <string name="channel_description">Mensajes nuevos</string>
+    <string name="channelID">Notificaciones de la app</string>
 </resources>

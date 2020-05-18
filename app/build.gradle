@@ -35,6 +35,8 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+    implementation 'com.android.support:support-compat:28.0.0'
+
     //https://mvnrepository.com/artifact/org.mongodb/bson
     implementation 'org.mongodb:bson:4.0.0'
     //implementation 'org.bson:bson:4.0.1'

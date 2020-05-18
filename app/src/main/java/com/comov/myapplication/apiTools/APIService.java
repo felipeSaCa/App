@@ -53,6 +53,10 @@ public interface APIService {
     Call<MessageResponse> getMessage(@Header("authorization") String auth,
                                      @Query("channel") String channel);
 
+    @GET("/api/message")
+    Call<Integer> getNumberMessages(@Header("authorization") String auth,
+                                            @Query("channel") String channel);
+
     @Headers("Content-Type: application/json")
     @POST("/api/channel")
     Call<Channel> postChannel(@Header("authorization") String auth,
