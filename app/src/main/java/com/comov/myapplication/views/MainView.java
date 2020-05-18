@@ -4,22 +4,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.comov.myapplication.R;
 import com.comov.myapplication.adapters.ChannelAdapter;
 import com.comov.myapplication.apiTools.APIUtils;
-
-import com.comov.myapplication.datamodel.*;
+import com.comov.myapplication.datamodel.Channel;
+import com.comov.myapplication.datamodel.ChannelResponse;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,6 +26,8 @@ import retrofit2.Response;
 
 public class MainView extends AppCompatActivity implements ChannelAdapter.ChannelListener {
     private com.comov.myapplication.apiTools.APIService APIService;
+    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+    setSupportActionBar(toolbar);
     RecyclerView recyclerViewChannel;
     ChannelAdapter channelAdapter;
     List<Channel> channels;
@@ -41,7 +42,7 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.chat_main_activity);
+        setContentView(R.layout.activity_chats_view);
         APIService = APIUtils.getAPIService();
         mainView = this;
         handler = new Handler();
@@ -52,9 +53,6 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
         //obtener con getIntent() los parametros de login obtenidos
         username = getIntent().getStringExtra("name");
         token = getIntent().getStringExtra("token");
-        TextView nameTxt = findViewById(R.id.user_name);
-        String finalTxt = "Hi "+ username;
-        nameTxt.setText(finalTxt);
         channels = new ArrayList<Channel>();
         recyclerViewChannel = findViewById(R.id.channelsList);
         channelAdapter = new ChannelAdapter(channels,mainView);
@@ -107,6 +105,13 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
 
     public void openAddContact(View v){
         Intent intent = new Intent(MainView.this, AddContactView.class);
+        intent.putExtra("username", username);
+        intent.putExtra("token", token);
+        startActivity(intent);
+    }
+
+    public void openContactList(View v){
+        Intent intent = new Intent(MainView.this, ContactList.class);
         intent.putExtra("username", username);
         intent.putExtra("token", token);
         startActivity(intent);

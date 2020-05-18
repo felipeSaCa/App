@@ -20,7 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".views.Register" android:parentActivityName=".views.MainActivity" />
+        <activity android:name=".views.Register" android:parentActivityName=".views.Login" />
         <activity android:name=".views.ChatView" android:parentActivityName=".views.MainView" />
         <activity android:name=".views.AddChatView"
             android:parentActivityName=".views.MainView"
@@ -29,11 +29,12 @@
         <activity android:name=".views.MainView"
             android:parentActivityName=".views.MainView"
             android:launchMode="singleTop"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             />
         <activity android:name=".views.AddContactView"
             android:parentActivityName=".views.MainView"
             android:launchMode="singleTask"/>
-        <activity android:name=".views.MainActivity">
+        <activity android:name=".views.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

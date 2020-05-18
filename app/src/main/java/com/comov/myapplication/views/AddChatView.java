@@ -65,18 +65,16 @@ public class AddChatView extends AppCompatActivity{
             public void onResponse(Call<Channel> call, Response<Channel> response) {
                 System.out.println(response.code() + response.toString() );
                 if (response.code() == 201){
-                    Toast.makeText(getApplicationContext(), "Added Chat: " + response.body().getTitle(), Toast.LENGTH_LONG).show();
-                    System.out.println("####################################### "+ response.body().get_id());
+                    Toast.makeText(getApplicationContext(), "Added Chat" + response.body().getTitle(), Toast.LENGTH_LONG).show();
                     finish();
                 }
                 else if (response.code() == 500){
-                    Toast.makeText(getApplicationContext(), "500", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Server error", Toast.LENGTH_LONG).show();
                 }
             }
             @Override
             public void onFailure(Call<Channel> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "Register NOT OK " + t, Toast.LENGTH_LONG).show();
-                //Manejar error TODO if (response.code() == ??? )
             }
         });
     }

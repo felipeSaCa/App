@@ -10,14 +10,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.comov.myapplication.R;
 import com.comov.myapplication.apiTools.APIUtils;
-import com.comov.myapplication.datamodel.Login;
 import com.comov.myapplication.datamodel.Token;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class Login extends AppCompatActivity {
     private com.comov.myapplication.apiTools.APIService APIService;
 
     @Override
@@ -61,12 +60,12 @@ public class MainActivity extends AppCompatActivity {
         //auxCipherPassword.update(password.getText().toString().getBytes());
         String cipherPassword = auxCipherPassword.digest(password.getText().toString().getBytes()).toString();*/
 
-        Login login = new Login(name.getText().toString(),password.getText().toString());
+        com.comov.myapplication.datamodel.Login login = new com.comov.myapplication.datamodel.Login(name.getText().toString(),password.getText().toString());
         sendLogin(login);
 
     }
 
-    public void sendLogin(Login login) {
+    public void sendLogin(com.comov.myapplication.datamodel.Login login) {
         APIService.postLogin(login).enqueue(new Callback<Token>() {
             @Override
             public void onResponse(Call<Token> call, Response<Token> response) {
@@ -93,12 +92,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openRegister(View v) {
-        Intent intent = new Intent(MainActivity.this, Register.class);
+        Intent intent = new Intent(Login.this, Register.class);
         startActivity(intent);
     }
 
     public void openMainView(String name, String token){
-        Intent intent = new Intent(MainActivity.this, MainView.class);
+        Intent intent = new Intent(Login.this, MainView.class);
         intent.putExtra("name", name);
         intent.putExtra("token", token);
         startActivity(intent);

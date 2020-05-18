@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     android:background="#191919">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+
     <ImageView
         android:id="@+id/logo"
         android:layout_width="101dp"
@@ -48,15 +58,5 @@
         android:text="@string/btnAddContact"
         tools:layout_editor_absoluteX="318dp"
         tools:layout_editor_absoluteY="84dp" />
-
-    <TextView
-        android:id="@+id/user_name"
-        android:layout_width="105dp"
-        android:layout_height="26dp"
-        android:layout_toRightOf="@id/logo"
-        android:text="user_name"
-        android:textColor="@color/white"
-        tools:layout_editor_absoluteX="153dp"
-        tools:layout_editor_absoluteY="455dp" />
 
 </RelativeLayout>

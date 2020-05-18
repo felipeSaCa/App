@@ -67,5 +67,9 @@ public interface APIService {
     Call<Users> postContact(@Header("authorization") String auth,
                             @Body Login contact);
 
+    @GET("/api/user")
+    Call<Users> getUser(@Header("authorization") String auth,
+                            @Query("username") String username);
+
 }
 
