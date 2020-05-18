@@ -39,6 +39,10 @@
             android:parentActivityName=".views.MainView"
             android:launchMode="singleTask"
             />
+        <activity android:name=".views.AddUserChannel"
+            android:parentActivityName=".views.MainView"
+            android:launchMode="singleTask"
+            />
         <activity android:name=".views.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

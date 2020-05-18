@@ -183,8 +183,7 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.logoutMenu)
-            // TODO
-            System.out.println("TODO");
+            finish();
         else if (id == R.id.contactListMenu)
             openContactList();
         else if (id == R.id.addContactMenu)

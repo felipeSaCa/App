@@ -11,15 +11,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.comov.myapplication.R;
 import com.comov.myapplication.apiTools.APIUtils;
 import com.comov.myapplication.datamodel.Login;
-import com.comov.myapplication.datamodel.Users;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddContactView extends AppCompatActivity {
+public class AddUserChannel extends AppCompatActivity {
     private com.comov.myapplication.apiTools.APIService APIService;
-    private String username;
+    private String channelID;
     private String token;
 
     @Override
@@ -27,44 +27,43 @@ public class AddContactView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contact);
         APIService = APIUtils.getAPIService();
-        username = getIntent().getStringExtra("username");
+        channelID = getIntent().getStringExtra("channelID");
         token = getIntent().getStringExtra("token");
 
-        final EditText textcontact = (EditText) findViewById(R.id.editAddContact);
+        final EditText textuserchannel = (EditText) findViewById(R.id.editAddUserChannel);
         Button btnAddContact = (Button) findViewById(R.id.btnAddContact);
         btnAddContact.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 //Comprobar campos
-                if (textcontact.getText().toString().matches("")) {
-                    textcontact.setError("Contact is required");
-                    textcontact.requestFocus();
+                if (textuserchannel.getText().toString().matches("")) {
+                    textuserchannel.setError("User is required");
+                    textuserchannel.requestFocus();
                     return;
                 }
-                Login contact = new Login(username, textcontact.getText().toString());
-                addContact(contact);
-                textcontact.setText("");
+                Login userChannel = new Login(channelID, textuserchannel.getText().toString());
+                addUserChannel(userChannel);
+                textuserchannel.setText("");
                 onBackPressed();
             }
         });
     }
 
-    public void addContact(Login contact) {
-        APIService.postContact(token,contact).enqueue(new Callback<Users>() {
+    public void addUserChannel(Login userChannel) {
+        APIService.postUserChannel(token,userChannel).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<Users> call, Response<Users> response) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 System.out.println(response.code() + response.toString() );
                 if (response.code() == 201){
                     Toast.makeText(getApplicationContext(), "Added Contact", Toast.LENGTH_LONG).show();
                 }
                 else if (response.code() == 400){
-                    Toast.makeText(getApplicationContext(), "400", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Not found", Toast.LENGTH_LONG).show();
                 }
             }
             @Override
-            public void onFailure(Call<Users> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "Server NOT OK", Toast.LENGTH_LONG).show();
-                //Manejar error TODO if (response.code() == ??? )
             }
         });
     }

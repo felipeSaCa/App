@@ -11,8 +11,10 @@ import com.comov.myapplication.datamodel.Users;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
@@ -55,7 +57,7 @@ public interface APIService {
 
     @GET("/api/message")
     Call<Integer> getNumberMessages(@Header("authorization") String auth,
-                                            @Query("channel") String channel);
+                                    @Query("channel") String channel);
 
     @Headers("Content-Type: application/json")
     @POST("/api/channel")
@@ -66,6 +68,15 @@ public interface APIService {
     Call<ChannelResponse> getChannel(@Header("authorization") String auth,
                                      @Query("username") String username);
 
+    @DELETE("/api/channel/delete")
+    Call<ResponseBody> deleteChannel(@Header("authorization") String auth,
+                                     @Query("channel") String channel);
+
+    @Headers("Content-Type: application/json")
+    @POST("/api/channel/user")
+    Call<ResponseBody> postUserChannel(@Header("authorization") String auth,
+                                       @Body Login addUser);
+
     @Headers("Content-Type: application/json")
     @POST("/api/contact")
     Call<Users> postContact(@Header("authorization") String auth,
@@ -73,7 +84,7 @@ public interface APIService {
 
     @GET("/api/user")
     Call<Users> getUser(@Header("authorization") String auth,
-                            @Query("username") String username);
+                        @Query("username") String username);
 
 }
 

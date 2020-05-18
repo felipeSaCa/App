@@ -14,18 +14,7 @@
         android:background="@color/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:titleMarginStart="40dp"
-        app:title="Toolbar"
-        app:logo="@drawable/ic_logout"
         />
-
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="101dp"
-        android:layout_height="70dp"
-        android:layout_alignParentLeft="true"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="283dp"
-        tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/channelsList"

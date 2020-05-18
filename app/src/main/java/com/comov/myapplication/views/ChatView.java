@@ -1,5 +1,6 @@
 package com.comov.myapplication.views;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -22,6 +23,7 @@ import com.comov.myapplication.datamodel.MessageResponse;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -64,7 +66,7 @@ public class ChatView extends AppCompatActivity {
         //linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        String titleToText = "Channel "+title;
+        String titleToText = title;
         TextView titleText = findViewById(R.id.TitleChat);
         titleText.setText(titleToText);
 
@@ -136,6 +138,34 @@ public class ChatView extends AppCompatActivity {
 
             }
         });
-
     }
+
+    public void deleteChannel(View view){
+        APIservice.deleteChannel(token,channelID).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.code() == 200){
+                    Toast.makeText(getApplicationContext(),"Channel removed",Toast.LENGTH_LONG).show();
+                    finish();
+                }
+                else if (response.code() == 500){
+                    Toast.makeText(getApplicationContext(), "Server error." +
+                            "", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "Fail "+ t, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    public void openAddUserChannel(View view){
+        Intent intent = new Intent(this, AddUserChannel.class);
+        intent.putExtra("channelID", channelID);
+        intent.putExtra("token", token);
+        startActivity(intent);
+    }
+
 }

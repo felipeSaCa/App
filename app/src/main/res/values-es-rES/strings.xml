@@ -17,4 +17,5 @@
     <string name="btnAddContact">Añadir Contacto</string>
     <string name="channel_description">Mensajes nuevos</string>
     <string name="channelID">Notificaciones de la app</string>
+    <string name="Slipt">Separa los usuarios por , </string>
 </resources>

@@ -16,4 +16,5 @@
     <string name="btnAddContact">Add Contact</string>
     <string name="channel_description">New Messages</string>
     <string name="channelID">App Notifications</string>
+    <string name="Slipt">Slipt users by , </string>
 </resources>
