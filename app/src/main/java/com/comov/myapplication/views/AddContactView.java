@@ -1,4 +1,4 @@
-package com.comov.myapplication;
+package com.comov.myapplication.views;
 
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.comov.myapplication.R;
 import com.comov.myapplication.apiTools.APIUtils;
 import com.comov.myapplication.datamodel.Login;
 import com.comov.myapplication.datamodel.Users;

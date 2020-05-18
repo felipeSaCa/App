@@ -20,20 +20,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Register" android:parentActivityName=".MainActivity" />
-        <activity android:name=".ChatView" android:parentActivityName=".MainView" />
-        <activity android:name=".AddChatView"
-            android:parentActivityName=".MainView"
+        <activity android:name=".views.Register" android:parentActivityName=".views.MainActivity" />
+        <activity android:name=".views.ChatView" android:parentActivityName=".views.MainView" />
+        <activity android:name=".views.AddChatView"
+            android:parentActivityName=".views.MainView"
             android:launchMode="singleTask"
             />
-        <activity android:name=".MainView"
-            android:parentActivityName=".MainView"
+        <activity android:name=".views.MainView"
+            android:parentActivityName=".views.MainView"
             android:launchMode="singleTop"
             />
-        <activity android:name=".AddContactView"
-            android:parentActivityName=".MainView"
+        <activity android:name=".views.AddContactView"
+            android:parentActivityName=".views.MainView"
             android:launchMode="singleTask"/>
-        <activity android:name=".MainActivity">
+        <activity android:name=".views.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

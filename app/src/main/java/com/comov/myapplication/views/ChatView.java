@@ -1,4 +1,4 @@
-package com.comov.myapplication;
+package com.comov.myapplication.views;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.comov.myapplication.R;
 import com.comov.myapplication.adapters.MessageAdapter;
 import com.comov.myapplication.apiTools.APIService;
 import com.comov.myapplication.apiTools.APIUtils;
