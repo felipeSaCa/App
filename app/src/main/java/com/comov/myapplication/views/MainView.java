@@ -3,6 +3,7 @@ package com.comov.myapplication.views;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
 
@@ -26,8 +27,6 @@ import retrofit2.Response;
 
 public class MainView extends AppCompatActivity implements ChannelAdapter.ChannelListener {
     private com.comov.myapplication.apiTools.APIService APIService;
-    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-    setSupportActionBar(toolbar);
     RecyclerView recyclerViewChannel;
     ChannelAdapter channelAdapter;
     List<Channel> channels;
@@ -43,6 +42,8 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chats_view);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         APIService = APIUtils.getAPIService();
         mainView = this;
         handler = new Handler();
@@ -63,6 +64,11 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
         getChannelsFromUser();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu,menu);
+        return true;
+    }
 
     @Override
     protected void onStart() {

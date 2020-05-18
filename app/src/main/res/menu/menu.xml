@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:title="Logout"
+        android:id="@+id/logout"/>
+
+    <item
+        android:title="contacts"
+        android:id="@+id/contactListMenu"
+        android:icon="@drawable/ic_contact_list"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:title="contacts"
+        android:id="@+id/addContactMenu"
+        android:icon="@drawable/ic_add_contact"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:title="contacts"
+        android:id="@+id/addChannelMenu"
+        android:icon="@drawable/ic_add_channel"
+        app:showAsAction="always"
+        />
+
+</menu>

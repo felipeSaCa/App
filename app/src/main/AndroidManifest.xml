@@ -33,7 +33,12 @@
             />
         <activity android:name=".views.AddContactView"
             android:parentActivityName=".views.MainView"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask"
+            />
+        <activity android:name=".views.ContactList"
+            android:parentActivityName=".views.MainView"
+            android:launchMode="singleTask"
+            />
         <activity android:name=".views.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

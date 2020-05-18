@@ -4,17 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#191919">
+    android:background="@color/colorPrimary"
+    android:theme = "@style/NoActionBar">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
-
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbar"
+        android:background="@color/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:titleMarginStart="40dp"
+        app:title="Toolbarrr"
+        app:logo="@drawable/ic_logout"
+        />
 
     <ImageView
         android:id="@+id/logo"
@@ -29,34 +31,13 @@
         android:id="@+id/channelsList"
         android:layout_width="417dp"
         android:layout_height="660dp"
-        android:layout_below="@id/addChannel"
+        android:layout_below="@+id/toolbar"
         android:layout_alignParentBottom="true"
+        android:layout_marginTop="0dp"
         android:background="#191919"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="70dp" />
 
-    <Button
-        android:id="@+id/addChannel"
-        android:layout_width="108dp"
-        android:layout_height="72dp"
-        android:layout_alignParentRight="true"
-        android:background="@drawable/buttonround"
-        android:onClick="openAddChannel"
-        android:text="@string/btnAddChannel"
-        tools:layout_editor_absoluteX="318dp"
-        tools:layout_editor_absoluteY="84dp" />
 
-    <Button
-        android:id="@+id/addContact"
-        android:layout_width="108dp"
-        android:layout_height="72dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginEnd="112dp"
-        android:layout_marginRight="103dp"
-        android:background="@drawable/buttonround"
-        android:onClick="openAddContact"
-        android:text="@string/btnAddContact"
-        tools:layout_editor_absoluteX="318dp"
-        tools:layout_editor_absoluteY="84dp" />
 
 </RelativeLayout>
