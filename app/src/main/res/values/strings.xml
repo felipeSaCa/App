@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Feather</string>
     <string name="btnRegister">Register</string>
     <string name="btnLogin">Login</string>
     <string name="btnSend">Send</string>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Feather</string>
     <string name="btnRegister">Registro</string>
     <string name="btnLogin">Entrar</string>
     <string name="btnSend">Enviar</string>
