@@ -3,6 +3,7 @@ package com.comov.myapplication.views;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -40,6 +41,7 @@ public class ChatView extends AppCompatActivity {
     private Handler handler;
     private Runnable runnable;
     private MessageAdapter messageAdapter;
+    static final int REQUEST_IMAGE_CAPTURE = 1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -166,6 +168,13 @@ public class ChatView extends AppCompatActivity {
         intent.putExtra("channelID", channelID);
         intent.putExtra("token", token);
         startActivity(intent);
+    }
+
+    public void takePic(View v){
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
     }
 
 }
