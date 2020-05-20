@@ -243,7 +243,7 @@ public class NotificationService extends Service {
             for (int i=0;i<diffMessages;i++){
                 mNotify+=printMessage(messages.get(i));
             }
-            mNotificationBuilder.setContentText(mNotify);
+            mNotificationBuilder.setStyle(new NotificationCompat.BigTextStyle().bigText(mNotify));
 
         }
 

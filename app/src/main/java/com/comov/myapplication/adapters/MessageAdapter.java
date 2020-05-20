@@ -1,8 +1,12 @@
 package com.comov.myapplication.adapters;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,7 +22,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
 
     private static final int MESSAGE_SENT = 0;
     private static final int GROUP_MESSAGE_RECEIVED =1;
-
+    private static final int IMAGE_SENT =2;
 
     private List<Message> messages;
     private String current_user;
@@ -37,7 +41,11 @@ public class MessageAdapter extends RecyclerView.Adapter {
                 return new ViewHolderOwnMessage(view);
             case GROUP_MESSAGE_RECEIVED:
                 View view1 = LayoutInflater.from(parent.getContext()).inflate(R.layout.received_groups_message,parent,false);
-                return new ViewHolderGroupMessage(view1);        }
+                return new ViewHolderGroupMessage(view1);
+            case IMAGE_SENT:
+                View view2 = LayoutInflater.from(parent.getContext()).inflate(R.layout.imagen_sent,parent,false);
+                return new ViewHolderImageMessage(view2);
+        }
         return null;
     }
 
@@ -58,6 +66,15 @@ public class MessageAdapter extends RecyclerView.Adapter {
             holderGroupMessage.getUser().setText(message.getUsername());
             holderGroupMessage.getDate().setText(dateString);
         }
+        else if (type == IMAGE_SENT){
+            ViewHolderImageMessage holderImageMessage = (ViewHolderImageMessage) holder;
+            holderImageMessage.getDate().setText(dateString);
+            holderImageMessage.getText().setText(message.getUsername());
+
+            byte[] decodedString = Base64.decode(message.getTitle(), Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            holderImageMessage.getImage().setImageBitmap(decodedByte);
+        }
     }
 
     @Override
@@ -68,6 +85,8 @@ public class MessageAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemViewType(int position){
         Message message = messages.get(position);
+        if(message.getImagenBoolean())
+            return IMAGE_SENT;
         if(message.getUsername().equals(current_user)){
             return MESSAGE_SENT;
         }
@@ -106,6 +125,30 @@ public class MessageAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
+    public class ViewHolderImageMessage extends RecyclerView.ViewHolder{
+        ImageView image;
+        TextView text;
+        TextView date;
+
+        public ViewHolderImageMessage(@NonNull View itemView) {
+            super(itemView);
+            text = itemView.findViewById(R.id.userMessage);
+            date = itemView.findViewById(R.id.date);
+            image = itemView.findViewById(R.id.imagenMessage);
+        }
+
+        public ImageView getImage() {
+            return image;
+        }
+
+        public TextView getText() {
+            return text;
+        }
+
+        public TextView getDate() {
+            return date;
+        }
+    }
 
     public class ViewHolderOwnMessage extends RecyclerView.ViewHolder {
         TextView text;
