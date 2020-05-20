@@ -20,36 +20,46 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".views.Register" android:parentActivityName=".views.Login" />
-        <activity android:name=".views.ChatView" android:parentActivityName=".views.MainView" />
-        <activity android:name=".views.AddChatView"
-            android:parentActivityName=".views.MainView"
+        <service
+            android:name=".services.NotificationService"
+            android:enabled="true"
+            android:exported="true"></service>
+
+        <activity
+            android:name=".views.Register"
+            android:parentActivityName=".views.Login" />
+        <activity
+            android:name=".views.ChatView"
+            android:parentActivityName=".views.MainView" />
+        <activity
+            android:name=".views.AddChatView"
             android:launchMode="singleTask"
-            />
-        <activity android:name=".views.MainView"
-            android:parentActivityName=".views.MainView"
+            android:parentActivityName=".views.MainView" />
+        <activity
+            android:name=".views.MainView"
             android:launchMode="singleTop"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            />
-        <activity android:name=".views.AddContactView"
             android:parentActivityName=".views.MainView"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".views.AddContactView"
             android:launchMode="singleTask"
-            />
-        <activity android:name=".views.ContactList"
-            android:parentActivityName=".views.MainView"
+            android:parentActivityName=".views.MainView" />
+        <activity
+            android:name=".views.ContactList"
             android:launchMode="singleTask"
-            />
-        <activity android:name=".views.AddUserChannel"
-            android:parentActivityName=".views.MainView"
+            android:parentActivityName=".views.MainView" />
+        <activity
+            android:name=".views.AddUserChannel"
             android:launchMode="singleTask"
-            />
+            android:parentActivityName=".views.MainView" />
         <activity android:name=".views.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".services.Background"/>
+
     </application>
 
 </manifest>

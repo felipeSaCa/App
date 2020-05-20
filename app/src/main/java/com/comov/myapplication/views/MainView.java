@@ -1,11 +1,9 @@
 package com.comov.myapplication.views;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -20,7 +18,7 @@ import com.comov.myapplication.adapters.ChannelAdapter;
 import com.comov.myapplication.apiTools.APIUtils;
 import com.comov.myapplication.datamodel.Channel;
 import com.comov.myapplication.datamodel.ChannelResponse;
-import com.comov.myapplication.services.Background;
+import com.comov.myapplication.services.NotificationService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,13 +34,12 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
     List<Channel> channels;
     String username;
     String token;
-    private Intent notService;
+    private Intent requestIntent;
     private static MainView mainView;
     Runnable runnable;
     Handler handler;
-    private static String current_channel;
-    //private EditText message;
-    //private Button btnSend;
+    private Boolean backgroundService = false;
+    public static String current_channel;
 
     public static MainView getInstance(){
         return mainView;
@@ -53,20 +50,26 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chats_view);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        notService = new Intent(this, Background.class);
+        //notService = new Intent(this, Background.class);
         setSupportActionBar(toolbar);
         APIService = APIUtils.getAPIService();
         mainView = this;
-        createNotificationChannel();
+        //
 
         handler = new Handler();
         runnable = () -> {
             getChannelsFromUser();
             handler.postDelayed(runnable,5000);
         };
+
         //obtener con getIntent() los parametros de login obtenidos
         username = getIntent().getStringExtra("name");
         token = getIntent().getStringExtra("token");
+        if(!backgroundService){
+            requestIntent = new Intent(this, NotificationService.class);
+            NotificationService.startNotificationService(3,MainView.this, requestIntent, username, token);
+            backgroundService = true;
+        }
         channels = new ArrayList<Channel>();
         recyclerViewChannel = findViewById(R.id.channelsList);
         channelAdapter = new ChannelAdapter(channels,mainView);
@@ -81,16 +84,7 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
         return current_channel;
     }
 
-    private void createNotificationChannel() {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            CharSequence name = getString(R.string.app_name);
-            String description = getString(R.string.channel_description);
-            NotificationChannel channel = new NotificationChannel(getString(R.string.channelID),name, NotificationManager.IMPORTANCE_DEFAULT);
-            channel.setDescription(description);
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -103,14 +97,33 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
         super.onStart();
         current_channel ="";
         runnable.run();
-        startNotification();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         handler.removeCallbacks(runnable);
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
         stopNotification();
+    }
+
+    private void startNotification(){
+        Intent intentActivity = new Intent(this, Background.class);
+        Log.i("Background service","Entering");
+        intentActivity.putExtra("name", username);
+        intentActivity.putExtra("token", token);
+        startService(intentActivity);
+        backgroundService = true;
+    }
+
+    private void stopNotification() {
+        stopService(requestIntent);
+        backgroundService = false;
     }
 
 
@@ -134,14 +147,7 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
         });
     }
 
-    private void startNotification() {
-        startService(notService);
 
-    }
-
-    private void stopNotification() {
-        stopService(notService);
-    }
 
     public void openAddChannel() {
         Intent intent = new Intent(MainView.this, AddChatView.class);

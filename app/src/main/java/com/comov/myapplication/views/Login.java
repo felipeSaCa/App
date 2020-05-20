@@ -1,6 +1,9 @@
 package com.comov.myapplication.views;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -98,8 +101,20 @@ public class Login extends AppCompatActivity {
 
     public void openMainView(String name, String token){
         Intent intent = new Intent(Login.this, MainView.class);
+        createNotificationChannel();
         intent.putExtra("name", name);
         intent.putExtra("token", token);
         startActivity(intent);
+    }
+
+    private void createNotificationChannel() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            CharSequence name = getString(R.string.app_name);
+            String description = getString(R.string.channel_description);
+            NotificationChannel channel = new NotificationChannel(getString(R.string.channelID),name, NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setDescription(description);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 }
