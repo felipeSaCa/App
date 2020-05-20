@@ -112,15 +112,6 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
         stopNotification();
     }
 
-    private void startNotification(){
-        Intent intentActivity = new Intent(this, Background.class);
-        Log.i("Background service","Entering");
-        intentActivity.putExtra("name", username);
-        intentActivity.putExtra("token", token);
-        startService(intentActivity);
-        backgroundService = true;
-    }
-
     private void stopNotification() {
         stopService(requestIntent);
         backgroundService = false;
