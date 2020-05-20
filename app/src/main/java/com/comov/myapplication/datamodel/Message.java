@@ -1,7 +1,5 @@
 package com.comov.myapplication.datamodel;
 
-import androidx.annotation.Nullable;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -19,22 +17,27 @@ public class Message implements Serializable {
     @SerializedName("username")
     @Expose
     private String username;
-
     @SerializedName("channelID")
     @Expose
     private String channelID;
+    @SerializedName("imagen")
+    @Expose
+    private boolean imagen;
 
-    public Message(String title, Date date, String username, String uidChannel) {
+
+    public Message(String title, Date date, String username, String uidChannel, boolean imagen) {
         this.title = title;
         this.date = date;
         this.username = username;
         this.channelID = uidChannel;
+        this.imagen = imagen;
     }
 
-    public Message(String title, String username, String uidChannel) {
+    public Message(String title, String username, String uidChannel, boolean imagen) {
         this.title = title;
         this.username = username;
         this.channelID = uidChannel;
+        this.imagen = imagen;
     }
 
     public String getTitle() {
@@ -67,6 +70,12 @@ public class Message implements Serializable {
 
     public void setChannelID(String uid) {
         this.channelID = uid;
+    }
+
+    public boolean getImagenBoolean(){ return imagen;}
+
+    public void setImagenBoolean(boolean imagen) {
+        this.imagen = imagen;
     }
 
 

@@ -1,9 +1,12 @@
 package com.comov.myapplication.views;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -21,6 +24,8 @@ import com.comov.myapplication.apiTools.APIUtils;
 import com.comov.myapplication.datamodel.Message;
 import com.comov.myapplication.datamodel.MessageResponse;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -120,7 +125,7 @@ public class ChatView extends AppCompatActivity {
         if(text.getText().toString().matches("")){
             return;
         }
-        Message mymessage = new Message(text.getText().toString(),username, channelID);
+        Message mymessage = new Message(text.getText().toString(),username, channelID,false);
         text.getText().clear();
         APIservice.postMessage(token,mymessage).enqueue(new Callback<Message>(){
 
@@ -177,4 +182,89 @@ public class ChatView extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("MissingSuperCall")
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            int nh = (int) ( imageBitmap.getHeight() * (256.0 / imageBitmap.getWidth()) );
+            Bitmap scaled = Bitmap.createScaledBitmap(imageBitmap, 256 , nh, true);
+            String encodedImage = Base64.encodeToString(bitmapToByteArray(scaled), Base64.DEFAULT);
+            Message photo = new Message(encodedImage,username,channelID,true);
+
+            /*RequestBody pic = RequestBody.create(MediaType.parse("image/png"), bitmapToByteArray(scaled));
+            System.out.println("########################\n"+ pic + "\n##############################");*/
+            /*byte[] bitmapdata = bitmapToByteArray(scaled);
+            File f = new File(getApplicationContext().getCacheDir(), "temporary_file.jpg");
+            try { f.createNewFile(); } catch (IOException e) { e.printStackTrace();}
+            FileOutputStream fos = null;
+            try { fos = new FileOutputStream(f);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } try {
+                fos.write(bitmapdata);
+                fos.flush();
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            RequestBody reqBody = RequestBody.create(MediaType.parse("image/*"), f);
+            MultipartBody.Part body = MultipartBody.Part.createFormData("photo", f.getName(), reqBody);
+            System.out.println("########################\n"+ body + "\n##############################");*/
+
+            APIservice.postPic(token,photo).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.code() == 201) {
+
+                    } else if (response.code() == 500){
+                        Toast.makeText(getApplicationContext(), "Server error" +
+                                "", Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Toast.makeText(getApplicationContext(), "Fail " + t, Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+    }
+
+    public static byte[] bitmapToByteArray(Bitmap bitmap){
+        ByteArrayOutputStream bos = null;
+        try {
+            bos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
+            return bos.toByteArray();
+        }finally {
+            if(bos != null){
+                try {
+                    bos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+    /*ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 50, bos);
+            byte[] bitmapdata = bos.toByteArray();
+
+            File f = new File(getApplicationContext().getCacheDir(), "temporary_file.jpg");
+            FileOutputStream fos = null;
+            try {
+                fos = new FileOutputStream(f);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } try {
+                fos.write(bitmapdata);
+                fos.flush();
+                fos.close();
+            } catch (IOException e) { e.printStackTrace(); }
+
+            RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), f);
+            MultipartBody.Part body = MultipartBody.Part.createFormData("upload", f.getName(), reqFile);*/
 }
