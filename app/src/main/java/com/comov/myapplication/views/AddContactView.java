@@ -57,14 +57,13 @@ public class AddContactView extends AppCompatActivity {
                 if (response.code() == 201){
                     Toast.makeText(getApplicationContext(), "Added Contact", Toast.LENGTH_LONG).show();
                 }
-                else if (response.code() == 400){
-                    Toast.makeText(getApplicationContext(), "400", Toast.LENGTH_LONG).show();
+                else if (response.code() == 404){
+                    Toast.makeText(getApplicationContext(), "User not found", Toast.LENGTH_LONG).show();
                 }
             }
             @Override
             public void onFailure(Call<Users> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "Server NOT OK", Toast.LENGTH_LONG).show();
-                //Manejar error TODO if (response.code() == ??? )
             }
         });
     }

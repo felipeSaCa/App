@@ -57,8 +57,8 @@ public class AddUserChannel extends AppCompatActivity {
                 if (response.code() == 201){
                     Toast.makeText(getApplicationContext(), "Added user", Toast.LENGTH_LONG).show();
                 }
-                else if (response.code() == 400){
-                    Toast.makeText(getApplicationContext(), "Not found", Toast.LENGTH_LONG).show();
+                else if (response.code() == 404){
+                    Toast.makeText(getApplicationContext(), "User not found", Toast.LENGTH_LONG).show();
                 }
             }
             @Override

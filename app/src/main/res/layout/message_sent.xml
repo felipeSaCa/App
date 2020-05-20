@@ -16,7 +16,6 @@
         android:textSize="16dp"
         android:text="Sample of text"
         android:background="#cccc"
-
         />
 
     <TextView
