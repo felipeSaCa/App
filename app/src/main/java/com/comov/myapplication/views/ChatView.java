@@ -188,31 +188,10 @@ public class ChatView extends AppCompatActivity {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            int nh = (int) ( imageBitmap.getHeight() * (256.0 / imageBitmap.getWidth()) );
-            Bitmap scaled = Bitmap.createScaledBitmap(imageBitmap, 256 , nh, true);
+            int nh = (int) ( imageBitmap.getHeight() * (512.0 / imageBitmap.getWidth()) );
+            Bitmap scaled = Bitmap.createScaledBitmap(imageBitmap, 512 , nh, true);
             String encodedImage = Base64.encodeToString(bitmapToByteArray(scaled), Base64.DEFAULT);
             Message photo = new Message(encodedImage,username,channelID,true);
-
-            /*RequestBody pic = RequestBody.create(MediaType.parse("image/png"), bitmapToByteArray(scaled));
-            System.out.println("########################\n"+ pic + "\n##############################");*/
-            /*byte[] bitmapdata = bitmapToByteArray(scaled);
-            File f = new File(getApplicationContext().getCacheDir(), "temporary_file.jpg");
-            try { f.createNewFile(); } catch (IOException e) { e.printStackTrace();}
-            FileOutputStream fos = null;
-            try { fos = new FileOutputStream(f);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } try {
-                fos.write(bitmapdata);
-                fos.flush();
-                fos.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            RequestBody reqBody = RequestBody.create(MediaType.parse("image/*"), f);
-            MultipartBody.Part body = MultipartBody.Part.createFormData("photo", f.getName(), reqBody);
-            System.out.println("########################\n"+ body + "\n##############################");*/
 
             APIservice.postPic(token,photo).enqueue(new Callback<ResponseBody>() {
                 @Override

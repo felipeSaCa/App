@@ -86,12 +86,6 @@ public interface APIService {
     Call<Users> getUser(@Header("authorization") String auth,
                         @Query("username") String username);
 
-    /*@Multipart
-    @POST("/api/upload")
-    Call<ResponseBody> postPic(@Header("authorization") String auth,
-                               //@Part("description") RequestBody description,
-                               @Part MultipartBody.Part file);*/
-
     @POST("/api/upload")
     Call<ResponseBody> postPic(@Header("authorization") String auth,
                                @Body Message message);
