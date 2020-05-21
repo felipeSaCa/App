@@ -36,11 +36,13 @@ public class ContactList extends AppCompatActivity implements ContactAdapter.Con
         APIService = APIUtils.getAPIService();
         recyclerView = findViewById(R.id.contactList);
         contactAdapter = new ContactAdapter(new ArrayList<String>(),this);
+        recyclerView.setAdapter(contactAdapter);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
         username = getIntent().getStringExtra("username");
         token = getIntent().getStringExtra("token");
         getContactList();
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(linearLayoutManager);
+
     }
 
     private void getContactList(){
