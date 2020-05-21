@@ -23,6 +23,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
     private static final int MESSAGE_SENT = 0;
     private static final int GROUP_MESSAGE_RECEIVED =1;
     private static final int IMAGE_SENT =2;
+    private static final int IMAGE_RECEIVED =3;
 
     private List<Message> messages;
     private String current_user;
@@ -44,7 +45,10 @@ public class MessageAdapter extends RecyclerView.Adapter {
                 return new ViewHolderGroupMessage(view1);
             case IMAGE_SENT:
                 View view2 = LayoutInflater.from(parent.getContext()).inflate(R.layout.imagen_sent,parent,false);
-                return new ViewHolderImageMessage(view2);
+                return new ViewHolderImageSentMessage(view2);
+            case IMAGE_RECEIVED:
+                View view3 = LayoutInflater.from(parent.getContext()).inflate(R.layout.imagen_received,parent,false);
+                return new ViewHolderImageReceivedMessage(view3);
         }
         return null;
     }
@@ -67,7 +71,16 @@ public class MessageAdapter extends RecyclerView.Adapter {
             holderGroupMessage.getDate().setText(dateString);
         }
         else if (type == IMAGE_SENT){
-            ViewHolderImageMessage holderImageMessage = (ViewHolderImageMessage) holder;
+            ViewHolderImageSentMessage holderImageMessage = (ViewHolderImageSentMessage) holder;
+            holderImageMessage.getDate().setText(dateString);
+            holderImageMessage.getText().setText(message.getUsername());
+
+            byte[] decodedString = Base64.decode(message.getTitle(), Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            holderImageMessage.getImage().setImageBitmap(decodedByte);
+        }
+        else if (type == IMAGE_RECEIVED){
+            ViewHolderImageReceivedMessage holderImageMessage = (ViewHolderImageReceivedMessage) holder;
             holderImageMessage.getDate().setText(dateString);
             holderImageMessage.getText().setText(message.getUsername());
 
@@ -85,12 +98,15 @@ public class MessageAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemViewType(int position){
         Message message = messages.get(position);
-        if(message.getImagenBoolean())
-            return IMAGE_SENT;
+
         if(message.getUsername().equals(current_user)){
+            if(message.getImagenBoolean())
+                return IMAGE_SENT;
             return MESSAGE_SENT;
         }
         else {
+            if(message.getImagenBoolean())
+                return IMAGE_RECEIVED;
             return GROUP_MESSAGE_RECEIVED;
         }
     }
@@ -125,16 +141,41 @@ public class MessageAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
-    public class ViewHolderImageMessage extends RecyclerView.ViewHolder{
+    public class ViewHolderImageSentMessage extends RecyclerView.ViewHolder{
         ImageView image;
         TextView text;
         TextView date;
 
-        public ViewHolderImageMessage(@NonNull View itemView) {
+        public ViewHolderImageSentMessage(@NonNull View itemView) {
             super(itemView);
             text = itemView.findViewById(R.id.userMessage);
             date = itemView.findViewById(R.id.date);
             image = itemView.findViewById(R.id.imagenMessage);
+        }
+
+        public ImageView getImage() {
+            return image;
+        }
+
+        public TextView getText() {
+            return text;
+        }
+
+        public TextView getDate() {
+            return date;
+        }
+    }
+
+    public class ViewHolderImageReceivedMessage extends RecyclerView.ViewHolder{
+        ImageView image;
+        TextView text;
+        TextView date;
+
+        public ViewHolderImageReceivedMessage(@NonNull View itemView) {
+            super(itemView);
+            text = itemView.findViewById(R.id.userMessageReceived);
+            date = itemView.findViewById(R.id.dateImageReceived);
+            image = itemView.findViewById(R.id.imageMessageReceived);
         }
 
         public ImageView getImage() {

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:id="@+id/userMessageReceived"
+        android:text="User"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/imageMessageReceived"
+        android:layout_alignBottom="@id/imageMessageReceived"
+        android:id="@+id/dateImageReceived"
+        android:text="18:43"
+
+        tools:ignore="NotSibling" />
+
+    <ImageView
+        android:id="@+id/imageMessageReceived"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/userMessageReceived"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp" />
+
+</RelativeLayout>
