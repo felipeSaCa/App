@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.comov.myapplication.R;
 import com.comov.myapplication.adapters.ContactAdapter;
 import com.comov.myapplication.apiTools.APIUtils;
+import com.comov.myapplication.datamodel.UserResponse;
 import com.comov.myapplication.datamodel.Users;
 
 import java.util.ArrayList;
@@ -40,11 +41,13 @@ public class ContactList extends AppCompatActivity implements ContactAdapter.Con
     }
 
     private void getContactList(){
-        APIService.getUser(token,username).enqueue(new Callback<Users>(){
+        APIService.getUser(token,username).enqueue(new Callback<UserResponse>(){
             @Override
-            public void onResponse(Call<Users> call, Response<Users> response) {
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 if (response.code() == 200) {
-                    List<String> contactsList = response.body().getContacts();
+                    List<Users> usersList = response.body().getUsers();
+                    List<String> contactsList =  usersList.get(0).getContacts();
+                    System.out.println("#######################\n"+contactsList.toString()+"\n#########################");
                     contactAdapter.updateItems(contactsList);
                     contactAdapter.notifyDataSetChanged();
 
@@ -57,7 +60,7 @@ public class ContactList extends AppCompatActivity implements ContactAdapter.Con
 
             }
             @Override
-            public void onFailure(Call<Users> call, Throwable t){
+            public void onFailure(Call<UserResponse> call, Throwable t){
                 Toast.makeText(getApplicationContext(), "Fail "+ t, Toast.LENGTH_LONG).show();
             }
         });
@@ -65,14 +68,16 @@ public class ContactList extends AppCompatActivity implements ContactAdapter.Con
 
     @Override
     public void onClickContact(String contact) {
-        APIService.getUser(token,contact).enqueue(new Callback<Users>(){
+        APIService.getUser(token,contact).enqueue(new Callback<UserResponse>(){
             @Override
-            public void onResponse(Call<Users> call, Response<Users> response) {
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 if (response.code() == 200) {
+                    List<Users> usersList = response.body().getUsers();
+
                     Intent intent = new Intent(ContactList.this, ContactProfile.class);
-                    intent.putExtra("username", response.body().getName());
-                    intent.putExtra("email", response.body().getEmail());
-                    intent.putExtra("age", response.body().getAge());
+                    intent.putExtra("username", usersList.get(0).getName());
+                    intent.putExtra("email", usersList.get(0).getEmail());
+                    intent.putExtra("age", usersList.get(0).getAge());
                     startActivity(intent);
                 } else if (response.code() == 404 )
                     Toast.makeText(getApplicationContext(), "Contact not found." +
@@ -82,7 +87,7 @@ public class ContactList extends AppCompatActivity implements ContactAdapter.Con
                             "", Toast.LENGTH_LONG).show();
             }
             @Override
-            public void onFailure(Call<Users> call, Throwable t){
+            public void onFailure(Call<UserResponse> call, Throwable t){
                 Toast.makeText(getApplicationContext(), "Fail "+ t, Toast.LENGTH_LONG).show();
             }
         });

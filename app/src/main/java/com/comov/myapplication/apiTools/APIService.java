@@ -7,6 +7,7 @@ import com.comov.myapplication.datamodel.Message;
 import com.comov.myapplication.datamodel.MessageResponse;
 import com.comov.myapplication.datamodel.Post;
 import com.comov.myapplication.datamodel.Token;
+import com.comov.myapplication.datamodel.UserResponse;
 import com.comov.myapplication.datamodel.Users;
 
 import java.util.List;
@@ -83,8 +84,8 @@ public interface APIService {
                             @Body Login contact);
 
     @GET("/api/user")
-    Call<Users> getUser(@Header("authorization") String auth,
-                        @Query("username") String username);
+    Call<UserResponse> getUser(@Header("authorization") String auth,
+                               @Query("username") String username);
 
     @POST("/api/upload")
     Call<ResponseBody> postPic(@Header("authorization") String auth,
