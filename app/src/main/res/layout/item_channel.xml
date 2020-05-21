@@ -6,12 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bordertext">
 
-    <Button
-        android:id="@+id/goInside"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="See the chat" />
+
     <TextView
         android:id="@+id/titleChannel"
         android:layout_width="wrap_content"
