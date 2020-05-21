@@ -1,5 +1,6 @@
 package com.comov.myapplication.views;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -64,6 +65,26 @@ public class ContactList extends AppCompatActivity implements ContactAdapter.Con
 
     @Override
     public void onClickContact(String contact) {
-        //TODO
+        APIService.getUser(token,contact).enqueue(new Callback<Users>(){
+            @Override
+            public void onResponse(Call<Users> call, Response<Users> response) {
+                if (response.code() == 200) {
+                    Intent intent = new Intent(ContactList.this, ContactProfile.class);
+                    intent.putExtra("username", response.body().getName());
+                    intent.putExtra("email", response.body().getEmail());
+                    intent.putExtra("age", response.body().getAge());
+                    startActivity(intent);
+                } else if (response.code() == 404 )
+                    Toast.makeText(getApplicationContext(), "Contact not found." +
+                            "", Toast.LENGTH_LONG).show();
+                else if (response.code() == 500)
+                    Toast.makeText(getApplicationContext(), "Server error." +
+                            "", Toast.LENGTH_LONG).show();
+            }
+            @Override
+            public void onFailure(Call<Users> call, Throwable t){
+                Toast.makeText(getApplicationContext(), "Fail "+ t, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

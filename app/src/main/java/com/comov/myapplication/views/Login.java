@@ -65,8 +65,6 @@ public class Login extends AppCompatActivity {
 
         com.comov.myapplication.datamodel.Login login = new com.comov.myapplication.datamodel.Login(name.getText().toString(),password.getText().toString());
         sendLogin(login);
-        name.setText("");
-        password.setText("");
     }
 
     public void sendLogin(com.comov.myapplication.datamodel.Login login) {
@@ -88,7 +86,6 @@ public class Login extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Token> call, Throwable t) {
-                System.out.println("###### Fail ####### " + call + "  " + t);
                 call.cancel();
                 Toast.makeText(getApplicationContext(), "Login NOT OK", Toast.LENGTH_LONG).show();
             }

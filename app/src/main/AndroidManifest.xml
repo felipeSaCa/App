@@ -49,6 +49,10 @@
             android:launchMode="singleTask"
             android:parentActivityName=".views.MainView" />
         <activity
+            android:name=".views.ContactProfile"
+            android:launchMode="singleTask"
+            android:parentActivityName=".views.ContactList" />
+        <activity
             android:name=".views.AddUserChannel"
             android:launchMode="singleTask"
             android:parentActivityName=".views.MainView" />

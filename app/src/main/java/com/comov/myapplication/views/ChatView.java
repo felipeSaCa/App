@@ -76,8 +76,6 @@ public class ChatView extends AppCompatActivity {
         String titleToText = title;
         TextView titleText = findViewById(R.id.TitleChat);
         titleText.setText(titleToText);
-
-
     }
 
     @Override
@@ -99,12 +97,9 @@ public class ChatView extends AppCompatActivity {
             @Override
             public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {
                 if(response.code() == 200){
-                        //Toast.makeText(getApplicationContext(),"Mensajes llegados",Toast.LENGTH_LONG).show();
                         List<Message> messages1 = response.body().getMessages();
                         messageAdapter.addItems(messages1);
                         messageAdapter.notifyDataSetChanged();
-
-
                 }
                 else if (response.code() == 404){
                     Toast.makeText(getApplicationContext(), "Messsages not found." +
@@ -131,10 +126,7 @@ public class ChatView extends AppCompatActivity {
 
             @Override
             public void onResponse(Call<Message> call, Response<Message> response) {
-                if(response.code() == 201){
-                    //Toast.makeText(getApplicationContext(),"Se envia correctamente",Toast.LENGTH_LONG).show();
-                }
-                else if(response.code() == 500){
+                if(response.code() == 500){
                     Toast.makeText(getApplicationContext(), "Internal server error" +
                             "", Toast.LENGTH_LONG).show();
                 }
@@ -164,6 +156,7 @@ public class ChatView extends AppCompatActivity {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "Fail "+ t, Toast.LENGTH_LONG).show();
+                call.cancel();
             }
         });
     }
@@ -228,22 +221,4 @@ public class ChatView extends AppCompatActivity {
             }
         }
     }
-    /*ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 50, bos);
-            byte[] bitmapdata = bos.toByteArray();
-
-            File f = new File(getApplicationContext().getCacheDir(), "temporary_file.jpg");
-            FileOutputStream fos = null;
-            try {
-                fos = new FileOutputStream(f);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } try {
-                fos.write(bitmapdata);
-                fos.flush();
-                fos.close();
-            } catch (IOException e) { e.printStackTrace(); }
-
-            RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), f);
-            MultipartBody.Part body = MultipartBody.Part.createFormData("upload", f.getName(), reqFile);*/
 }
