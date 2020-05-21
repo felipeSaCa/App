@@ -29,6 +29,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
         public ViewHolderContact(@NonNull View itemView) {
             super(itemView);
             user = itemView.findViewById(R.id.titleChannel);
+            itemView.setOnClickListener(this);
         }
 
         @Override
