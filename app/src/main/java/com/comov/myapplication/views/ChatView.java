@@ -70,7 +70,6 @@ public class ChatView extends AppCompatActivity {
         recyclerView.setAdapter(messageAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setReverseLayout(true);
-        //linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
 
         String titleToText = title;

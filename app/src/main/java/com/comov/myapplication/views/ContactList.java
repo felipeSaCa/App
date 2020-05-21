@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.comov.myapplication.R;
@@ -38,6 +39,8 @@ public class ContactList extends AppCompatActivity implements ContactAdapter.Con
         username = getIntent().getStringExtra("username");
         token = getIntent().getStringExtra("token");
         getContactList();
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
     }
 
     private void getContactList(){
