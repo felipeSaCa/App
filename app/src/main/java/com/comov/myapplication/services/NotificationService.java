@@ -180,9 +180,10 @@ public class NotificationService extends Service {
             channel.forEach( c -> {
                 if(mapaNotificaciones.get(c.get_id())!=null){
                     auxiliary.put(c.get_id(),mapaNotificaciones.get(c.get_id()));
+                } else{
                     notChannel.put(c.get_id(),getNextCounter());
-                } else
                     auxiliary.put(c.get_id(),new Values(false,0, c));
+                }
             });
             mapaNotificaciones.clear();
             mapaNotificaciones = auxiliary;
