@@ -188,8 +188,8 @@ public class ChatView extends AppCompatActivity {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            int nh = (int) ( imageBitmap.getHeight() * (512.0 / imageBitmap.getWidth()) );
-            Bitmap scaled = Bitmap.createScaledBitmap(imageBitmap, 512 , nh, true);
+            int nh = (int) ( imageBitmap.getHeight() * (300.0 / imageBitmap.getWidth()) );
+            Bitmap scaled = Bitmap.createScaledBitmap(imageBitmap, 300 , nh, true);
             String encodedImage = Base64.encodeToString(bitmapToByteArray(scaled), Base64.DEFAULT);
             Message photo = new Message(encodedImage,username,channelID,true);
 

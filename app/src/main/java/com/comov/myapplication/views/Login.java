@@ -65,7 +65,8 @@ public class Login extends AppCompatActivity {
 
         com.comov.myapplication.datamodel.Login login = new com.comov.myapplication.datamodel.Login(name.getText().toString(),password.getText().toString());
         sendLogin(login);
-
+        name.setText("");
+        password.setText("");
     }
 
     public void sendLogin(com.comov.myapplication.datamodel.Login login) {
