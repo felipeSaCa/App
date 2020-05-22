@@ -85,7 +85,7 @@ public class ChatView extends AppCompatActivity {
 
         messages = new ArrayList<Message>();
         recyclerView = findViewById(R.id.recyclerChat);
-        messageAdapter = new MessageAdapter(messages, username);
+        messageAdapter = new MessageAdapter(this,messages, username);
         recyclerView.setAdapter(messageAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setReverseLayout(true);
