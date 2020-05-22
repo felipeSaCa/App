@@ -64,6 +64,7 @@ public class ChatView extends AppCompatActivity {
     private Runnable runnable;
     private MessageAdapter messageAdapter;
     static final int REQUEST_IMAGE_CAPTURE = 1;
+    static final int REQUEST_VIDEO_CAPTURE = 2;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -192,6 +193,13 @@ public class ChatView extends AppCompatActivity {
         }
     }
 
+    public void takeVideo(View v) {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_VIDEO_CAPTURE);
+        }
+    }
+
     @SuppressLint("MissingSuperCall")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -219,6 +227,11 @@ public class ChatView extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Fail " + t, Toast.LENGTH_LONG).show();
                 }
             });
+        }
+
+        if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
+            // Do something with the on result.
+            // Return the video path, open the video etc
         }
     }
 
@@ -262,10 +275,7 @@ public class ChatView extends AppCompatActivity {
         fusedLocationClient.getLastLocation().addOnSuccessListener(ChatView.this, new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
-                System.out.println("#############################\n"+ location.toString() + "\n#############################");
-                System.out.println("#############################\n"+ location + "\n#############################");
-                System.out.println("#############################\n"+ location.getSpeed() + "\n#############################");
-                if(location != null){
+                 if(location != null){
                     LatLng coordenadas = new LatLng(location.getLatitude(),location.getLongitude());
                     Log.i("Prueba de concepto","coordendas-> latitud:"+ coordenadas.latitude+" longitud: "+coordenadas.longitude);
                     Message locationMsg = new Message(parseCoordenadasToString(coordenadas),username,channelID,Message.LOCATION_MESSAGE);
