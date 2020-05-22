@@ -102,6 +102,12 @@ public class Message implements Serializable {
         return false;
     }
 
+    public boolean isVideo(){
+        if(type == VIDEO_MESSAGE)
+            return true;
+        return false;
+    }
+
 
     @Override
     public boolean equals(Object o) {

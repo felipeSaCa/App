@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,6 +33,8 @@ public class MessageAdapter extends RecyclerView.Adapter {
     private static final int IMAGE_RECEIVED = 3;
     private static final int LOCATION_SENT = 4;
     private static final int LOCATION_RECEIVED = 5;
+    private static final int VIDEO_SENT = 6;
+    private static final int VIDEO_RECEIVED = 7;
 
     private List<Message> messages;
     private String current_user;
@@ -62,6 +65,15 @@ public class MessageAdapter extends RecyclerView.Adapter {
             case LOCATION_SENT:
                 View view4 = LayoutInflater.from(parent.getContext()).inflate(R.layout.location_sent,parent,false);
                 return new ViewHolderLocationSentMessage(view4);
+            case LOCATION_RECEIVED:
+                View view5 = LayoutInflater.from(parent.getContext()).inflate(R.layout.location_received,parent,false);
+                return new ViewHolderLocationSentMessage(view5);
+            case VIDEO_SENT:
+                View view6 = LayoutInflater.from(parent.getContext()).inflate(R.layout.video_sent,parent,false);
+                return new ViewHolderLocationSentMessage(view6);
+            case VIDEO_RECEIVED:
+                View view7 = LayoutInflater.from(parent.getContext()).inflate(R.layout.video_received,parent,false);
+                return new ViewHolderLocationSentMessage(view7);
         }
         return null;
     }
@@ -118,6 +130,34 @@ public class MessageAdapter extends RecyclerView.Adapter {
                         context.startActivity(intent);
                     }
                 });
+                break;
+            case LOCATION_RECEIVED:
+                ViewHolderLocationReceivedMessage holderLocationReceivedMessage = (ViewHolderLocationReceivedMessage) holder;
+                holderLocationReceivedMessage.getDate().setText(dateString);
+                holderLocationReceivedMessage.getUser().setText(message.getUsername());
+                holderLocationReceivedMessage.getMap().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String[] geocode =message.getTitle().split(",");
+                        Log.i("Coordenadas", "Size "+ geocode.length);
+                        Intent intent = new Intent(context, MapsActivity.class);
+                        intent.putExtra("latitud",geocode[0]);
+                        intent.putExtra("longitud",geocode[1]);
+                        context.startActivity(intent);
+                    }
+                });
+                break;
+            case VIDEO_SENT:
+                ViewHolderVideoSentMessage holderVideoSentMessage = (ViewHolderVideoSentMessage) holder;
+                holderVideoSentMessage.getDate().setText(dateString);
+                holderVideoSentMessage.getUser().setText(message.getUsername());
+                //TODO tratamiento
+                break;
+            case VIDEO_RECEIVED:
+                ViewHolderVideoReceivedMessage holderVideoReceivedMessage = (ViewHolderVideoReceivedMessage) holder;
+                holderVideoReceivedMessage.getDate().setText(dateString);
+                holderVideoReceivedMessage.getText().setText(message.getUsername());
+                //TODO tratamiento
         }
     }
 
@@ -136,6 +176,8 @@ public class MessageAdapter extends RecyclerView.Adapter {
                 return IMAGE_SENT;
             else if(message.isLocation())
                 return LOCATION_SENT;
+            else if(message.isVideo())
+                return VIDEO_SENT;
             return MESSAGE_SENT;
         }
         else {
@@ -143,6 +185,8 @@ public class MessageAdapter extends RecyclerView.Adapter {
                 return IMAGE_RECEIVED;
             else if(message.isLocation())
                 return LOCATION_RECEIVED;
+            else if(message.isVideo())
+                return VIDEO_RECEIVED;
             return GROUP_MESSAGE_RECEIVED;
         }
     }
@@ -295,6 +339,83 @@ public class MessageAdapter extends RecyclerView.Adapter {
 
         public TextView getUser() {
             return user;
+        }
+
+        public TextView getDate() {
+            return date;
+        }
+    }
+
+    public class ViewHolderLocationReceivedMessage extends RecyclerView.ViewHolder {
+        ImageButton map;
+        TextView user;
+        TextView date;
+
+        public ViewHolderLocationReceivedMessage(@NonNull View itemView) {
+            super(itemView);
+            map = itemView.findViewById(R.id.mapViewReceived);
+            user = itemView.findViewById(R.id.userLocationReceived);
+            date = itemView.findViewById(R.id.dateLocationReceived);
+        }
+
+        public ImageButton getMap() {
+            return map;
+        }
+
+        public TextView getUser() {
+            return user;
+        }
+
+        public TextView getDate() {
+            return date;
+        }
+    }
+
+
+
+    public class ViewHolderVideoSentMessage extends RecyclerView.ViewHolder{
+        VideoView video;
+        TextView user;
+        TextView date;
+
+        public ViewHolderVideoSentMessage(@NonNull View itemView) {
+            super(itemView);
+            user = itemView.findViewById(R.id.userVideoSent);
+            date = itemView.findViewById(R.id.dateVideo);
+            video = itemView.findViewById(R.id.userVideoSent);
+        }
+
+        public VideoView getImage() {
+            return video;
+        }
+
+        public TextView getUser() {
+            return user;
+        }
+
+        public TextView getDate() {
+            return date;
+        }
+    }
+
+    public class ViewHolderVideoReceivedMessage extends RecyclerView.ViewHolder{
+        VideoView video;
+        TextView text;
+        TextView date;
+
+        public ViewHolderVideoReceivedMessage(@NonNull View itemView) {
+            super(itemView);
+            text = itemView.findViewById(R.id.userVideoReceived);
+            date = itemView.findViewById(R.id.dateVideoReceived);
+            video = itemView.findViewById(R.id.videoMessageReceived);
+        }
+
+        public VideoView getImage() {
+            return video;
+        }
+
+        public TextView getText() {
+            return text;
         }
 
         public TextView getDate() {
