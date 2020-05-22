@@ -1,19 +1,27 @@
 package com.comov.myapplication.views;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,6 +31,13 @@ import com.comov.myapplication.apiTools.APIService;
 import com.comov.myapplication.apiTools.APIUtils;
 import com.comov.myapplication.datamodel.Message;
 import com.comov.myapplication.datamodel.MessageResponse;
+import com.comov.myapplication.location.LocationAddressModel;
+import com.comov.myapplication.location.LocationHelper;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -35,6 +50,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ChatView extends AppCompatActivity {
+
+
+    public final static int MY_LOCATION_PERMISSION = 0;
+    public final static int MY_LOCATION_PERMISSION_FINE = 1;
+
+    private FusedLocationProviderClient fusedLocationClient;
+
 
     private APIService APIservice;
     private String username;
@@ -53,6 +75,7 @@ public class ChatView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         APIservice = APIUtils.getAPIService();
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         username = getIntent().getStringExtra("username");
         channelID = getIntent().getStringExtra("channelID");
         title = getIntent().getStringExtra("title");
@@ -119,7 +142,7 @@ public class ChatView extends AppCompatActivity {
         if(text.getText().toString().matches("")){
             return;
         }
-        Message mymessage = new Message(text.getText().toString(),username, channelID,false);
+        Message mymessage = new Message(text.getText().toString(),username, channelID,Message.TEXT_MESSAGE);
         text.getText().clear();
         APIservice.postMessage(token,mymessage).enqueue(new Callback<Message>(){
 
@@ -183,7 +206,7 @@ public class ChatView extends AppCompatActivity {
             int nh = (int) ( imageBitmap.getHeight() * (300.0 / imageBitmap.getWidth()) );
             Bitmap scaled = Bitmap.createScaledBitmap(imageBitmap, 300 , nh, true);
             String encodedImage = Base64.encodeToString(bitmapToByteArray(scaled), Base64.DEFAULT);
-            Message photo = new Message(encodedImage,username,channelID,true);
+            Message photo = new Message(encodedImage,username,channelID,Message.IMAGE_MESSAGE);
 
             APIservice.postPic(token,photo).enqueue(new Callback<ResponseBody>() {
                 @Override
@@ -220,4 +243,56 @@ public class ChatView extends AppCompatActivity {
             }
         }
     }
+
+    private void checkPermissionsLocation() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                }, MY_LOCATION_PERMISSION);
+            }
+        } else {
+        }
+    }
+
+
+
+    public void getLocation(View v) {
+        checkPermissionsLocation();
+        fusedLocationClient.getLastLocation().addOnSuccessListener(this, location -> {
+            if(location != null){
+                LatLng coordenadas = new LatLng(location.getLatitude(),location.getLongitude());
+                Log.i("Prueba de concepto","coordendas-> latitud:"+ coordenadas.latitude+" longitud: "+coordenadas.longitude);
+                Message locationMsg = new Message(parseCoordenadasToString(coordenadas),username,channelID,Message.TEXT_MESSAGE);
+                APIservice.postLocation(token, locationMsg).enqueue(new Callback<ResponseBody>(){
+
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if(response.code()==201){
+
+                        }else if (response.code() == 500){
+                            Toast.makeText(getApplicationContext(), "Server error" +
+                                    "", Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                    }
+                });
+            } else {
+                Toast.makeText(getApplicationContext(), "Pues no hay ubicacion parece" +
+                        "", Toast.LENGTH_LONG).show();
+            }
+        });
+
+    }
+
+    public String parseCoordenadasToString(LatLng location){
+        return location.latitude+","+location.longitude;
+    }
+
+
 }

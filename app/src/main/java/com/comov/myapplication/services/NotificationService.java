@@ -129,14 +129,10 @@ public class NotificationService extends Service {
         private void getNewMessages(int target) {
                 try {
                     Thread.sleep(1000);
-                    Log.i(TAG,""+(target)+" seconds");
                     getChannelsFromUser();
                     Thread.sleep(1000);
-                    Log.i(TAG,""+(target-1)+" seconds");
-                    Log.i(TAG,"Size "+ mapaNotificaciones.size());
                     for (String key:
                          mapaNotificaciones.keySet()) {
-                        Log.i(TAG,"CANAL "+mapaNotificaciones.get(key).channel.getTitle());
                         processMessages(mapaNotificaciones.get(key));
                     }
                     /*mapaNotificaciones.forEach((k,v)->{
@@ -145,7 +141,6 @@ public class NotificationService extends Service {
                         //showNotification(Integer.parseInt(k));
                     });*/
                     Thread.sleep(1000);
-                    Log.i(TAG,""+(target-2)+" seconds");
                 }catch (InterruptedException e){
                     Thread.currentThread().interrupt();
                 }
@@ -154,16 +149,13 @@ public class NotificationService extends Service {
         }
 
         public void getChannelsFromUser(){
-            Log.i(TAG,"Buscando channels");
             APIservice.getChannel(token,username).enqueue(new retrofit2.Callback<ChannelResponse>(){
                 @RequiresApi(api = Build.VERSION_CODES.N)
                 @Override
                 public void onResponse(Call<ChannelResponse> call, Response<ChannelResponse> response) {
                     if (response.code() == 200) {
-                        Log.i(TAG,"Canales to update");
                         List<Channel> channels1 = response.body().getChannels();
                         updateChannel(channels1);
-                        Log.i(TAG,"Canales actualizados");
                     } else if (response.code() == 404 ){ Log.i(TAG,"Not found");}
                 }
                 @Override
@@ -200,19 +192,15 @@ public class NotificationService extends Service {
                 public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {
                     if(response.code() == 200){
                         List<com.comov.myapplication.datamodel.Message> messages1 = response.body().getMessages();
-                        Log.i(TAG,"Mensajes del canal obtenidos " + value.channel.get_id());
                         if(!value.update){//si es falso entonces first time
-                            Log.i(TAG,"Actualizados los mensajes por primera vez");
                             value.update = true;
                             value.notificationMsg = messages1.size();
                             value.lastValue = messages1.size();
                             mapaNotificaciones.put(value.channel.get_id(),value);
                         }
                         else{
-                            Log.i(TAG,"No es la primera vez");
                             if(!value.lastValue.equals(messages1.size())){
                                 if(!value.notificationMsg.equals(messages1.size())){
-                                    Log.i(TAG,"Debe saltar notificacion");
                                     value.notificationMsg = messages1.size();
                                     mapaNotificaciones.put(value.channel.get_id(),value);
                                     notifyMessage(messages1,value.notificationMsg-value.lastValue);
@@ -249,7 +237,7 @@ public class NotificationService extends Service {
         }
 
         private String printMessage(com.comov.myapplication.datamodel.Message message) {
-            if(message.getImagenBoolean())
+            if(message.isImage())
                 return message.getUsername() +": (Photo)\n";
             return message.getUsername()+": "+message.getTitle()+"\n";
         }

@@ -91,5 +91,9 @@ public interface APIService {
     Call<ResponseBody> postPic(@Header("authorization") String auth,
                                @Body Message message);
 
+    @POST("/api/location")
+    Call<ResponseBody> postLocation(@Header("authorization") String auth,
+                               @Body Message message);
+
 }
 

@@ -10,7 +10,7 @@
 
     <EditText
         android:id="@+id/editWriteAMessage"
-        android:layout_width="250dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
@@ -99,10 +99,23 @@
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="8dp"
         android:layout_toStartOf="@+id/btnSendChat"
-        android:layout_toEndOf="@+id/editWriteAMessage"
         android:background="@drawable/buttonround"
         android:onClick="takePic"
         app:srcCompat="@drawable/ic_photo" />
+
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="50dp"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="8dp"
+        android:layout_toStartOf="@+id/imageButton2"
+        android:layout_toEndOf="@+id/editWriteAMessage"
+        android:background="@drawable/buttonround"
+        android:onClick="getLocation"
+        app:srcCompat="@drawable/ic_place_black_24dp" />
 
 
 </RelativeLayout>

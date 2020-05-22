@@ -100,12 +100,13 @@ public class MessageAdapter extends RecyclerView.Adapter {
         Message message = messages.get(position);
 
         if(message.getUsername().equals(current_user)){
-            if(message.getImagenBoolean())
+            if(message.isImage())
                 return IMAGE_SENT;
+            else
             return MESSAGE_SENT;
         }
         else {
-            if(message.getImagenBoolean())
+            if(message.isImage())
                 return IMAGE_RECEIVED;
             return GROUP_MESSAGE_RECEIVED;
         }

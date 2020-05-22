@@ -8,6 +8,11 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Message implements Serializable {
+    public static final int TEXT_MESSAGE = 0;
+    public static final int  IMAGE_MESSAGE = 1;
+    public static final int LOCATION_MESSAGE = 2;
+
+
     @SerializedName("title")
     @Expose
     private String title;
@@ -20,24 +25,24 @@ public class Message implements Serializable {
     @SerializedName("channelID")
     @Expose
     private String channelID;
-    @SerializedName("imagen")
+    @SerializedName("type")
     @Expose
-    private boolean imagen;
+    private int type;
 
 
-    public Message(String title, Date date, String username, String uidChannel, boolean imagen) {
+    public Message(String title, Date date, String username, String uidChannel, Integer type) {
         this.title = title;
         this.date = date;
         this.username = username;
         this.channelID = uidChannel;
-        this.imagen = imagen;
+        this.type = type;
     }
 
-    public Message(String title, String username, String uidChannel, boolean imagen) {
+    public Message(String title, String username, String uidChannel, Integer type) {
         this.title = title;
         this.username = username;
         this.channelID = uidChannel;
-        this.imagen = imagen;
+        this.type = type;
     }
 
     public String getTitle() {
@@ -72,10 +77,28 @@ public class Message implements Serializable {
         this.channelID = uid;
     }
 
-    public boolean getImagenBoolean(){ return imagen;}
+    public int getType(){ return type;}
 
-    public void setImagenBoolean(boolean imagen) {
-        this.imagen = imagen;
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public boolean isText(){
+        if(type == TEXT_MESSAGE)
+            return true;
+        return false;
+    }
+
+    public boolean isImage(){
+        if(type == IMAGE_MESSAGE)
+            return true;
+        return false;
+    }
+
+    public boolean isLocation(){
+        if(type == LOCATION_MESSAGE)
+            return true;
+        return false;
     }
 
 
