@@ -209,14 +209,12 @@ public class ChatView extends AppCompatActivity {
             int nh = (int) ( imageBitmap.getHeight() * (300.0 / imageBitmap.getWidth()) );
             Bitmap scaled = Bitmap.createScaledBitmap(imageBitmap, 300 , nh, true);
             String encodedImage = Base64.encodeToString(bitmapToByteArray(scaled), Base64.DEFAULT);
-            Message photo = new Message(encodedImage,username,channelID,Message.IMAGE_MESSAGE);
+            Message photo = new Message(encodedImage,username,channelID, Message.IMAGE_MESSAGE);
 
             APIservice.postPic(token,photo).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    if (response.code() == 201) {
-
-                    } else if (response.code() == 500){
+                    if (response.code() == 500){
                         Toast.makeText(getApplicationContext(), "Server error" +
                                 "", Toast.LENGTH_LONG).show();
                     }
@@ -230,8 +228,27 @@ public class ChatView extends AppCompatActivity {
         }
 
         if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
-            // Do something with the on result.
-            // Return the video path, open the video etc
+            Bundle extras = data.getExtras();
+            Bitmap videoBitmap = (Bitmap) extras.get("data");
+            int nh = (int) ( videoBitmap.getHeight() * (300.0 / videoBitmap.getWidth()) );
+            Bitmap scaled = Bitmap.createScaledBitmap(videoBitmap, 300 , nh, true);
+            String encodedImage = Base64.encodeToString(bitmapToByteArray(scaled), Base64.DEFAULT);
+            Message video = new Message(encodedImage,username,channelID, Message.VIDEO_MESSAGE);
+
+            APIservice.postPic(token,video).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.code() == 500){
+                        Toast.makeText(getApplicationContext(), "Server error" +
+                                "", Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Toast.makeText(getApplicationContext(), "Fail " + t, Toast.LENGTH_LONG).show();
+                }
+            });
         }
     }
 
