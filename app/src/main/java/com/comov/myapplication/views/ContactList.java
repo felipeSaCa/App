@@ -52,7 +52,6 @@ public class ContactList extends AppCompatActivity implements ContactAdapter.Con
                 if (response.code() == 200) {
                     List<Users> usersList = response.body().getUsers();
                     List<String> contactsList =  usersList.get(0).getContacts();
-                    System.out.println("#######################\n"+contactsList.toString()+"\n#########################");
                     contactAdapter.updateItems(contactsList);
                     contactAdapter.notifyDataSetChanged();
 

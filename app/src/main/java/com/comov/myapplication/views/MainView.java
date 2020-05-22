@@ -3,7 +3,6 @@ package com.comov.myapplication.views;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -133,7 +132,8 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
             }
             @Override
             public void onFailure(Call<ChannelResponse> call, Throwable t){
-                Toast.makeText(getApplicationContext(), "Fail "+ t, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Fail in connection", Toast.LENGTH_LONG).show();
+                call.cancel();
             }
         });
     }
