@@ -5,12 +5,9 @@ import com.comov.myapplication.datamodel.ChannelResponse;
 import com.comov.myapplication.datamodel.Login;
 import com.comov.myapplication.datamodel.Message;
 import com.comov.myapplication.datamodel.MessageResponse;
-import com.comov.myapplication.datamodel.Post;
 import com.comov.myapplication.datamodel.Token;
 import com.comov.myapplication.datamodel.UserResponse;
 import com.comov.myapplication.datamodel.Users;
-
-import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -20,28 +17,13 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface APIService {
 
-    // GET Posts collection
-    @GET("/posts")
-    Call<List<Post>> getPosts();
-
-    // GET Post by ID
-    @GET("/posts/{id}")
-    Call<Post> getPost(@Path("id") int postId);
-
-    // POST Create a new Post resource
-    // Body annotation defines a single request body.
-    @Headers("Content-Type: application/json")
-    @POST("/posts")
-    Call<Post> newPost(@Body Post myPost);
-
     @Headers("Content-Type: application/json")
     @POST("/api/user")
-    Call<Post> postRegister (@Body Users myUsers);
+    Call<Users> postRegister (@Body Users myUsers);
 
     @Headers("Content-Type: application/json")
     @POST("/api/login")
@@ -69,7 +51,7 @@ public interface APIService {
     Call<ChannelResponse> getChannel(@Header("authorization") String auth,
                                      @Query("username") String username);
 
-    @DELETE("/api/channel/delete")
+    @DELETE("/api/channel")
     Call<ResponseBody> deleteChannel(@Header("authorization") String auth,
                                      @Query("channel") String channel);
 

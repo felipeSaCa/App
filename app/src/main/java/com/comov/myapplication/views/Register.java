@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.comov.myapplication.R;
 import com.comov.myapplication.apiTools.APIService;
 import com.comov.myapplication.apiTools.APIUtils;
-import com.comov.myapplication.datamodel.Post;
 import com.comov.myapplication.datamodel.Users;
 
 import java.util.ArrayList;
@@ -65,14 +64,6 @@ public class Register extends AppCompatActivity {
                     password.requestFocus();
                     return;
                 }
-                /*MessageDigest auxCipherPassword = null;
-                try {
-                    auxCipherPassword = MessageDigest.getInstance("SHA-256");
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                }
-                //auxCipherPassword.update(password.getText().toString().getBytes());
-                String cipherPassword = auxCipherPassword.digest(password.getText().toString().getBytes()).toString();*/
 
                 Users user;
                 if(age.getText().toString().trim().length() > 0) {
@@ -85,11 +76,11 @@ public class Register extends AppCompatActivity {
         });
     }
     public void sendRegister(Users user) {
-        APIService.postRegister(user).enqueue(new Callback<Post>() {
+        APIService.postRegister(user).enqueue(new Callback<Users>() {
             @Override
-            public void onResponse(Call<Post> call, Response<Post> response) {
+            public void onResponse(Call<Users> call, Response<Users> response) {
                 if(response.code() == 401)
-                    Toast.makeText(getApplicationContext(), "User already exists " + response.body().getId(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "User already exists", Toast.LENGTH_LONG).show();
                 else if (response.code() == 201){
                     Toast.makeText(getApplicationContext(), "Register OK ", Toast.LENGTH_LONG).show();
                     finish();
@@ -97,7 +88,7 @@ public class Register extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Post> call, Throwable t) {
+            public void onFailure(Call<Users> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "Server NOT OK " + t, Toast.LENGTH_LONG).show();
             }
         });

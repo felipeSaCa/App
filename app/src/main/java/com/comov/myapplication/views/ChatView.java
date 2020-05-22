@@ -2,7 +2,6 @@ package com.comov.myapplication.views;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -17,7 +16,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -31,12 +29,9 @@ import com.comov.myapplication.apiTools.APIService;
 import com.comov.myapplication.apiTools.APIUtils;
 import com.comov.myapplication.datamodel.Message;
 import com.comov.myapplication.datamodel.MessageResponse;
-import com.comov.myapplication.location.LocationAddressModel;
-import com.comov.myapplication.location.LocationHelper;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.ByteArrayOutputStream;
@@ -267,6 +262,9 @@ public class ChatView extends AppCompatActivity {
         fusedLocationClient.getLastLocation().addOnSuccessListener(ChatView.this, new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
+                System.out.println("#############################\n"+ location.toString() + "\n#############################");
+                System.out.println("#############################\n"+ location + "\n#############################");
+                System.out.println("#############################\n"+ location.getSpeed() + "\n#############################");
                 if(location != null){
                     LatLng coordenadas = new LatLng(location.getLatitude(),location.getLongitude());
                     Log.i("Prueba de concepto","coordendas-> latitud:"+ coordenadas.latitude+" longitud: "+coordenadas.longitude);
