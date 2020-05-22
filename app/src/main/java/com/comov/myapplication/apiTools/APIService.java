@@ -29,6 +29,10 @@ public interface APIService {
     @POST("/api/login")
     Call<Token> postLogin (@Body Login data);
 
+    @GET("/api/message")
+    Call<Token> getLogin(@Header("authorization") String auth,
+                         @Body Login data);
+
     @Headers("Content-Type: application/json")
     @POST("/api/message")
     Call<Message> postMessage(@Header("authorization") String auth,

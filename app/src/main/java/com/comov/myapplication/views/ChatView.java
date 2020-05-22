@@ -29,6 +29,8 @@ import com.comov.myapplication.apiTools.APIService;
 import com.comov.myapplication.apiTools.APIUtils;
 import com.comov.myapplication.datamodel.Message;
 import com.comov.myapplication.datamodel.MessageResponse;
+import com.comov.myapplication.datamodel.Login;
+import com.comov.myapplication.datamodel.Token;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
@@ -64,7 +66,8 @@ public class ChatView extends AppCompatActivity {
     private Runnable runnable;
     private MessageAdapter messageAdapter;
     static final int REQUEST_IMAGE_CAPTURE = 1;
-    static final int REQUEST_VIDEO_CAPTURE = 2;
+
+    final Handler tokenHandler = new Handler();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,6 +85,33 @@ public class ChatView extends AppCompatActivity {
             getMessages();
             handler.postDelayed(runnable,1000);
         };
+
+        tokenHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Login login = new Login(username,"");
+                Toast.makeText(getApplicationContext(), "Refreshing token." +
+                        "", Toast.LENGTH_LONG).show();
+                APIservice.getLogin(token,login).enqueue(new Callback<Token>() {
+                    @Override
+                    public void onResponse(Call<Token> call, Response<Token> response) {
+                        if(response.code() == 200){
+                            token = response.body().getToken();
+                        }
+                        else if (response.code() == 500){
+                            Toast.makeText(getApplicationContext(), "Fail to refresh token." +
+                                    "", Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Token> call, Throwable t) {
+                        Toast.makeText(getApplicationContext(), "Fail "+ t, Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        }, 10000);
+        //1800000
 
         messages = new ArrayList<Message>();
         recyclerView = findViewById(R.id.recyclerChat);
@@ -107,7 +137,6 @@ public class ChatView extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         handler.removeCallbacks(runnable);
-
     }
 
     public void getMessages(){
@@ -193,13 +222,6 @@ public class ChatView extends AppCompatActivity {
         }
     }
 
-    public void takeVideo(View v) {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_VIDEO_CAPTURE);
-        }
-    }
-
     @SuppressLint("MissingSuperCall")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -212,30 +234,6 @@ public class ChatView extends AppCompatActivity {
             Message photo = new Message(encodedImage,username,channelID, Message.IMAGE_MESSAGE);
 
             APIservice.postPic(token,photo).enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    if (response.code() == 500){
-                        Toast.makeText(getApplicationContext(), "Server error" +
-                                "", Toast.LENGTH_LONG).show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    Toast.makeText(getApplicationContext(), "Fail " + t, Toast.LENGTH_LONG).show();
-                }
-            });
-        }
-
-        if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap videoBitmap = (Bitmap) extras.get("data");
-            int nh = (int) ( videoBitmap.getHeight() * (300.0 / videoBitmap.getWidth()) );
-            Bitmap scaled = Bitmap.createScaledBitmap(videoBitmap, 300 , nh, true);
-            String encodedImage = Base64.encodeToString(bitmapToByteArray(scaled), Base64.DEFAULT);
-            Message video = new Message(encodedImage,username,channelID, Message.VIDEO_MESSAGE);
-
-            APIservice.postPic(token,video).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if (response.code() == 500){
@@ -281,8 +279,6 @@ public class ChatView extends AppCompatActivity {
             getLastLocation();
         }
     }
-
-
 
     public void getLocation(View v) {
         checkPermissionsLocation();

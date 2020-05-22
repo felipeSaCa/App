@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public class Message implements Serializable {
     public static final int TEXT_MESSAGE = 0;
-    public static final int  IMAGE_MESSAGE = 1;
+    public static final int IMAGE_MESSAGE = 1;
     public static final int LOCATION_MESSAGE = 2;
     public static final int VIDEO_MESSAGE = 3;
 
