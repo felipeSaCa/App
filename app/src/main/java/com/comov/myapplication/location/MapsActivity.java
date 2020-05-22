@@ -18,12 +18,16 @@ import com.google.android.gms.tasks.OnSuccessListener;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private FusedLocationProviderClient fusedLocationClient;
+    //private FusedLocationProviderClient fusedLocationClient;
+    private double latitud;
+    private double longitud;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        latitud = Double.parseDouble(getIntent().getStringExtra("latitud"));
+        longitud = Double.parseDouble(getIntent().getStringExtra("longitud"));
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -43,16 +47,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        fusedLocationClient = LocationHelper.getLocationFusedInstance(this);
-        getLastLocation(fusedLocationClient, this);
 
+        LatLng coordenadas = new LatLng(latitud,longitud);
+        mMap.addMarker(new MarkerOptions().position(coordenadas).title("Position"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(coordenadas));
+        //fusedLocationClient = LocationHelper.getLocationFusedInstance(this);
+        //getLastLocation(fusedLocationClient, this);
         /*// Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));*/
     }
 
-    private void getLastLocation(FusedLocationProviderClient fusedLocationClient, MapsActivity mapsActivity) {
+    /*private void getLastLocation(FusedLocationProviderClient fusedLocationClient, MapsActivity mapsActivity) {
         fusedLocationClient.getLastLocation().addOnSuccessListener(mapsActivity, location -> {//ON SUCCESS LISTENER
             // Got last known location. In some rare situations this can be null.
             if (location != null) {
@@ -62,5 +69,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(lastLocation));
             }
         });
-    }
+    }*/
 }

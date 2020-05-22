@@ -1,11 +1,15 @@
 package com.comov.myapplication.adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.comov.myapplication.R;
 import com.comov.myapplication.datamodel.Message;
+import com.comov.myapplication.location.MapsActivity;
 import com.google.android.gms.maps.MapView;
 
 import java.text.SimpleDateFormat;
@@ -30,10 +35,12 @@ public class MessageAdapter extends RecyclerView.Adapter {
 
     private List<Message> messages;
     private String current_user;
+    private Context context;
 
-    public MessageAdapter(List<Message> listMessage, String user){
+    public MessageAdapter(Context context,List<Message> listMessage, String user){
         messages = listMessage;
         current_user = user;
+        this.context = context;
     }
 
     @NonNull
@@ -100,9 +107,20 @@ public class MessageAdapter extends RecyclerView.Adapter {
                 ViewHolderLocationSentMessage holderLocationSentMessage = (ViewHolderLocationSentMessage) holder;
                 holderLocationSentMessage.getDate().setText(dateString);
                 holderLocationSentMessage.getUser().setText(message.getUsername());
-                holderLocationSentMessage.getMap().onStart();
+                holderLocationSentMessage.getMap().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String[] geocode =message.getTitle().split(",");
+                        Log.i("Coordenadas", "Size "+ geocode.length);
+                        Intent intent = new Intent(context, MapsActivity.class);
+                        intent.putExtra("latitud",geocode[0]);
+                        intent.putExtra("longitud",geocode[1]);
+                        context.startActivity(intent);
+                    }
+                });
         }
     }
+
 
     @Override
     public int getItemCount() {
@@ -260,7 +278,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
     }
 
     public class ViewHolderLocationSentMessage extends RecyclerView.ViewHolder {
-        MapView map;
+        ImageButton map;
         TextView user;
         TextView date;
 
@@ -271,7 +289,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
             date = itemView.findViewById(R.id.dateLocationSent);
         }
 
-        public MapView getMap() {
+        public ImageButton getMap() {
             return map;
         }
 
