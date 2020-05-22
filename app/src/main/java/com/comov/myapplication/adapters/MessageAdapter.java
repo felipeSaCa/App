@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.comov.myapplication.R;
 import com.comov.myapplication.datamodel.Message;
+import com.google.android.gms.maps.MapView;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -21,9 +22,11 @@ import java.util.List;
 public class MessageAdapter extends RecyclerView.Adapter {
 
     private static final int MESSAGE_SENT = 0;
-    private static final int GROUP_MESSAGE_RECEIVED =1;
-    private static final int IMAGE_SENT =2;
-    private static final int IMAGE_RECEIVED =3;
+    private static final int GROUP_MESSAGE_RECEIVED = 1;
+    private static final int IMAGE_SENT = 2;
+    private static final int IMAGE_RECEIVED = 3;
+    private static final int LOCATION_SENT = 4;
+    private static final int LOCATION_RECEIVED = 5;
 
     private List<Message> messages;
     private String current_user;
@@ -49,6 +52,9 @@ public class MessageAdapter extends RecyclerView.Adapter {
             case IMAGE_RECEIVED:
                 View view3 = LayoutInflater.from(parent.getContext()).inflate(R.layout.imagen_received,parent,false);
                 return new ViewHolderImageReceivedMessage(view3);
+            case LOCATION_SENT:
+                View view4 = LayoutInflater.from(parent.getContext()).inflate(R.layout.location_sent,parent,false);
+                return new ViewHolderLocationSentMessage(view4);
         }
         return null;
     }
@@ -59,34 +65,42 @@ public class MessageAdapter extends RecyclerView.Adapter {
         int type = getItemViewType(position);
         SimpleDateFormat format = new SimpleDateFormat("HH:mm dd/MM/yyyy");
         String dateString = format.format(message.getDate());
-        if(type == MESSAGE_SENT){
-            ViewHolderOwnMessage ownHolder = (ViewHolderOwnMessage) holder;
-            ownHolder.getText().setText(message.getTitle());
-            ownHolder.getDate().setText(dateString);
-        }
-        else if (type == GROUP_MESSAGE_RECEIVED){
-            ViewHolderGroupMessage holderGroupMessage = (ViewHolderGroupMessage) holder;
-            holderGroupMessage.getText().setText(message.getTitle());
-            holderGroupMessage.getUser().setText(message.getUsername());
-            holderGroupMessage.getDate().setText(dateString);
-        }
-        else if (type == IMAGE_SENT){
-            ViewHolderImageSentMessage holderImageMessage = (ViewHolderImageSentMessage) holder;
-            holderImageMessage.getDate().setText(dateString);
-            holderImageMessage.getText().setText(message.getUsername());
+        switch (type){
+            case MESSAGE_SENT:
+                ViewHolderOwnMessage ownHolder = (ViewHolderOwnMessage) holder;
+                ownHolder.getUser().setText(message.getUsername());
+                ownHolder.getText().setText(message.getTitle());
+                ownHolder.getDate().setText(dateString);
+                break;
+            case GROUP_MESSAGE_RECEIVED:
+                ViewHolderGroupMessage holderGroupMessage = (ViewHolderGroupMessage) holder;
+                holderGroupMessage.getText().setText(message.getTitle());
+                holderGroupMessage.getUser().setText(message.getUsername());
+                holderGroupMessage.getDate().setText(dateString);
+                break;
+            case IMAGE_SENT:
+                ViewHolderImageSentMessage holderImageMessage = (ViewHolderImageSentMessage) holder;
+                holderImageMessage.getDate().setText(dateString);
+                holderImageMessage.getUser().setText(message.getUsername());
 
-            byte[] decodedString = Base64.decode(message.getTitle(), Base64.DEFAULT);
-            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-            holderImageMessage.getImage().setImageBitmap(decodedByte);
-        }
-        else if (type == IMAGE_RECEIVED){
-            ViewHolderImageReceivedMessage holderImageMessage = (ViewHolderImageReceivedMessage) holder;
-            holderImageMessage.getDate().setText(dateString);
-            holderImageMessage.getText().setText(message.getUsername());
+                byte[] decodedString = Base64.decode(message.getTitle(), Base64.DEFAULT);
+                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                holderImageMessage.getImage().setImageBitmap(decodedByte);
+                break;
+            case IMAGE_RECEIVED:
+                ViewHolderImageReceivedMessage holderImageMessage2 = (ViewHolderImageReceivedMessage) holder;
+                holderImageMessage2.getDate().setText(dateString);
+                holderImageMessage2.getText().setText(message.getUsername());
 
-            byte[] decodedString = Base64.decode(message.getTitle(), Base64.DEFAULT);
-            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-            holderImageMessage.getImage().setImageBitmap(decodedByte);
+                byte[] decodedString2 = Base64.decode(message.getTitle(), Base64.DEFAULT);
+                Bitmap decodedByte2 = BitmapFactory.decodeByteArray(decodedString2, 0, decodedString2.length);
+                holderImageMessage2.getImage().setImageBitmap(decodedByte2);
+                break;
+            case LOCATION_SENT:
+                ViewHolderLocationSentMessage holderLocationSentMessage = (ViewHolderLocationSentMessage) holder;
+                holderLocationSentMessage.getDate().setText(dateString);
+                holderLocationSentMessage.getUser().setText(message.getUsername());
+                holderLocationSentMessage.getMap().onStart();
         }
     }
 
@@ -102,12 +116,15 @@ public class MessageAdapter extends RecyclerView.Adapter {
         if(message.getUsername().equals(current_user)){
             if(message.isImage())
                 return IMAGE_SENT;
-            else
+            else if(message.isLocation())
+                return LOCATION_SENT;
             return MESSAGE_SENT;
         }
         else {
             if(message.isImage())
                 return IMAGE_RECEIVED;
+            else if(message.isLocation())
+                return LOCATION_RECEIVED;
             return GROUP_MESSAGE_RECEIVED;
         }
     }
@@ -144,12 +161,12 @@ public class MessageAdapter extends RecyclerView.Adapter {
 
     public class ViewHolderImageSentMessage extends RecyclerView.ViewHolder{
         ImageView image;
-        TextView text;
+        TextView user;
         TextView date;
 
         public ViewHolderImageSentMessage(@NonNull View itemView) {
             super(itemView);
-            text = itemView.findViewById(R.id.userMessage);
+            user = itemView.findViewById(R.id.userImageSent);
             date = itemView.findViewById(R.id.date);
             image = itemView.findViewById(R.id.imagenMessage);
         }
@@ -158,8 +175,8 @@ public class MessageAdapter extends RecyclerView.Adapter {
             return image;
         }
 
-        public TextView getText() {
-            return text;
+        public TextView getUser() {
+            return user;
         }
 
         public TextView getDate() {
@@ -193,15 +210,20 @@ public class MessageAdapter extends RecyclerView.Adapter {
     }
 
     public class ViewHolderOwnMessage extends RecyclerView.ViewHolder {
+        TextView user;
         TextView text;
         TextView date;
 
         public ViewHolderOwnMessage(@NonNull View itemView) {
             super(itemView);
+            user = itemView.findViewById(R.id.userMessageSent);
             text = itemView.findViewById(R.id.sentTxt);
             date = itemView.findViewById(R.id.dateText);
         }
 
+        public TextView getUser() {
+            return user;
+        }
         public TextView getText() {
             return text;
         }
@@ -236,4 +258,30 @@ public class MessageAdapter extends RecyclerView.Adapter {
             return date;
         }
     }
+
+    public class ViewHolderLocationSentMessage extends RecyclerView.ViewHolder {
+        MapView map;
+        TextView user;
+        TextView date;
+
+        public ViewHolderLocationSentMessage(@NonNull View itemView) {
+            super(itemView);
+            map = itemView.findViewById(R.id.mapViewSent);
+            user = itemView.findViewById(R.id.userLocationSent);
+            date = itemView.findViewById(R.id.dateLocationSent);
+        }
+
+        public MapView getMap() {
+            return map;
+        }
+
+        public TextView getUser() {
+            return user;
+        }
+
+        public TextView getDate() {
+            return date;
+        }
+    }
+
 }

@@ -27,8 +27,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/receivedTxt"
-        android:layout_alignBottom="@id/receivedTxt"
+        android:layout_below="@id/receivedTxt"
         android:id="@+id/dateReceivedText"
         android:text="18:43"
 

@@ -16,8 +16,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/imageMessageReceived"
-        android:layout_alignBottom="@id/imageMessageReceived"
+        android:layout_below="@id/imageMessageReceived"
         android:id="@+id/dateImageReceived"
         android:text="18:43"
 

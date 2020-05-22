@@ -9,14 +9,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:id="@+id/userlocation" />
+        android:id="@+id/userLocationSent" />
 
     <com.google.android.gms.maps.MapView
-        android:id="@+id/mapView"
+        android:id="@+id/mapViewSent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_below="@id/userlocation"
+        android:layout_below="@id/userLocationSent"
         tools:layout_editor_absoluteX="180dp"
         tools:layout_editor_absoluteY="248dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/mapViewSent"
+        android:id="@+id/dateLocationSent" />
+
+
 </RelativeLayout>

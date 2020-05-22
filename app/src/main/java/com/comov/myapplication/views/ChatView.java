@@ -253,6 +253,7 @@ public class ChatView extends AppCompatActivity {
                 }, MY_LOCATION_PERMISSION);
             }
         } else {
+            getLastLocation();
         }
     }
 
@@ -260,34 +261,37 @@ public class ChatView extends AppCompatActivity {
 
     public void getLocation(View v) {
         checkPermissionsLocation();
-        fusedLocationClient.getLastLocation().addOnSuccessListener(this, location -> {
-            if(location != null){
-                LatLng coordenadas = new LatLng(location.getLatitude(),location.getLongitude());
-                Log.i("Prueba de concepto","coordendas-> latitud:"+ coordenadas.latitude+" longitud: "+coordenadas.longitude);
-                Message locationMsg = new Message(parseCoordenadasToString(coordenadas),username,channelID,Message.TEXT_MESSAGE);
-                APIservice.postLocation(token, locationMsg).enqueue(new Callback<ResponseBody>(){
+    }
 
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        if(response.code()==201){
+    public void getLastLocation(){
+        fusedLocationClient.getLastLocation().addOnSuccessListener(ChatView.this, new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if(location != null){
+                    LatLng coordenadas = new LatLng(location.getLatitude(),location.getLongitude());
+                    Log.i("Prueba de concepto","coordendas-> latitud:"+ coordenadas.latitude+" longitud: "+coordenadas.longitude);
+                    Message locationMsg = new Message(parseCoordenadasToString(coordenadas),username,channelID,Message.LOCATION_MESSAGE);
+                    APIservice.postLocation(token, locationMsg).enqueue(new Callback<ResponseBody>(){
 
-                        }else if (response.code() == 500){
-                            Toast.makeText(getApplicationContext(), "Server error" +
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            if(response.code()==201){
+
+                            }else if (response.code() == 500){
+                                Toast.makeText(getApplicationContext(), "Server error" +
+                                        "", Toast.LENGTH_LONG).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            Toast.makeText(getApplicationContext(), "Pues no hay ubicacion parece" +
                                     "", Toast.LENGTH_LONG).show();
                         }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                    }
-                });
-            } else {
-                Toast.makeText(getApplicationContext(), "Pues no hay ubicacion parece" +
-                        "", Toast.LENGTH_LONG).show();
+                    });
+                }
             }
         });
-
     }
 
     public String parseCoordenadasToString(LatLng location){

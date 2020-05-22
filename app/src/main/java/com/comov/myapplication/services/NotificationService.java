@@ -239,6 +239,8 @@ public class NotificationService extends Service {
         private String printMessage(com.comov.myapplication.datamodel.Message message) {
             if(message.isImage())
                 return message.getUsername() +": (Photo)\n";
+            if(message.isLocation())
+                return message.getUsername() +": (Location)\n";
             return message.getUsername()+": "+message.getTitle()+"\n";
         }
     }
