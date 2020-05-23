@@ -65,7 +65,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
                 return new ViewHolderLocationSentMessage(view4);
             case LOCATION_RECEIVED:
                 View view5 = LayoutInflater.from(parent.getContext()).inflate(R.layout.location_received,parent,false);
-                return new ViewHolderLocationSentMessage(view5);
+                return new ViewHolderLocationReceivedMessage(view5);
         }
         return null;
     }
