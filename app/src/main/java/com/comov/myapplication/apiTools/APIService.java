@@ -31,7 +31,7 @@ public interface APIService {
 
     @GET("/api/message")
     Call<Token> getLogin(@Header("authorization") String auth,
-                         @Body Login data);
+                         @Query("username") String username);
 
     @Headers("Content-Type: application/json")
     @POST("/api/message")

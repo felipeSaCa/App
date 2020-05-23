@@ -29,8 +29,6 @@ import com.comov.myapplication.apiTools.APIService;
 import com.comov.myapplication.apiTools.APIUtils;
 import com.comov.myapplication.datamodel.Message;
 import com.comov.myapplication.datamodel.MessageResponse;
-import com.comov.myapplication.datamodel.Login;
-import com.comov.myapplication.datamodel.Token;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
@@ -67,8 +65,6 @@ public class ChatView extends AppCompatActivity {
     private MessageAdapter messageAdapter;
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
-    final Handler tokenHandler = new Handler();
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,39 +76,6 @@ public class ChatView extends AppCompatActivity {
         title = getIntent().getStringExtra("title");
         token = getIntent().getStringExtra("token");
 
-        handler = new Handler();
-        runnable = () -> {
-            getMessages();
-            handler.postDelayed(runnable,1000);
-        };
-
-        tokenHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Login login = new Login(username,"");
-                Toast.makeText(getApplicationContext(), "Refreshing token." +
-                        "", Toast.LENGTH_LONG).show();
-                APIservice.getLogin(token,login).enqueue(new Callback<Token>() {
-                    @Override
-                    public void onResponse(Call<Token> call, Response<Token> response) {
-                        if(response.code() == 200){
-                            token = response.body().getToken();
-                        }
-                        else if (response.code() == 500){
-                            Toast.makeText(getApplicationContext(), "Fail to refresh token." +
-                                    "", Toast.LENGTH_LONG).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Token> call, Throwable t) {
-                        Toast.makeText(getApplicationContext(), "Fail "+ t, Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
-        }, 10000);
-        //1800000
-
         messages = new ArrayList<Message>();
         recyclerView = findViewById(R.id.recyclerChat);
         messageAdapter = new MessageAdapter(this,messages, username);
@@ -120,6 +83,12 @@ public class ChatView extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setReverseLayout(true);
         recyclerView.setLayoutManager(linearLayoutManager);
+
+        handler = new Handler();
+        runnable = () -> {
+            getMessages();
+            handler.postDelayed(runnable,1000);
+        };
 
         String titleToText = title;
         TextView titleText = findViewById(R.id.TitleChat);
