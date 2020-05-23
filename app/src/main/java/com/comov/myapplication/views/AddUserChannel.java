@@ -20,7 +20,6 @@ import retrofit2.Response;
 public class AddUserChannel extends AppCompatActivity {
     private com.comov.myapplication.apiTools.APIService APIService;
     private String channelID;
-    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +27,6 @@ public class AddUserChannel extends AppCompatActivity {
         setContentView(R.layout.activity_add_user_channel);
         APIService = APIUtils.getAPIService();
         channelID = getIntent().getStringExtra("channelID");
-        token = getIntent().getStringExtra("token");
 
         final EditText textuserchannel = (EditText) findViewById(R.id.editAddUserChannel);
         Button btnAddUserChannel = (Button) findViewById(R.id.btnAddUserChannel);
@@ -50,7 +48,7 @@ public class AddUserChannel extends AppCompatActivity {
     }
 
     public void addUserChannel(Login userChannel) {
-        APIService.postUserChannel(token,userChannel).enqueue(new Callback<ResponseBody>() {
+        APIService.postUserChannel(MainView.token,userChannel).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 System.out.println(response.code() + response.toString() );

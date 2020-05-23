@@ -17,7 +17,6 @@ import com.comov.myapplication.adapters.ChannelAdapter;
 import com.comov.myapplication.apiTools.APIUtils;
 import com.comov.myapplication.datamodel.Channel;
 import com.comov.myapplication.datamodel.ChannelResponse;
-import com.comov.myapplication.datamodel.Token;
 import com.comov.myapplication.services.NotificationService;
 
 import java.util.ArrayList;
@@ -33,13 +32,13 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
     ChannelAdapter channelAdapter;
     List<Channel> channels;
     String username;
-    String token;
-    private Intent requestIntent;
-    private static MainView mainView;
     Runnable runnable;
     Handler handler;
+    private Intent requestIntent;
+    private static MainView mainView;
     private Boolean backgroundService = false;
     public static String current_channel;
+    public static String token;
 
     final Handler tokenHandler = new Handler();
 
@@ -56,7 +55,6 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
         setSupportActionBar(toolbar);
         APIService = APIUtils.getAPIService();
         mainView = this;
-        //
 
         handler = new Handler();
         runnable = () -> {
@@ -65,7 +63,7 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
         };
 
         // Token Refresh
-        tokenHandler.postDelayed(new Runnable() {
+        /*tokenHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 Toast.makeText(getApplicationContext(), "Refreshing token." +
@@ -90,7 +88,7 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
                     }
                 });
             }
-        }, 10000);
+        }, 10000);*/
         //1800000
 
         //obtener con getIntent() los parametros de login obtenidos
@@ -175,21 +173,18 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
     public void openAddChannel() {
         Intent intent = new Intent(MainView.this, AddChatView.class);
         intent.putExtra("username", username);
-        intent.putExtra("token", token);
         startActivity(intent);
     }
 
     public void openAddContact(){
         Intent intent = new Intent(MainView.this, AddContactView.class);
         intent.putExtra("username", username);
-        intent.putExtra("token", token);
         startActivity(intent);
     }
 
     public void openContactList(){
         Intent intent = new Intent(MainView.this, ContactList.class);
         intent.putExtra("username", username);
-        intent.putExtra("token", token);
         startActivity(intent);
     }
 
@@ -203,7 +198,6 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
         intent.putExtra("username", username);
         intent.putExtra("channelID", channel.get_id());
         intent.putExtra("title", channel.getTitle());
-        intent.putExtra("token", token);
         current_channel = channel.get_id();
         startActivity(intent);
     }

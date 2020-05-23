@@ -26,7 +26,6 @@ public class ContactList extends AppCompatActivity implements ContactAdapter.Con
     private RecyclerView recyclerView;
     ContactAdapter contactAdapter;
     private String username;
-    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +39,12 @@ public class ContactList extends AppCompatActivity implements ContactAdapter.Con
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         username = getIntent().getStringExtra("username");
-        token = getIntent().getStringExtra("token");
         getContactList();
 
     }
 
     private void getContactList(){
-        APIService.getUser(token,username).enqueue(new Callback<UserResponse>(){
+        APIService.getUser(MainView.token,username).enqueue(new Callback<UserResponse>(){
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 if (response.code() == 200) {
@@ -72,7 +70,7 @@ public class ContactList extends AppCompatActivity implements ContactAdapter.Con
 
     @Override
     public void onClickContact(String contact) {
-        APIService.getUser(token,contact).enqueue(new Callback<UserResponse>(){
+        APIService.getUser(MainView.token,contact).enqueue(new Callback<UserResponse>(){
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 if (response.code() == 200) {

@@ -52,12 +52,10 @@ public class ChatView extends AppCompatActivity {
 
     private FusedLocationProviderClient fusedLocationClient;
 
-
     private APIService APIservice;
     private String username;
     private String channelID;
     private String title;
-    private String token;
     private List<Message> messages;
     private RecyclerView recyclerView;
     private Handler handler;
@@ -74,7 +72,6 @@ public class ChatView extends AppCompatActivity {
         username = getIntent().getStringExtra("username");
         channelID = getIntent().getStringExtra("channelID");
         title = getIntent().getStringExtra("title");
-        token = getIntent().getStringExtra("token");
 
         messages = new ArrayList<Message>();
         recyclerView = findViewById(R.id.recyclerChat);
@@ -109,7 +106,7 @@ public class ChatView extends AppCompatActivity {
     }
 
     public void getMessages(){
-        APIservice.getMessage(token,channelID).enqueue(new Callback<MessageResponse>() {
+        APIservice.getMessage(MainView.token,channelID).enqueue(new Callback<MessageResponse>() {
             @Override
             public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {
                 if(response.code() == 200){
@@ -138,7 +135,7 @@ public class ChatView extends AppCompatActivity {
         }
         Message mymessage = new Message(text.getText().toString(),username, channelID,Message.TEXT_MESSAGE);
         text.getText().clear();
-        APIservice.postMessage(token,mymessage).enqueue(new Callback<Message>(){
+        APIservice.postMessage(MainView.token,mymessage).enqueue(new Callback<Message>(){
 
             @Override
             public void onResponse(Call<Message> call, Response<Message> response) {
@@ -156,7 +153,7 @@ public class ChatView extends AppCompatActivity {
     }
 
     public void deleteChannel(View view){
-        APIservice.deleteChannel(token,channelID).enqueue(new Callback<ResponseBody>() {
+        APIservice.deleteChannel(MainView.token,channelID).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.code() == 200){
@@ -180,7 +177,6 @@ public class ChatView extends AppCompatActivity {
     public void openAddUserChannel(View view){
         Intent intent = new Intent(this, AddUserChannel.class);
         intent.putExtra("channelID", channelID);
-        intent.putExtra("token", token);
         startActivity(intent);
     }
 
@@ -202,7 +198,7 @@ public class ChatView extends AppCompatActivity {
             String encodedImage = Base64.encodeToString(bitmapToByteArray(scaled), Base64.DEFAULT);
             Message photo = new Message(encodedImage,username,channelID, Message.IMAGE_MESSAGE);
 
-            APIservice.postPic(token,photo).enqueue(new Callback<ResponseBody>() {
+            APIservice.postPic(MainView.token,photo).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if (response.code() == 500){
@@ -261,7 +257,7 @@ public class ChatView extends AppCompatActivity {
                     LatLng coordenadas = new LatLng(location.getLatitude(),location.getLongitude());
                     Log.i("Prueba de concepto","coordendas-> latitud:"+ coordenadas.latitude+" longitud: "+coordenadas.longitude);
                     Message locationMsg = new Message(parseCoordenadasToString(coordenadas),username,channelID,Message.LOCATION_MESSAGE);
-                    APIservice.postLocation(token, locationMsg).enqueue(new Callback<ResponseBody>(){
+                    APIservice.postLocation(MainView.token, locationMsg).enqueue(new Callback<ResponseBody>(){
 
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

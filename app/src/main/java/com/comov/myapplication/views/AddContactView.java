@@ -20,7 +20,6 @@ import retrofit2.Response;
 public class AddContactView extends AppCompatActivity {
     private com.comov.myapplication.apiTools.APIService APIService;
     private String username;
-    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +27,6 @@ public class AddContactView extends AppCompatActivity {
         setContentView(R.layout.activity_add_contact);
         APIService = APIUtils.getAPIService();
         username = getIntent().getStringExtra("username");
-        token = getIntent().getStringExtra("token");
 
         final EditText textcontact = (EditText) findViewById(R.id.editAddContact);
         Button btnAddContact = (Button) findViewById(R.id.btnAddContact);
@@ -50,7 +48,7 @@ public class AddContactView extends AppCompatActivity {
     }
 
     public void addContact(Login contact) {
-        APIService.postContact(token,contact).enqueue(new Callback<Users>() {
+        APIService.postContact(MainView.token,contact).enqueue(new Callback<Users>() {
             @Override
             public void onResponse(Call<Users> call, Response<Users> response) {
                 System.out.println(response.code() + response.toString() );
