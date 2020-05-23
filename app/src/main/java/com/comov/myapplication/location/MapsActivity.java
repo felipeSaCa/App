@@ -51,23 +51,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng coordenadas = new LatLng(latitud,longitud);
         mMap.addMarker(new MarkerOptions().position(coordenadas).title("Position"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(coordenadas));
-        //fusedLocationClient = LocationHelper.getLocationFusedInstance(this);
-        //getLastLocation(fusedLocationClient, this);
-        /*// Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));*/
+
     }
 
-    /*private void getLastLocation(FusedLocationProviderClient fusedLocationClient, MapsActivity mapsActivity) {
-        fusedLocationClient.getLastLocation().addOnSuccessListener(mapsActivity, location -> {//ON SUCCESS LISTENER
-            // Got last known location. In some rare situations this can be null.
-            if (location != null) {
-                LocationHelper.location = location;
-                LatLng lastLocation = new LatLng(LocationHelper.location.getLatitude(), LocationHelper.location.getLongitude());
-                mMap.addMarker(new MarkerOptions().position(lastLocation).title("Marker in Last location"));
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(lastLocation));
-            }
-        });
-    }*/
+
 }
