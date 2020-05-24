@@ -10,21 +10,18 @@
         android:title="contacts"
         android:id="@+id/contactListMenu"
         android:icon="@drawable/ic_contact_list"
-        app:showAsAction="always"
-        />
+        app:showAsAction="always"/>
 
     <item
         android:title="contacts"
         android:id="@+id/addContactMenu"
         android:icon="@drawable/ic_add_contact"
-        app:showAsAction="always"
-        />
+        app:showAsAction="always"/>
 
     <item
         android:title="contacts"
         android:id="@+id/addChannelMenu"
         android:icon="@drawable/ic_add_channel"
-        app:showAsAction="always"
-        />
+        app:showAsAction="always"/>
 
 </menu>

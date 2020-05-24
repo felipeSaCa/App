@@ -54,15 +54,6 @@ public class Login extends AppCompatActivity {
             return;
         }
 
-        /*MessageDigest auxCipherPassword = null;
-        try {
-            auxCipherPassword = MessageDigest.getInstance("SHA-256");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        //auxCipherPassword.update(password.getText().toString().getBytes());
-        String cipherPassword = auxCipherPassword.digest(password.getText().toString().getBytes()).toString();*/
-
         com.comov.myapplication.datamodel.Login login = new com.comov.myapplication.datamodel.Login(name.getText().toString(),password.getText().toString());
         sendLogin(login);
     }

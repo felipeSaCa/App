@@ -82,7 +82,7 @@ public class Register extends AppCompatActivity {
                 if(response.code() == 401)
                     Toast.makeText(getApplicationContext(), "User already exists", Toast.LENGTH_LONG).show();
                 else if (response.code() == 201){
-                    Toast.makeText(getApplicationContext(), "Register OK ", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Register OK", Toast.LENGTH_LONG).show();
                     finish();
                 }
             }

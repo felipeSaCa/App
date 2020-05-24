@@ -31,7 +31,6 @@ public class ContactList extends AppCompatActivity implements ContactAdapter.Con
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_list);
-
         APIService = APIUtils.getAPIService();
         recyclerView = findViewById(R.id.contactList);
         contactAdapter = new ContactAdapter(new ArrayList<String>(),this);
@@ -40,7 +39,6 @@ public class ContactList extends AppCompatActivity implements ContactAdapter.Con
         recyclerView.setLayoutManager(linearLayoutManager);
         username = getIntent().getStringExtra("username");
         getContactList();
-
     }
 
     private void getContactList(){
@@ -75,7 +73,6 @@ public class ContactList extends AppCompatActivity implements ContactAdapter.Con
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 if (response.code() == 200) {
                     List<Users> usersList = response.body().getUsers();
-
                     Intent intent = new Intent(ContactList.this, ContactProfile.class);
                     intent.putExtra("username", usersList.get(0).getName());
                     intent.putExtra("email", usersList.get(0).getEmail());
