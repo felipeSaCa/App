@@ -37,7 +37,7 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
     private Intent requestIntent;
     private static MainView mainView;
     private Boolean backgroundService = false;
-    public static String current_channel;
+    public static volatile String current_channel;
     public static String token;
 
     final Handler tokenHandler = new Handler();

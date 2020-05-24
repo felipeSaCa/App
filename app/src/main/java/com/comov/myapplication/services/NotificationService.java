@@ -82,7 +82,7 @@ public class NotificationService extends Service {
         private NotificationManager mNotificationManager;
 
 
-        private NotificationCompat.Builder createNotification(){//String title, String content, int priority TODO
+        private NotificationCompat.Builder createNotification(){
             NotificationCompat.Builder builder = new NotificationCompat.Builder(NotificationService.this, getString(R.string.channelID))
                     .setSmallIcon(R.drawable.ic_chat_black_24dp)
                     .setContentTitle("Nuevo mensaje")
@@ -94,7 +94,7 @@ public class NotificationService extends Service {
             return builder;
         }
 
-        NotificationHandler(Looper looper){//podemos pasarle mas cosas para que furule TODO
+        NotificationHandler(Looper looper){
             super(looper);
             mNotificationBuilder = createNotification();
             mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -109,7 +109,6 @@ public class NotificationService extends Service {
             Intent request = (Intent) msg.obj;
             if (ACTION_NEW_MESSAGES.equals(request.getAction())) {
                 Log.i(TAG,"Go loop");
-                int target = request.getIntExtra("EXTRA_COUNT_TARGET", 0);
                 while(service){
                     getNewMessages(3);
                 }
@@ -118,7 +117,6 @@ public class NotificationService extends Service {
 
 
         private void showNotification(int target) {
-            //mNotificationBuilder.setContentText("Mensaje "+msgCounter);//TODO
             mNotificationManager.notify(
                     target,
                     mNotificationBuilder.build()
@@ -192,7 +190,7 @@ public class NotificationService extends Service {
                 public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {
                     if(response.code() == 200){
                         List<com.comov.myapplication.datamodel.Message> messages1 = response.body().getMessages();
-                        if(!value.update){//si es falso entonces first time
+                        if(!value.update || MainView.getCurrent_channel().equals(value.channel.get_id())){//si es falso entonces first time o current Channel
                             value.update = true;
                             value.notificationMsg = messages1.size();
                             value.lastValue = messages1.size();
