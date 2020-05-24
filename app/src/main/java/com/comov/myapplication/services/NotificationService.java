@@ -28,7 +28,6 @@ import com.comov.myapplication.datamodel.MessageResponse;
 import com.comov.myapplication.views.MainView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -87,8 +86,6 @@ public class NotificationService extends Service {
                     .setSmallIcon(R.drawable.ic_chat_black_24dp)
                     .setContentTitle("Nuevo mensaje")
                     .setContentText("Content ")
-                    //.setStyle(new NotificationCompat.BigTextStyle().bigText("Yupi "+msgCounter))
-                    //.setPriority(priority)
                     .setAutoCancel(true);
             Log.i(TAG,"Se crea notificación");
             return builder;
@@ -133,11 +130,6 @@ public class NotificationService extends Service {
                          mapaNotificaciones.keySet()) {
                         processMessages(mapaNotificaciones.get(key));
                     }
-                    /*mapaNotificaciones.forEach((k,v)->{
-                        Log.i(TAG,"Mapa notificaciones");
-                        //processMessages(v);
-                        //showNotification(Integer.parseInt(k));
-                    });*/
                     Thread.sleep(1000);
                 }catch (InterruptedException e){
                     Thread.currentThread().interrupt();

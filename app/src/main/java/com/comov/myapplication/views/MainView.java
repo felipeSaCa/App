@@ -40,11 +40,7 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
     public static volatile String current_channel;
     public static String token;
 
-    final Handler tokenHandler = new Handler();
 
-    public static MainView getInstance(){
-        return mainView;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,35 +57,6 @@ public class MainView extends AppCompatActivity implements ChannelAdapter.Channe
             getChannelsFromUser();
             handler.postDelayed(runnable,5000);
         };
-
-        // Token Refresh
-        /*tokenHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(getApplicationContext(), "Refreshing token." +
-                        "", Toast.LENGTH_LONG).show();
-                APIService.getLogin(token,username).enqueue(new Callback<Token>() {
-                    @Override
-                    public void onResponse(Call<Token> call, Response<Token> response) {
-                        if(response.code() == 200){
-                            token = response.body().getToken();
-                            Toast.makeText(getApplicationContext(), "Token refreshed." +
-                                    "", Toast.LENGTH_LONG).show();
-                        }
-                        else if (response.code() == 500){
-                            Toast.makeText(getApplicationContext(), "Fail to refresh token." +
-                                    "", Toast.LENGTH_LONG).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Token> call, Throwable t) {
-                        Toast.makeText(getApplicationContext(), "Fail "+ t, Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
-        }, 10000);*/
-        //1800000
 
         //obtener con getIntent() los parametros de login obtenidos
         username = getIntent().getStringExtra("name");
